@@ -1,2 +1,2 @@
 # ORMIR_2022
-Code developed at the 2022 ORMIR workshop in Maastricht, Netherlands
+This project was partially developed during the Jupyter Community Workshop “Building the Jupyter Community in Musculoskeletal Imaging Research”.
