@@ -1,0 +1,18 @@
+# Internal tools
+pbr
+pip
+setuptools
+
+# Image processing
+itk
+itkwidgets
+vtk
+simpleitk
+scikit-image
+
+# Numerics
+numpy
+scipy
+
+# Jupiter Notebooks
+notebook
