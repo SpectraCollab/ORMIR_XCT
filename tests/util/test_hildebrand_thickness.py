@@ -1,5 +1,6 @@
 import unittest
 
+import numpy as np
 from ormir_xct.util.hildebrand_thickness import (
     compute_local_thickness_from_distance_ridge,
     compute_local_thickness_from_mask,

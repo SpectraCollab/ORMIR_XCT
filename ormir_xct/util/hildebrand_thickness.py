@@ -143,8 +143,11 @@ def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[flo
         the mean, standard deviation, minimum, and maximum of the local thickness of the structure defined by the mask,
         and the whole local thickness field of the entire image (0 outside the mask)
     """
-
-    local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
+    if (mask > 0).sum() > 0:
+        local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
+    else:
+        print("Cannot find structure thickness statistics for binary mask with no positive voxels")
+        return 0, 0, 0, 0, np.zeros(mask.shape, dtype=float)
     local_thickness_structure = local_thickness[mask > 0]
 
     local_thickness_structure = np.maximum(local_thickness_structure, min_thickness)
