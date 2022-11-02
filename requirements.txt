@@ -2,6 +2,8 @@
 pbr
 pip
 setuptools
+black
+flake8
 
 # Image processing
 itk
