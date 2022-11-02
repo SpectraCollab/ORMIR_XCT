@@ -11,7 +11,7 @@ import datetime
 import numpy as np
 import SimpleITK as sitk
 
-from ormir_xct.util.dt_morphometry import calc_mean_thickness
+from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 
 
 # Set standard global variables used in IPL script
@@ -160,7 +160,7 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
 
     # Needs to be fixed for masks with JS minimum < 1 voxel
     # For now, set the minimum JSW value to twice the voel size (0.1214)
-    result = calc_mean_thickness(mask, voxel_size, voxel_size * 2)
+    result = calc_structure_thickness_statistics(mask, voxel_size, voxel_size * 2)
     mean_thickness = result[0]
     mean_thickness_std = result[1]
     min_thickness = result[2]
