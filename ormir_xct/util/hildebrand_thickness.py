@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 from collections.abc import Iterable
 from numba import jit
-from SimpleITK import GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap, DanielssonDistanceMap
+from SimpleITK import GetImageFromArray, GetArrayFromImage, DanielssonDistanceMap
 from skimage.morphology import skeletonize_3d
 from typing import Union
 
@@ -122,6 +122,9 @@ def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Itera
     ridge = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*(skeletonize_3d(mask).nonzero()))]
     ridge.sort()
     ridge = np.asarray(ridge)
+    if len(ridge) == 0:
+        print("skeletonization of distance map produced no ridge voxels, cannot proceed")
+        return np.zeros(mask.shape, dtype=float)
     local_thickness = compute_local_thickness_from_distance_ridge(
         np.zeros(mask.shape, dtype=float), ridge[:, 0].astype(float), ridge[:, 1:].astype(int), voxel_width
     )
