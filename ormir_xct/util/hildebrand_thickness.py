@@ -22,7 +22,7 @@ EPS = 1e-8
 
 @jit(nopython=True, fastmath=True)
 def compute_local_thickness_from_distance_ridge(
-    local_thickness: np.ndarray, dist_ridge: np.ndarray, voxel_width: np.ndarray
+    local_thickness: np.ndarray, dist_ridge: np.ndarray, dist_ridge_indices: np.ndarray, voxel_width: np.ndarray
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
@@ -43,9 +43,13 @@ def compute_local_thickness_from_distance_ridge(
         A numpy array that is initialized as zeros.
 
     dist_ridge : np.ndarray
-        A numpy array that is the sorted distance ridge of a mask. Each row in this array is one voxel on the distance
-        ridge, and in each row the first element should be the value of the distance transform while the next three
-        elements are the i, j, and k indices of the location of that ridge voxel in the binary image.
+        A numpy array that is the sorted distance ridge of a mask, but the distances only. Each element is a float
+        that corresponds to a distance value on the distance ridge, in ascending order.
+
+    dist_ridge_indices : np.ndarray
+        A numpy array that is the integer indices of the location of the distance. Each row in this array corresponds to
+        the distance at the same position in the `dist_ridge` parameter, and then the three elements in each row are
+        the i, j, k indices of the location of that voxel of the distance ridge in the binary image.
 
     voxel_width : np.ndarray
         A numpy array with shape (3,) that gives the width of voxels in each dimension.
@@ -55,7 +59,7 @@ def compute_local_thickness_from_distance_ridge(
     np.ndarray
         The local thickness field.
     """
-    for (rd, ri, rj, rk) in dist_ridge:
+    for (rd, (ri, rj, rk)) in zip(dist_ridge, dist_ridge_indices):
         for di in range(
             np.maximum(np.floor(ri - rd/voxel_width[0]) - 1, 0),
             np.minimum(np.ceil(ri + rd/voxel_width[0]) + 1, local_thickness.shape[0]),
@@ -117,8 +121,9 @@ def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Itera
     ))
     ridge = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*(skeletonize_3d(mask).nonzero()))]
     ridge.sort()
+    ridge = np.asarray(ridge)
     local_thickness = compute_local_thickness_from_distance_ridge(
-        np.zeros(mask.shape, dtype=float), np.array(ridge), voxel_width
+        np.zeros(mask.shape, dtype=float), ridge[:, 0].astype(float), ridge[:, 1:].astype(int), voxel_width
     )
     return (mask > 0) * local_thickness
 
@@ -144,6 +149,7 @@ def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[flo
         and the whole local thickness field of the entire image (0 outside the mask)
     """
     if (mask > 0).sum() > 0:
+        print((mask > 0).sum())
         local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
     else:
         print("Cannot find structure thickness statistics for binary mask with no positive voxels")
