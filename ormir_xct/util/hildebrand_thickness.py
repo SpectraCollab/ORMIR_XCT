@@ -15,9 +15,7 @@ from numba import jit
 from SimpleITK import GetImageFromArray, GetArrayFromImage, DanielssonDistanceMap
 from skimage.morphology import skeletonize_3d
 from typing import Union
-
-# constant to add to denominator(s) to prevent divide-by-zero errors
-EPS = 1e-8
+import warnings
 
 
 @jit(nopython=True, fastmath=True)
@@ -123,7 +121,7 @@ def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Itera
     ridge.sort()
     ridge = np.asarray(ridge)
     if len(ridge) == 0:
-        print("skeletonization of distance map produced no ridge voxels, cannot proceed")
+        warnings.warn("skeletonization of distance map produced no ridge voxels, cannot proceed")
         return np.zeros(mask.shape, dtype=float)
     local_thickness = compute_local_thickness_from_distance_ridge(
         np.zeros(mask.shape, dtype=float), ridge[:, 0].astype(float), ridge[:, 1:].astype(int), voxel_width
@@ -154,7 +152,7 @@ def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[flo
     if (mask > 0).sum() > 0:
         local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
     else:
-        print("Cannot find structure thickness statistics for binary mask with no positive voxels")
+        warnings.warn("cannot find structure thickness statistics for binary mask with no positive voxels")
         return 0, 0, 0, 0, np.zeros(mask.shape, dtype=float)
     local_thickness_structure = local_thickness[mask > 0]
 
