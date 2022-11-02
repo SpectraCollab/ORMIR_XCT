@@ -31,7 +31,7 @@ def jsw_pad(joint_seg_image):
 
     Parameters
     ----------
-    joint_seg_path : string
+    joint_seg_image : string
 
     Returns
     -------
@@ -64,8 +64,6 @@ def jsw_dilate(image):
     Parameters
     ----------
     image : SimpleITK.Image
-
-    output_path : string
 
     Returns
     -------
@@ -109,8 +107,6 @@ def jsw_erode(dilated_image, image):
     dilated_image : SimpleITK.Image
 
     image : SimpleITK.Image
-
-    output_path : string
 
     Returns
     -------
@@ -156,6 +152,8 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
     output_path : string
 
     filename : string
+
+    voxel_size : float
     """
     # Distance transform + JSW parameters
     mask = sitk.GetArrayFromImage(js_mask)
@@ -186,7 +184,6 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
     ]
 
     jsv = stats_list[0][0]
-    pixel_count = stats_list[0][1]
 
     jsw_output_header = np.array(
         [
