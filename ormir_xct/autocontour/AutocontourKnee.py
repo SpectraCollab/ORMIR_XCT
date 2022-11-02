@@ -1,5 +1,7 @@
 import SimpleITK as sitk
+
 # import yaml
+
 
 class AutocontourKnee:
     """
@@ -88,35 +90,35 @@ class AutocontourKnee:
 
     def __init__(
         self,
-        in_value = 127,
-        peri_s1_sigma = 1.5,
-        peri_s1_support = 1,
-        peri_s1_lower = 350, #919, # was 350 mgHA/ccm
-        peri_s1_upper = 10000, # very high value
-        peri_s1_radius = 35,
-        peri_s2_sigma = 1.5,
-        peri_s2_support = 1,
-        peri_s2_lower = 250, #660, # was 250 mgHA/ccm
-        peri_s2_upper = 10000,
-        peri_s2_radius = 10,
-        peri_s3_sigma = 1.5,
-        peri_s3_support = 1,
-        peri_s3_lower = 350, #919, # was 350 mgHA/ccm
-        peri_s3_upper = 10000, # very high value
-        peri_s3_radius = 5,
-        peri_s4_open_radius = 8,
-        peri_s4_close_radius = 16,
-        endo_sigma = 2,
-        endo_support = 3,
-        endo_lower = 550, #1444, # was 550 mg HA/ccm
-        endo_upper = 10000,
-        endo_min_cort_th = 4,
-        endo_open_radius = 3,
-        endo_min_number = 1000, # should be 300000 for full image,
-        endo_open_close_radius = 15,
-        endo_corner_open_radius = 3,
-        endo_close_radius = 50
-        ):
+        in_value=127,
+        peri_s1_sigma=1.5,
+        peri_s1_support=1,
+        peri_s1_lower=350,  # 919, # was 350 mgHA/ccm
+        peri_s1_upper=10000,  # very high value
+        peri_s1_radius=35,
+        peri_s2_sigma=1.5,
+        peri_s2_support=1,
+        peri_s2_lower=250,  # 660, # was 250 mgHA/ccm
+        peri_s2_upper=10000,
+        peri_s2_radius=10,
+        peri_s3_sigma=1.5,
+        peri_s3_support=1,
+        peri_s3_lower=350,  # 919, # was 350 mgHA/ccm
+        peri_s3_upper=10000,  # very high value
+        peri_s3_radius=5,
+        peri_s4_open_radius=8,
+        peri_s4_close_radius=16,
+        endo_sigma=2,
+        endo_support=3,
+        endo_lower=550,  # 1444, # was 550 mg HA/ccm
+        endo_upper=10000,
+        endo_min_cort_th=4,
+        endo_open_radius=3,
+        endo_min_number=1000,  # should be 300000 for full image,
+        endo_open_close_radius=15,
+        endo_corner_open_radius=3,
+        endo_close_radius=50,
+    ):
         """
         Initialization method.
 
@@ -232,7 +234,7 @@ class AutocontourKnee:
         """
 
         self.in_value = in_value
-        self.out_value = 0 # this should only be zero
+        self.out_value = 0  # this should only be zero
 
         self.peri_s1_sigma = peri_s1_sigma
         self.peri_s1_support = peri_s1_support
@@ -269,11 +271,7 @@ class AutocontourKnee:
         self.DEFAULT_MAX_ERROR = 0.01
         self.USE_SPACING = False
 
-    def _gaussian_and_threshold(
-        self, img,
-        sigma, support,
-        lower, upper
-        ):
+    def _gaussian_and_threshold(self, img, sigma, support, lower, upper):
         """
         Gaussian smooth and then binarize an image using a threshold filter.
 
@@ -303,11 +301,15 @@ class AutocontourKnee:
         # gaussian filtering
         # Suppress warnings from the Gaussian function about kernel size
         sitk.ProcessObject_SetGlobalWarningDisplay(False)
-        img_gauss = sitk.DiscreteGaussian(img, sigma, support, self.DEFAULT_MAX_ERROR, self.USE_SPACING)
+        img_gauss = sitk.DiscreteGaussian(
+            img, sigma, support, self.DEFAULT_MAX_ERROR, self.USE_SPACING
+        )
         sitk.ProcessObject_SetGlobalWarningDisplay(True)
 
         # binary segmentation
-        img_segmented = sitk.BinaryThreshold(img_gauss, lower, upper, self.in_value, self.out_value)
+        img_segmented = sitk.BinaryThreshold(
+            img_gauss, lower, upper, self.in_value, self.out_value
+        )
 
         return img_segmented
 
@@ -329,7 +331,7 @@ class AutocontourKnee:
 
         img_conn = sitk.ConnectedComponent(img, img, True)
         img_conn = sitk.RelabelComponent(img_conn, sortByObjectSize=True)
-        img_conn = self.in_value*(img_conn == 1)
+        img_conn = self.in_value * (img_conn == 1)
 
         return img_conn
 
@@ -348,7 +350,7 @@ class AutocontourKnee:
             The inverted binary image.
         """
 
-        return self.in_value*(img!=self.in_value)
+        return self.in_value * (img != self.in_value)
 
     def _close_with_connected_components(self, img, radius):
         """
@@ -373,8 +375,7 @@ class AutocontourKnee:
 
         # dilate to close holes in cortex
         img = sitk.BinaryDilate(
-            img, [radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            img, [radius] * 3, sitk.sitkBall, self.out_value, self.in_value
         )
 
         # invert the image to switch to background
@@ -388,8 +389,7 @@ class AutocontourKnee:
 
         # erode back the dilated bone volume
         img = sitk.BinaryErode(
-            img, [radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            img, [radius] * 3, sitk.sitkBall, self.out_value, self.in_value
         )
 
         return img
@@ -417,8 +417,7 @@ class AutocontourKnee:
 
         # erode back the dilated bone volume
         img = sitk.BinaryErode(
-            img, [radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            img, [radius] * 3, sitk.sitkBall, self.out_value, self.in_value
         )
 
         # perform connected components on background
@@ -426,10 +425,8 @@ class AutocontourKnee:
 
         # dilate to close holes in cortex
         img = sitk.BinaryDilate(
-            img, [radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            img, [radius] * 3, sitk.sitkBall, self.out_value, self.in_value
         )
-
 
         return img
 
@@ -456,7 +453,7 @@ class AutocontourKnee:
         img_cl = sitk.ConnectedComponent(img, img, True)
         img_cl_min = sitk.RelabelComponent(img_cl, num_voxels, True)
 
-        return self.in_value*(img_cl_min>0)
+        return self.in_value * (img_cl_min > 0)
 
     def get_periosteal_mask(self, img, component):
         """
@@ -478,16 +475,19 @@ class AutocontourKnee:
         # STEP 1: Mask out the largest bone only
 
         img_segmented = self._gaussian_and_threshold(
-            img, self.peri_s1_sigma, self.peri_s1_support,
-            self.peri_s1_lower, self.peri_s1_upper
+            img,
+            self.peri_s1_sigma,
+            self.peri_s1_support,
+            self.peri_s1_lower,
+            self.peri_s1_upper,
         )
 
         # component labelling to keep only largest region
         img_conn = sitk.ConnectedComponent(img_segmented, img_segmented, True)
         img_conn = sitk.RelabelComponent(img_conn, sortByObjectSize=True)
-        img_segmented = self.in_value*(img_conn == component)
+        img_segmented = self.in_value * (img_conn == component)
         # img_segmented = self._get_largest_connected_component(img_segmented)
-        
+
         # dilation
         # !!!NOTE: I'm using a Euclidean metric for the structirng element,
         # the IPL implementation uses the 3-4-5 chamfer metric. Feel free to
@@ -496,8 +496,10 @@ class AutocontourKnee:
 
         img_segmented = sitk.BinaryDilate(
             img_segmented,
-            [self.peri_s1_radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            [self.peri_s1_radius] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         # invert the image to get the background
@@ -505,7 +507,7 @@ class AutocontourKnee:
 
         # connected components on the background
         img_segmented = self._get_largest_connected_component(img_segmented)
-        
+
         # invert back to foreground
         img_segmented = self._invert_binary_image(img_segmented)
 
@@ -519,18 +521,21 @@ class AutocontourKnee:
 
         # threshold using low threshold
         img_segmented = self._gaussian_and_threshold(
-            img_masked, self.peri_s2_sigma, self.peri_s2_support,
-            self.peri_s2_lower, self.peri_s2_upper
+            img_masked,
+            self.peri_s2_sigma,
+            self.peri_s2_support,
+            self.peri_s2_lower,
+            self.peri_s2_upper,
         )
 
         # keep only largest component
         img_segmented = self._get_largest_connected_component(img_segmented)
-        
+
         # dilate/conn comp/erode to close holes in cortex
         img_segmented = self._close_with_connected_components(
             img_segmented, self.peri_s2_radius
         )
-        
+
         # now mask the image using the latest segmentation
         img_masked = sitk.Mask(img, img_segmented)
 
@@ -541,38 +546,44 @@ class AutocontourKnee:
 
         # gaussian blur and segment with higher threshold
         img_segmented = self._gaussian_and_threshold(
-            img_masked, self.peri_s3_sigma, self.peri_s3_support,
-            self.peri_s3_lower, self.peri_s3_upper
+            img_masked,
+            self.peri_s3_sigma,
+            self.peri_s3_support,
+            self.peri_s3_lower,
+            self.peri_s3_upper,
         )
 
         # dilate/conn comp/erode to close holes in cortex
         img_segmented = self._close_with_connected_components(
             img_segmented, self.peri_s3_radius
         )
-        
+
         # again, mask the image with the new segmentation
         img_masked = sitk.Mask(img, img_segmented)
 
         # save the final segmentation from step 3
         img_segmented_s3 = img_segmented
 
-
         # STEP 4: Create the final segmentation using the segmentations from
         # steps 2 and 3
 
         # find where the two masks are different
-        img_segmented_diff = self.in_value*((img_segmented_s2==self.in_value)!=(img_segmented_s3==self.in_value))
+        img_segmented_diff = self.in_value * (
+            (img_segmented_s2 == self.in_value) != (img_segmented_s3 == self.in_value)
+        )
 
         # do an opening on the diff
         img_segmented_diff_open = sitk.BinaryMorphologicalOpening(
-            img_segmented_diff, [self.peri_s4_open_radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            img_segmented_diff,
+            [self.peri_s4_open_radius] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         # combine this with the segmentation from step 3
-        peri_mask = self.in_value*sitk.Or(
-            img_segmented_s3 == self.in_value,
-            img_segmented_diff_open == self.in_value
+        peri_mask = self.in_value * sitk.Or(
+            img_segmented_s3 == self.in_value, img_segmented_diff_open == self.in_value
         )
 
         # perform a smoothening close
@@ -582,9 +593,7 @@ class AutocontourKnee:
         # surface features. Qualitatively, it seems to me like a candidate for
         # improving the algorithm would be to replace this with an opening
         peri_mask = sitk.BinaryMorphologicalClosing(
-            peri_mask,
-            [self.peri_s4_close_radius]*3, sitk.sitkBall,
-            self.in_value
+            peri_mask, [self.peri_s4_close_radius] * 3, sitk.sitkBall, self.in_value
         )
 
         # mask the final peri mask using the first rough mask we created in
@@ -592,7 +601,6 @@ class AutocontourKnee:
         peri_mask = sitk.Mask(peri_mask, img_segmented_s1)
 
         return peri_mask
-
 
     def get_endosteal_mask(self, img, peri):
         """
@@ -619,19 +627,25 @@ class AutocontourKnee:
 
         # next, do a gaussian and binarization to get a cortical mask
         cort = self._gaussian_and_threshold(
-            img_masked, self.endo_sigma, self.endo_support,
-            self.endo_lower, self.endo_upper
+            img_masked,
+            self.endo_sigma,
+            self.endo_support,
+            self.endo_lower,
+            self.endo_upper,
         )
 
         # erode the peri mask to get the minimum cortical thickness
         peri_eroded = sitk.BinaryErode(
-            peri, [self.endo_min_cort_th]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            peri,
+            [self.endo_min_cort_th] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         # get an endosteal mask first guess by subtracting the cortical mask
         # from the periosteal mask
-        endo = self.in_value*sitk.And(peri,sitk.Not(cort))
+        endo = self.in_value * sitk.And(peri, sitk.Not(cort))
 
         # now mask the endo mask using the eroded peri mask
         endo = sitk.Mask(endo, peri_eroded)
@@ -647,7 +661,7 @@ class AutocontourKnee:
         cort = sitk.Mask(cort, peri)
 
         # get the trab region as the whole bone less the cortex
-        trab = self.in_value*sitk.And(peri, sitk.Not(cort))
+        trab = self.in_value * sitk.And(peri, sitk.Not(cort))
 
         # keep only the largest connected region of trab
         trab = self._get_largest_connected_component(trab)
@@ -657,32 +671,39 @@ class AutocontourKnee:
         trab = self._open_with_connected_components(trab, self.endo_open_radius)
 
         trab = sitk.BinaryMorphologicalClosing(
-            trab,
-            [self.endo_open_close_radius]*3, sitk.sitkBall,
-            self.in_value
+            trab, [self.endo_open_close_radius] * 3, sitk.sitkBall, self.in_value
         )
 
         trab = sitk.Mask(trab, peri)
 
         trab_open = sitk.BinaryMorphologicalOpening(
-            trab, [self.endo_open_close_radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            trab,
+            [self.endo_open_close_radius] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         # find where the inverse of trab and trab_open are not the same and call
         # it the corner mask
-        corners = self.in_value*sitk.And(trab, sitk.Not(trab_open))
+        corners = self.in_value * sitk.And(trab, sitk.Not(trab_open))
 
         corners = sitk.BinaryErode(
-            corners, [self.endo_corner_open_radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            corners,
+            [self.endo_corner_open_radius] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         corners = self._extract_large_regions(corners, self.endo_min_number)
 
         corners = sitk.BinaryDilate(
-            corners, [self.endo_corner_open_radius]*3, sitk.sitkBall,
-            self.out_value, self.in_value
+            corners,
+            [self.endo_corner_open_radius] * 3,
+            sitk.sitkBall,
+            self.out_value,
+            self.in_value,
         )
 
         corners = self._extract_large_regions(corners, self.endo_min_number)
@@ -695,9 +716,7 @@ class AutocontourKnee:
         trab = sitk.Or(trab, corners)
 
         trab = sitk.BinaryMorphologicalClosing(
-            trab,
-            [self.endo_close_radius]*3, sitk.sitkBall,
-            self.in_value
+            trab, [self.endo_close_radius] * 3, sitk.sitkBall, self.in_value
         )
 
         # mask the trab mask with the eroded peri mask to ensure a minimum
@@ -708,8 +727,7 @@ class AutocontourKnee:
         # step here but you can't do that efficiently in SITK, and also it
         # doesnt really make sense to me to do that on a knee anyways
 
-        cort = self.in_value*sitk.And(peri, sitk.Not(trab))
-
+        cort = self.in_value * sitk.And(peri, sitk.Not(trab))
 
         ##### NOTE: NOT FINISHED
         # left off at line 338 of IPLV6_AUTOK_ENDO_KNEE.COM
@@ -736,19 +754,19 @@ class AutocontourKnee:
         pass
 
     def __str__(self):
-        return f'Autocontour object (--str to be implemented--).'
+        return f"Autocontour object (--str to be implemented--)."
 
     def __repr__(self):
-        return 'Autocontour(--repr to be implemented--)'
+        return "Autocontour(--repr to be implemented--)"
 
-    def save_parameters_to_yaml(self,fn):
-        '''
+    def save_parameters_to_yaml(self, fn):
+        """
         To be implemented
-        '''
+        """
         pass
 
-    def load_parameters_from_yaml(self,fn):
-        '''
+    def load_parameters_from_yaml(self, fn):
+        """
         To be implemented
-        '''
+        """
         pass

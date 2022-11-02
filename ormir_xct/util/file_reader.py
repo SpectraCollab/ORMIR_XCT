@@ -1,10 +1,10 @@
-#-------------------------------------------------------#
+# -------------------------------------------------------#
 # Created by: Michael Kuczynski
 # Created on: June 18th, 2022
 #
 # Description:
 #
-#-------------------------------------------------------#
+# -------------------------------------------------------#
 import os
 import sys
 import itk
@@ -12,7 +12,8 @@ import SimpleITK as sitk
 
 from ormir_xct.util.sitk_itk import itk_sitk
 
-file_extensions = ['.nii', '.mha', '.aim', '.isq']
+file_extensions = [".nii", ".mha", ".aim", ".isq"]
+
 
 def file_reader(input_file_path):
     """
@@ -30,20 +31,20 @@ def file_reader(input_file_path):
     # Get the file extension and check if we can read it
     input_filename = os.path.split(input_file_path)[1]
     input_extension = os.path.splitext(input_filename)[1]
-    
+
     input_extension = input_extension.lower()
     image = None
 
     if input_extension in file_extensions:
-        if input_extension == '.aim' or input_extension == '.isq':
+        if input_extension == ".aim" or input_extension == ".isq":
             # If the input AIM contains a version number, remove it and rename the file
-            if ';' in input_extension:
-                scanco_filename = input_file_path.rsplit(';', 1)[0]
+            if ";" in input_extension:
+                scanco_filename = input_file_path.rsplit(";", 1)[0]
                 os.rename(input_file_path, scanco_filename)
                 input_file_path = scanco_filename
 
             # For now, only read signed short Scanco images
-            image_type = itk.Image[itk.ctype('signed short'), 3]
+            image_type = itk.Image[itk.ctype("signed short"), 3]
             reader = itk.ImageFileReader[image_type].New()
             image_io = itk.ScancoImageIO.New()
             reader.SetImageIO(image_io)
@@ -55,7 +56,7 @@ def file_reader(input_file_path):
         else:
             image = sitk.ReadImage(input_file_path, sitk.sitkFloat32)
     else:
-        print('ERROR: File extension ' + str(input_extension) + ' not supported.')
+        print("ERROR: File extension " + str(input_extension) + " not supported.")
         sys.exit(0)
 
     return image
