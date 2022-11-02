@@ -1,0 +1,13 @@
+[flake8]
+ignore =
+    E501, # don't really care if some lines are too long
+    W503, # line breaks *should* go before binary operators
+exclude =
+    .git,
+    .gitignore,
+    __pycache__,
+    docs,
+    LICENSE,
+    README.MD,
+    setup.cfg,
+    setup.py,
