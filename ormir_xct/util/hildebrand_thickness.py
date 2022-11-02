@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 from collections.abc import Iterable
 from numba import jit
-from SimpleITK import GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap
+from SimpleITK import GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap, DanielssonDistanceMap
 from skimage.morphology import skeletonize_3d
 from typing import Union
 
@@ -114,10 +114,10 @@ def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Itera
     else:
         raise ValueError("`voxel_width must be a float, int, or iterable of length 3`")
 
-    mask_sitk = GetImageFromArray(mask.astype(int))
+    mask_sitk = GetImageFromArray(1-mask.astype(int))
     mask_sitk.SetSpacing(tuple(voxel_width))
-    mask_dist = mask * GetArrayFromImage(SignedMaurerDistanceMap(
-        mask_sitk, useImageSpacing=True, insideIsPositive=True, squaredDistance=False
+    mask_dist = mask * GetArrayFromImage(DanielssonDistanceMap(
+        mask_sitk, useImageSpacing=True, squaredDistance=False
     ))
     ridge = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*(skeletonize_3d(mask).nonzero()))]
     ridge.sort()
@@ -149,7 +149,6 @@ def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[flo
         and the whole local thickness field of the entire image (0 outside the mask)
     """
     if (mask > 0).sum() > 0:
-        print((mask > 0).sum())
         local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
     else:
         print("Cannot find structure thickness statistics for binary mask with no positive voxels")
