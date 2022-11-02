@@ -11,7 +11,7 @@ import datetime
 import numpy as np
 import SimpleITK as sitk
 
-from dt_morphometry import calc_mean_thickness
+from ormir_xct.util.dt_morphometry import calc_mean_thickness
 
 
 # Set standard global variables used in IPL script
