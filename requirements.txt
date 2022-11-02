@@ -4,6 +4,7 @@ pip
 setuptools
 black
 flake8
+pytest
 
 # Image processing
 itk
