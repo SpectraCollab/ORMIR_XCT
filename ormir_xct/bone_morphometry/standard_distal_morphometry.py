@@ -24,6 +24,8 @@ def standard_distal_morphometry(
     cort_thresh: float = 450.0,
     trab_thresh: float = 320.0,
     ctth_min_th: float = 0.0,
+    tbth_min_th: float = 0.0,
+    tbsp_min_th: float = 0.0,
     axial_dim: int = 2,
 ) -> dict:
     """
@@ -54,6 +56,10 @@ def standard_distal_morphometry(
         Default value is 320.0 (in mg HA/ccm, corresponds to standard HR-pQCT protocol)
 
     ctth_min_th : float
+
+    tbth_min_th : float
+
+    tbsp_min_th : float
 
     axial_dim : int
         The axial dimension in the image, this is the dimension to iterate across slice-by-slice to find Tt.Ar, Ct.Ar,
@@ -132,10 +138,10 @@ def standard_distal_morphometry(
     parameters["Tb.BV/TV"] = float(trab_bone_mask.sum() / trab_mask.sum())
     parameters["Tb.N"] = None  # TODO not yet implemented
     parameters["Tb.Th"] = calc_structure_thickness_statistics(
-        trab_bone_mask, voxel_width, ctth_min_th
+        trab_bone_mask, voxel_width, tbth_min_th
     )[0]
     parameters["Tb.Sp"] = calc_structure_thickness_statistics(
-        trab_void_mask, voxel_width, ctth_min_th
+        trab_void_mask, voxel_width, tbsp_min_th
     )[0]
 
     # calculate area measures
