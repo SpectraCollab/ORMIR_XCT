@@ -17,14 +17,14 @@ from SimpleITK import GetImageFromArray, GetArrayFromImage
 
 
 def standard_distal_morphometry(
-        image: np.ndarray,
-        cort_mask: np.ndarray,
-        trab_mask: np.ndarray,
-        voxel_width: float = 0.0606964,
-        cort_thresh: float = 450.0,
-        trab_thresh: float = 320.0,
-        ctth_min_th: float = 0.0,
-        axial_dim: int
+    image: np.ndarray,
+    cort_mask: np.ndarray,
+    trab_mask: np.ndarray,
+    voxel_width: float = 0.0606964,
+    cort_thresh: float = 450.0,
+    trab_thresh: float = 320.0,
+    ctth_min_th: float = 0.0,
+    axial_dim: int = 2,
 ) -> dict:
     """
 
@@ -71,11 +71,14 @@ def standard_distal_morphometry(
     # input error checking
 
     if not isinstance(axial_dim, int) or axial_dim not in [0, 1, 2]:
-        raise ValueError("`axial_dim` must be an integer and must be either 0, 1, or 2.")
+        raise ValueError(
+            "`axial_dim` must be an integer and must be either 0, 1, or 2."
+        )
 
     if (cort_mask & trab_mask).sum() > 0:
-        warn("`cort_mask` and `trab_mask` should not overlap or the analysis may be invalid")
-
+        warn(
+            "`cort_mask` and `trab_mask` should not overlap or the analysis may be invalid"
+        )
 
     # first calculate bone and void masks for the cortical and trabecular compartments. these will be useful for
     # many of the morphometric parameters
@@ -84,23 +87,29 @@ def standard_distal_morphometry(
     trab_mask = trab_mask > 0
 
     cort_bone_mask = cort_mask & (
-        GetArrayFromImage(ipl_seg(
-            GetImageFromArray(image),
-            cort_thresh,
-            1e10,  # crazy high number because there's no upper thresh
-            voxel_width
-        )) == 127
+        GetArrayFromImage(
+            ipl_seg(
+                GetImageFromArray(image),
+                cort_thresh,
+                1e10,  # crazy high number because there's no upper thresh
+                voxel_width,
+            )
+        )
+        == 127
     )
 
     cort_void_mask = cort_mask & (~cort_bone_mask)
 
     trab_bone_mask = trab_mask & (
-        GetArrayFromImage(ipl_seg(
-            GetImageFromArray(image),
-            trab_thresh,
-            1e10,  # crazy high number because there's no upper thresh
-            voxel_width
-        )) == 127
+        GetArrayFromImage(
+            ipl_seg(
+                GetImageFromArray(image),
+                trab_thresh,
+                1e10,  # crazy high number because there's no upper thresh
+                voxel_width,
+            )
+        )
+        == 127
     )
 
     trab_void_mask = trab_mask & (~trab_bone_mask)
@@ -109,25 +118,38 @@ def standard_distal_morphometry(
     parameters = {}
 
     # calculate density measures
-    parameters["Tt.BMD"] = float(image[cort_mask|trab_mask].mean())
+    parameters["Tt.BMD"] = float(image[cort_mask | trab_mask].mean())
     parameters["Ct.BMD"] = float(image[cort_mask].mean())
     parameters["Tb.BMD"] = float(image[trab_mask].mean())
 
     # calculate cortical morphometry
-    parameters["Ct.Th"] = calc_structure_thickness_statistics(cort_mask, voxel_width, ctth_min_th)[0]
+    parameters["Ct.Th"] = calc_structure_thickness_statistics(
+        cort_mask, voxel_width, ctth_min_th
+    )[0]
     parameters["Ct.Po"] = float(cort_void_mask.sum() / cort_mask.sum())
 
     # calculate trabecular morphometry
     parameters["Tb.BV/TV"] = float(trab_bone_mask.sum() / trab_mask.sum())
     parameters["Tb.N"] = None  # TODO not yet implemented
-    parameters["Tb.Th"] = calc_structure_thickness_statistics(trab_bone_mask, voxel_width, ctth_min_th)[0]
-    parameters["Tb.Sp"] = calc_structure_thickness_statistics(trab_void_mask, voxel_width, ctth_min_th)[0]
+    parameters["Tb.Th"] = calc_structure_thickness_statistics(
+        trab_bone_mask, voxel_width, ctth_min_th
+    )[0]
+    parameters["Tb.Sp"] = calc_structure_thickness_statistics(
+        trab_void_mask, voxel_width, ctth_min_th
+    )[0]
 
     # calculate area measures
     parameters["Tt.Ar"] = np.asarray(
-        [(voxel_width**2)*s.sum() for s in np.moveaxis((cort_mask|trab_mask), axial_dim, 0)]
+        [
+            (voxel_width**2) * s.sum()
+            for s in np.moveaxis((cort_mask | trab_mask), axial_dim, 0)
+        ]
     ).mean()
-    parameters["Ct.Ar"] = np.asarray([(voxel_width**2)*s.sum() for s in np.moveaxis(cort_mask, axial_dim, 0)]).mean()
-    parameters["Tb.Ar"] = np.asarray([(voxel_width**2)*s.sum() for s in np.moveaxis(trab_mask, axial_dim, 0)]).mean()
+    parameters["Ct.Ar"] = np.asarray(
+        [(voxel_width**2) * s.sum() for s in np.moveaxis(cort_mask, axial_dim, 0)]
+    ).mean()
+    parameters["Tb.Ar"] = np.asarray(
+        [(voxel_width**2) * s.sum() for s in np.moveaxis(trab_mask, axial_dim, 0)]
+    ).mean()
 
     return parameters

@@ -20,7 +20,10 @@ import warnings
 
 @jit(nopython=True, fastmath=True)
 def compute_local_thickness_from_distance_ridge(
-    local_thickness: np.ndarray, dist_ridge: np.ndarray, dist_ridge_indices: np.ndarray, voxel_width: np.ndarray
+    local_thickness: np.ndarray,
+    dist_ridge: np.ndarray,
+    dist_ridge_indices: np.ndarray,
+    voxel_width: np.ndarray,
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
@@ -59,27 +62,33 @@ def compute_local_thickness_from_distance_ridge(
     """
     for (rd, (ri, rj, rk)) in zip(dist_ridge, dist_ridge_indices):
         for di in range(
-            np.maximum(np.floor(ri - rd/voxel_width[0]) - 1, 0),
-            np.minimum(np.ceil(ri + rd/voxel_width[0]) + 1, local_thickness.shape[0]),
+            np.maximum(np.floor(ri - rd / voxel_width[0]) - 1, 0),
+            np.minimum(np.ceil(ri + rd / voxel_width[0]) + 1, local_thickness.shape[0]),
         ):
             for dj in range(
-                np.maximum(np.floor(rj - rd/voxel_width[1]) - 1, 0),
-                np.minimum(np.ceil(rj + rd/voxel_width[1]) + 1, local_thickness.shape[1]),
+                np.maximum(np.floor(rj - rd / voxel_width[1]) - 1, 0),
+                np.minimum(
+                    np.ceil(rj + rd / voxel_width[1]) + 1, local_thickness.shape[1]
+                ),
             ):
                 for dk in range(
-                    np.maximum(np.floor(rk - rd/voxel_width[2]) - 1, 0),
-                    np.minimum(np.ceil(rk + rd/voxel_width[2]) + 1, local_thickness.shape[2]),
+                    np.maximum(np.floor(rk - rd / voxel_width[2]) - 1, 0),
+                    np.minimum(
+                        np.ceil(rk + rd / voxel_width[2]) + 1, local_thickness.shape[2]
+                    ),
                 ):
                     if (
                         (voxel_width[0] * (di - ri)) ** 2
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
-                    ) < (rd ** 2):
+                    ) < (rd**2):
                         local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
 
 
-def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Iterable[float], float]) -> np.ndarray:
+def compute_local_thickness_from_mask(
+    mask: np.ndarray, voxel_width: Union[Iterable[float], float]
+) -> np.ndarray:
     """
     Compute the local thickness field for a binary mask.
 
@@ -103,33 +112,45 @@ def compute_local_thickness_from_mask(mask: np.ndarray, voxel_width: Union[Itera
         The local thickness field.
     """
     if isinstance(voxel_width, float) or isinstance(voxel_width, int):
-        voxel_width = np.array([float(voxel_width)]*3)
+        voxel_width = np.array([float(voxel_width)] * 3)
     elif isinstance(voxel_width, Iterable):
         if len(voxel_width) != 3:
-            raise ValueError("`voxel_width must be a float, int, or iterable of length 3`")
+            raise ValueError(
+                "`voxel_width must be a float, int, or iterable of length 3`"
+            )
         else:
             voxel_width = np.array(voxel_width).astype(float)
     else:
         raise ValueError("`voxel_width must be a float, int, or iterable of length 3`")
 
-    mask_sitk = GetImageFromArray(1-mask.astype(int))
+    mask_sitk = GetImageFromArray(1 - mask.astype(int))
     mask_sitk.SetSpacing(tuple(voxel_width))
-    mask_dist = mask * GetArrayFromImage(DanielssonDistanceMap(
-        mask_sitk, useImageSpacing=True, squaredDistance=False
-    ))
-    ridge = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*(skeletonize_3d(mask).nonzero()))]
+    mask_dist = mask * GetArrayFromImage(
+        DanielssonDistanceMap(mask_sitk, useImageSpacing=True, squaredDistance=False)
+    )
+    ridge = [
+        (mask_dist[i, j, k], i, j, k)
+        for (i, j, k) in zip(*(skeletonize_3d(mask).nonzero()))
+    ]
     ridge.sort()
     ridge = np.asarray(ridge)
     if len(ridge) == 0:
-        warnings.warn("skeletonization of distance map produced no ridge voxels, cannot proceed, returning zeros array")
+        warnings.warn(
+            "skeletonization of distance map produced no ridge voxels, cannot proceed, returning zeros array"
+        )
         return np.zeros(mask.shape, dtype=float)
     local_thickness = compute_local_thickness_from_distance_ridge(
-        np.zeros(mask.shape, dtype=float), ridge[:, 0].astype(float), ridge[:, 1:].astype(int), voxel_width
+        np.zeros(mask.shape, dtype=float),
+        ridge[:, 0].astype(float),
+        ridge[:, 1:].astype(int),
+        voxel_width,
     )
     return (mask > 0) * local_thickness
 
 
-def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[float, Iterable], min_thickness: float):
+def calc_structure_thickness_statistics(
+    mask: np.ndarray, voxel_width: Union[float, Iterable], min_thickness: float
+):
     """
     Parameters
     ----------
@@ -152,7 +173,9 @@ def calc_structure_thickness_statistics(mask: np.ndarray, voxel_width: Union[flo
     if (mask > 0).sum() > 0:
         local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
     else:
-        warnings.warn("cannot find structure thickness statistics for binary mask with no positive voxels")
+        warnings.warn(
+            "cannot find structure thickness statistics for binary mask with no positive voxels"
+        )
         return 0, 0, 0, 0, np.zeros(mask.shape, dtype=float)
     local_thickness_structure = local_thickness[mask > 0]
 
