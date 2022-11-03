@@ -123,6 +123,16 @@ def compute_local_thickness_from_mask(
     else:
         raise ValueError("`voxel_width must be a float, int, or iterable of length 3`")
 
+    # figure out the bounds of the region of the mask we actually need to work with: where there are positive voxels
+    i_nz, j_nz, k_nz = mask.nonzero()
+    cropped_i_min, cropped_i_max = min(i_nz), max(i_nz)
+    cropped_j_min, cropped_j_max = min(j_nz), max(j_nz)
+    cropped_k_min, cropped_k_max = min(k_nz), max(k_nz)
+    mask_full_shape = mask.shape
+    cropping_slice = (slice(cropped_i_min,cropped_i_max), slice(cropped_j_min,cropped_j_max), slice(cropped_k_min,cropped_k_max))
+    mask = mask[cropping_slice]
+
+    # binarize the mask if it wasn't already done
     mask = mask > 0
 
     mask_sitk = GetImageFromArray((~mask).astype(int))
@@ -141,13 +151,15 @@ def compute_local_thickness_from_mask(
             "skeletonization of distance map produced no ridge voxels, cannot proceed, returning zeros array"
         )
         return np.zeros(mask.shape, dtype=float)
-    local_thickness = compute_local_thickness_from_distance_ridge(
+    local_thickness = (mask > 0) * compute_local_thickness_from_distance_ridge(
         np.zeros(mask.shape, dtype=float),
         ridge[:, 0].astype(float),
         ridge[:, 1:].astype(int),
         voxel_width,
     )
-    return (mask > 0) * local_thickness
+    full_local_thickness = np.zeros(mask_full_shape, dtype=local_thickness.dtype)
+    full_local_thickness[cropping_slice] = local_thickness
+    return full_local_thickness
 
 
 def calc_structure_thickness_statistics(
