@@ -12,8 +12,7 @@ from __future__ import annotations
 import numpy as np
 from collections.abc import Iterable
 from numba import jit
-from SimpleITK import BinaryThinning, GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap, DanielssonDistanceMap
-from skimage.morphology import skeletonize_3d
+from SimpleITK import BinaryThinning, GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap
 from typing import Union
 import warnings
 
@@ -60,7 +59,7 @@ def compute_local_thickness_from_distance_ridge(
     np.ndarray
         The local thickness field.
     """
-    """
+
     for (rd, (ri, rj, rk)) in zip(dist_ridge, dist_ridge_indices):
         for di in range(
             np.maximum(np.floor(ri - rd / voxel_width[0]) - 1, 0),
@@ -83,17 +82,6 @@ def compute_local_thickness_from_distance_ridge(
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
                     ) < (rd**2):
-                        local_thickness[di, dj, dk] = 2 * rd
-    """
-    for (rd, (ri, rj, rk)) in zip(dist_ridge, dist_ridge_indices):
-        for di in range(0, local_thickness.shape[0]):
-            for dj in range(0, local_thickness.shape[1]):
-                for dk in range(0, local_thickness.shape[2]):
-                    if (
-                        (voxel_width[0] * (di - ri)) ** 2
-                        + (voxel_width[1] * (dj - rj)) ** 2
-                        + (voxel_width[2] * (dk - rk)) ** 2
-                    ) <= (rd ** 2):
                         local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
 
@@ -134,6 +122,8 @@ def compute_local_thickness_from_mask(
             voxel_width = np.array(voxel_width).astype(float)
     else:
         raise ValueError("`voxel_width must be a float, int, or iterable of length 3`")
+
+    mask = mask > 0
 
     mask_sitk = GetImageFromArray((~mask).astype(int))
     mask_sitk.SetSpacing(tuple(voxel_width))
