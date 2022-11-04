@@ -142,7 +142,8 @@ def compute_local_thickness_from_mask(
             squaredDistance=True,
         )
     )[1:-1, 1:-1, 1:-1]
-
+    # perform the binary thinning on only the part of the mask that has the structure, this operation is
+    # extremely slow and scales poorly with image size
     i_nz, j_nz, k_nz = mask.nonzero()
     cropping_slice = (
         slice(min(i_nz), max(i_nz) + 1),
