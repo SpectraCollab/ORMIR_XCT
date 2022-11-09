@@ -1,11 +1,12 @@
-#-------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 9th, 2022
-#
-# Description: Contains functions to obtain joint space
-#               segmentation masks using the standard
-#               IPL implementation (translated to Python).
-#-------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 9th, 2022
+
+Description: Contains functions to obtain joint space
+            segmentation masks using the standard
+            IPL implementation (translated to Python).
+"""
+
 import os
 import datetime
 import numpy as np

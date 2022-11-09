@@ -1,19 +1,19 @@
-#-----------------------------------------------------
-# two_stack_reg.py
-#
-# Created by: Michael Kuczynski
-# Created on: July 18, 2022
-#
-# Description: Perform stack registration of 2 XCT images with a 25% overlap between stacks.
-#              Overlap is assumed to be in the axial direction and is fixed to 42 slices.
-#              Each stack is 168 axial slices, and the overlap between stacks is always 42
-#               slices, even if the image was cropped to be less than 168 axial slices.
-#              First, an initial alignment of images is obtained by matching geometric centres. 
-#              Final image alignment is obtained by optimizing the mutual information.
-#-----------------------------------------------------
-# Usage: 
-#   python two_stack_reg.py top_stack bottom_stack
-#-----------------------------------------------------
+"""
+two_stack_reg.py
+
+Created by: Michael Kuczynski
+Created on: July 18, 2022
+
+Description: Perform stack registration of 2 XCT images with a 25% overlap between stacks.
+             Overlap is assumed to be in the axial direction and is fixed to 42 slices.
+             Each stack is 168 axial slices, and the overlap between stacks is always 42
+              slices, even if the image was cropped to be less than 168 axial slices.
+             First, an initial alignment of images is obtained by matching geometric centres. 
+             Final image alignment is obtained by optimizing the mutual information.
+
+Usage: 
+  python two_stack_reg.py top_stack bottom_stack
+"""
 
 import os
 import sys

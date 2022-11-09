@@ -1,27 +1,28 @@
-#-------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 9th, 2022
-#
-# Description: Reimplementation of the IPL JSW Analysis
-#               as part of the ORMIR 2022 workshop.
-#
-# Overview of JSW Steps:
-#   1. Image padding (ignored as not needed in Python)
-#   2. Dilation
-#   3. Erosion
-#   4. Threshold out JS Mask
-#   5. DT sphere filling
-#   6. Compute JSW parameters
-#
-# Usage: python jsw_main.py JOINT_SEG.nii
-#
-# Inputs:
-#   1. Joint segmentation image (binary)
-#
-# Outputs:
-#   1. Joint Space Mask Image (MHA/NIFTI)
-#   2. Joint Space Output (text file)
-#-------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 9th, 2022
+
+Description: Reimplementation of the IPL JSW Analysis
+              as part of the ORMIR 2022 workshop.
+
+Overview of JSW Steps:
+  1. Image padding (ignored as not needed in Python)
+  2. Dilation
+  3. Erosion
+  4. Threshold out JS Mask
+  5. DT sphere filling
+  6. Compute JSW parameters
+
+Usage: python jsw_main.py JOINT_SEG.nii
+
+Inputs:
+   1. Joint segmentation image (binary)
+
+Outputs:
+  1. Joint Space Mask Image (MHA/NIFTI)
+  2. Joint Space Output (text file)
+"""
+
 import os
 import argparse
 import SimpleITK as sitk

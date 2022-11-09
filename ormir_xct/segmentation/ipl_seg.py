@@ -1,24 +1,25 @@
-#-----------------------------------------------------
-# ipl_seg.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   June 29, 2022
-#
-# Description: Binarize an input image following the standard
-#               segmentation protocol performed in IPL. 
-#
-# Notes:
-#   1. Gaussian smoothing is done in IPL with sigma = 0.5
-#       and support = 1. In ITK, this translates to using
-#       the SmoothingRecursiveGaussian filter with
-#       sigma = 0.5 * voxel size = 0.5 * 0.0606964.
-#   2. The output of the Guassian filter will be a float
-#       image so we may need to cast to a different type
-#       depending on what image you want to write to.
-#   3. The binarization is done using the same thresholds
-#       set in IPL, but we need to know the image units
-#       prior to binarization (default is set to BMD units).
-#-----------------------------------------------------
+"""
+ipl_seg.py
+
+Created by:   Michael Kuczynski
+Created on:   June 29, 2022
+
+Description: Binarize an input image following the standard
+              segmentation protocol performed in IPL. 
+
+Notes:
+  1. Gaussian smoothing is done in IPL with sigma = 0.5
+      and support = 1. In ITK, this translates to using
+      the SmoothingRecursiveGaussian filter with
+      sigma = 0.5 * voxel size = 0.5 * 0.0606964.
+  2. The output of the Guassian filter will be a float
+      image so we may need to cast to a different type
+      depending on what image you want to write to.
+  3. The binarization is done using the same thresholds
+      set in IPL, but we need to know the image units
+      prior to binarization (default is set to BMD units).
+"""
+
 import sys
 import argparse
 import SimpleITK as sitk

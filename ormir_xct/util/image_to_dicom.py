@@ -1,11 +1,11 @@
-#----------------------------------------------------- 
-# image_to_dicom.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   21-01-2020
-#
-# Description: Converts images to DICOM.
-#-----------------------------------------------------
+"""
+image_to_dicom.py
+
+Created by:   Michael Kuczynski
+Created on:   21-01-2020
+
+Description: Converts images to DICOM.
+"""
 
 import os
 import time

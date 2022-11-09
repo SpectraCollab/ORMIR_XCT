@@ -1,35 +1,32 @@
-#----------------------------------------------------- 
-# file_converter.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   21-01-2020
-#
-# Description: Converts between 3D image file formats.
-#
-# Notes: 
-# 1. File format conversion can be done using several different software libraries/packages. 
-#    However, when reading in images, VTK does not store the image orientation, direction, or origin. 
-#    This causes problems when trying to overlay images after conversion. ITK based libraries/packages 
-#    (like SimpleITK) are able to maintain the original image orientation, direction, and origin.
-#    Reading AIM images is only supported in ITK.
-#
-# 2. Some useful links that explain image orientation, direction, and origin:
-#    -https://www.slicer.org/wiki/Coordinate_systems
-#    -https://discourse.vtk.org/t/proposal-to-add-orientation-to-vtkimagedata-feedback-wanted/120
-#    -http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.DirectionMatrices
-#    -https://fromosia.wordpress.com/2017/03/10/image-orientation-vtk-itk/
-#
-# 3. Be careful when converting to a DICOM series! This script can currently do this conversion, however,
-#    not all of the header information is copied over!
-# 4. Be careful when converting from TIFF! Writing to TIFF currently works, but slice thickness is lost
-#    when writing TIFF images. Thus, when you try to convert back (or use a TIFF image from somewhere else),
-#    the image may look stretched as the slice thickness will be assumed to be 1.0
-#----------------------------------------------------- 
-# USAGE:
-# 1. conda activate manskelab
-# 2. python file_converter.py <inputImage.ext> <outputImage.ext>
-#
-#-----------------------------------------------------
+"""
+file_converter.py
+
+Created by:   Michael Kuczynski
+Created on:   21-01-2020
+
+Description: Converts between 3D image file formats.
+
+Notes: 
+1. File format conversion can be done using several different software libraries/packages. 
+   However, when reading in images, VTK does not store the image orientation, direction, or origin. 
+   This causes problems when trying to overlay images after conversion. ITK based libraries/packages 
+   (like SimpleITK) are able to maintain the original image orientation, direction, and origin.
+   Reading AIM images is only supported in ITK.
+2. Some useful links that explain image orientation, direction, and origin:
+   -https://www.slicer.org/wiki/Coordinate_systems
+   -https://discourse.vtk.org/t/proposal-to-add-orientation-to-vtkimagedata-feedback-wanted/120
+   -http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.DirectionMatrices
+   -https://fromosia.wordpress.com/2017/03/10/image-orientation-vtk-itk/
+3. Be careful when converting to a DICOM series! This script can currently do this conversion, however,
+   not all of the header information is copied over!
+4. Be careful when converting from TIFF! Writing to TIFF currently works, but slice thickness is lost
+   when writing TIFF images. Thus, when you try to convert back (or use a TIFF image from somewhere else),
+   the image may look stretched as the slice thickness will be assumed to be 1.0
+
+USAGE:
+1. conda activate manskelab
+2. python file_converter.py <inputImage.ext> <outputImage.ext>
+"""
 
 import os
 import sys
