@@ -72,17 +72,17 @@ def compute_local_thickness_from_distance_ridge(
         rd_sqrt_vox_1 = rd_sqrt / voxel_width[1]
         rd_sqrt_vox_2 = rd_sqrt / voxel_width[2]
         for di in range(
-            np.maximum(np.floor(ri - rd_sqrt_vox_0) - 2, 0),
-            np.minimum(np.ceil(ri + rd_sqrt_vox_0) + 3, local_thickness.shape[0]),
+            np.maximum(np.floor(ri - rd_sqrt_vox_0) - 1, 0),
+            np.minimum(np.ceil(ri + rd_sqrt_vox_0) + 2, local_thickness.shape[0]),
         ):
             for dj in range(
-                np.maximum(np.floor(rj - rd_sqrt_vox_1) - 2, 0),
-                np.minimum(np.ceil(rj + rd_sqrt_vox_1) + 3, local_thickness.shape[1]),
+                np.maximum(np.floor(rj - rd_sqrt_vox_1) - 1, 0),
+                np.minimum(np.ceil(rj + rd_sqrt_vox_1) + 2, local_thickness.shape[1]),
             ):
                 for dk in range(
-                    np.maximum(np.floor(rk - rd_sqrt_vox_2) - 2, 0),
+                    np.maximum(np.floor(rk - rd_sqrt_vox_2) - 1, 0),
                     np.minimum(
-                        np.ceil(rk + rd_sqrt_vox_2) + 3, local_thickness.shape[2]
+                        np.ceil(rk + rd_sqrt_vox_2) + 2, local_thickness.shape[2]
                     ),
                 ):
                     if (
