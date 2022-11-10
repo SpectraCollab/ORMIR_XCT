@@ -68,20 +68,21 @@ def compute_local_thickness_from_distance_ridge(
 
     for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
         rd_sqrt = np.sqrt(rd)
+        rd_sqrt_vox_0 = rd_sqrt / voxel_width[0]
+        rd_sqrt_vox_1 = rd_sqrt / voxel_width[1]
+        rd_sqrt_vox_2 = rd_sqrt / voxel_width[2]
         for di in range(
-            np.maximum(np.floor(ri - rd_sqrt / voxel_width[0]) - 2, 0),
-            np.minimum(np.ceil(ri + rd_sqrt / voxel_width[0]) + 3, local_thickness.shape[0]),
+            np.maximum(np.floor(ri - rd_sqrt_vox_0) - 2, 0),
+            np.minimum(np.ceil(ri + rd_sqrt_vox_0) + 3, local_thickness.shape[0]),
         ):
             for dj in range(
-                np.maximum(np.floor(rj - rd_sqrt / voxel_width[1]) - 2, 0),
-                np.minimum(
-                    np.ceil(rj + rd_sqrt / voxel_width[1]) + 3, local_thickness.shape[1]
-                ),
+                np.maximum(np.floor(rj - rd_sqrt_vox_1) - 2, 0),
+                np.minimum(np.ceil(rj + rd_sqrt_vox_1) + 3, local_thickness.shape[1]),
             ):
                 for dk in range(
-                    np.maximum(np.floor(rk - rd_sqrt / voxel_width[2]) - 2, 0),
+                    np.maximum(np.floor(rk - rd_sqrt_vox_2) - 2, 0),
                     np.minimum(
-                        np.ceil(rk + rd_sqrt / voxel_width[2]) + 3, local_thickness.shape[2]
+                        np.ceil(rk + rd_sqrt_vox_2) + 3, local_thickness.shape[2]
                     ),
                 ):
                     if (
@@ -133,27 +134,25 @@ def compute_local_thickness_from_mask(
     # binarize the mask if it wasn't already done
     mask = mask > 0
     if mask.sum() == 0:
-        warnings.warn(
-            "given an empty mask, cannot proceed, returning zeros array"
-        )
+        warnings.warn("given an empty mask, cannot proceed, returning zeros array")
         return np.zeros(mask.shape, dtype=float)
 
-    mask_sitk = GetImageFromArray((~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int))
+    mask_sitk = GetImageFromArray(
+        (~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int)
+    )
     mask_sitk.SetSpacing(tuple(voxel_width))
-    mask_dist = mask * GetArrayFromImage(
-        SignedMaurerDistanceMap(
-            mask_sitk,
-            useImageSpacing=True,
-            insideIsPositive=False,
-            squaredDistance=True,
-        )
-    )[1:-1, 1:-1, 1:-1]
-    sorted_dists = [
-        (mask_dist[i, j, k], i, j, k)
-        for (i, j, k) in zip(
-            *mask.nonzero()
-        )
-    ]
+    mask_dist = (
+        mask
+        * GetArrayFromImage(
+            SignedMaurerDistanceMap(
+                mask_sitk,
+                useImageSpacing=True,
+                insideIsPositive=False,
+                squaredDistance=True,
+            )
+        )[1:-1, 1:-1, 1:-1]
+    )
+    sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask.nonzero())]
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists)
 
