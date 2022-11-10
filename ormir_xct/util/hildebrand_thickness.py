@@ -18,15 +18,20 @@ from SimpleITK import (
     GetArrayFromImage,
     SignedMaurerDistanceMap,
 )
+from skimage.morphology import skeletonize_3d
+from skimage.draw import line_nd
+from kimimaro import skeletonize as kskeletonize
 from typing import Union
 import warnings
+
+EPS = 1e-8
 
 
 @jit(nopython=True, fastmath=True)
 def compute_local_thickness_from_distance_ridge(
     local_thickness: np.ndarray,
-    dist_ridge: np.ndarray,
-    dist_ridge_indices: np.ndarray,
+    sorted_dists: np.ndarray,
+    sorted_dists_indices: np.ndarray,
     voxel_width: np.ndarray,
 ) -> np.ndarray:
     """
@@ -47,11 +52,11 @@ def compute_local_thickness_from_distance_ridge(
     local_thickness : np.ndarray
         A numpy array that is initialized as zeros.
 
-    dist_ridge : np.ndarray
+    sorted_dists : np.ndarray
         A numpy array that is the sorted distance ridge of a mask, but the distances only. Each element is a float
         that corresponds to a distance value on the distance ridge, in ascending order.
 
-    dist_ridge_indices : np.ndarray
+    sorted_dists_indices : np.ndarray
         A numpy array that is the integer indices of the location of the distance. Each row in this array corresponds to
         the distance at the same position in the `dist_ridge` parameter, and then the three elements in each row are
         the i, j, k indices of the location of that voxel of the distance ridge in the binary image.
@@ -65,29 +70,29 @@ def compute_local_thickness_from_distance_ridge(
         The local thickness field.
     """
 
-    for (rd, (ri, rj, rk)) in zip(dist_ridge, dist_ridge_indices):
+    for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
         rd_sqrt = np.sqrt(rd)
         for di in range(
             np.maximum(np.floor(ri - rd_sqrt / voxel_width[0]) - 2, 0),
-            np.minimum(np.ceil(ri + rd_sqrt / voxel_width[0]) + 2, local_thickness.shape[0]),
+            np.minimum(np.ceil(ri + rd_sqrt / voxel_width[0]) + 3, local_thickness.shape[0]),
         ):
             for dj in range(
                 np.maximum(np.floor(rj - rd_sqrt / voxel_width[1]) - 2, 0),
                 np.minimum(
-                    np.ceil(rj + rd_sqrt / voxel_width[1]) + 2, local_thickness.shape[1]
+                    np.ceil(rj + rd_sqrt / voxel_width[1]) + 3, local_thickness.shape[1]
                 ),
             ):
                 for dk in range(
                     np.maximum(np.floor(rk - rd_sqrt / voxel_width[2]) - 2, 0),
                     np.minimum(
-                        np.ceil(rk + rd_sqrt / voxel_width[2]) + 2, local_thickness.shape[2]
+                        np.ceil(rk + rd_sqrt / voxel_width[2]) + 3, local_thickness.shape[2]
                     ),
                 ):
                     if (
                         (voxel_width[0] * (di - ri)) ** 2
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
-                    ) <= rd:
+                    ) < rd:
                         local_thickness[di, dj, dk] = 2 * rd_sqrt
     return local_thickness
 
@@ -131,6 +136,11 @@ def compute_local_thickness_from_mask(
 
     # binarize the mask if it wasn't already done
     mask = mask > 0
+    if mask.sum() == 0:
+        warnings.warn(
+            "given an empty mask, cannot proceed, returning zeros array"
+        )
+        return np.zeros(mask.shape, dtype=float)
 
     mask_sitk = GetImageFromArray((~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int))
     mask_sitk.SetSpacing(tuple(voxel_width))
@@ -142,34 +152,19 @@ def compute_local_thickness_from_mask(
             squaredDistance=True,
         )
     )[1:-1, 1:-1, 1:-1]
-    # perform the binary thinning on only the part of the mask that has the structure, this operation is
-    # extremely slow and scales poorly with image size
-    i_nz, j_nz, k_nz = mask.nonzero()
-    cropping_slice = (
-        slice(min(i_nz), max(i_nz) + 1),
-        slice(min(j_nz), max(j_nz) + 1),
-        slice(min(k_nz), max(k_nz) + 1),
-    )
-    skeleton = np.zeros_like(mask_dist)
-    skeleton[cropping_slice] = GetArrayFromImage(BinaryThinning(GetImageFromArray(mask[cropping_slice].astype(int))))
-    ridge = [
+    sorted_dists = [
         (mask_dist[i, j, k], i, j, k)
         for (i, j, k) in zip(
-            *skeleton.nonzero()
+            *mask.nonzero()
         )
     ]
-    ridge.sort()
-    ridge = np.asarray(ridge)
-    if len(ridge) == 0:
-        warnings.warn(
-            "skeletonization of distance map produced no ridge voxels, cannot proceed, returning zeros array"
-        )
-        return np.zeros(mask.shape, dtype=float)
+    sorted_dists.sort()
+    sorted_dists = np.asarray(sorted_dists)
 
     return mask * compute_local_thickness_from_distance_ridge(
         np.zeros(mask.shape, dtype=float),
-        ridge[:, 0].astype(float),
-        ridge[:, 1:].astype(int),
+        sorted_dists[:, 0].astype(float),
+        sorted_dists[:, 1:].astype(int),
         voxel_width,
     )
 
@@ -203,7 +198,8 @@ def calc_structure_thickness_statistics(
             "cannot find structure thickness statistics for binary mask with no positive voxels"
         )
         return 0, 0, 0, 0, np.zeros(mask.shape, dtype=float)
-    local_thickness_structure = local_thickness[mask > 0]
+
+    local_thickness_structure = local_thickness[local_thickness > 0]
 
     local_thickness_structure = np.maximum(local_thickness_structure, min_thickness)
 
