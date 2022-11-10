@@ -27,7 +27,7 @@ import os
 import argparse
 import SimpleITK as sitk
 
-from jsw_morphometry import jsw_pad, jsw_dilate, jsw_erode, jsw_parameters
+from jsw_morphometry import jsw_dilate, jsw_erode, jsw_parameters
 
 def main():
     #-------Inputs:-------#
@@ -40,23 +40,22 @@ def main():
 
     joint_seg_path = args.joint_seg
     filename = os.path.basename(joint_seg_path)
+    basename = os.path.splitext(filename)[0]
     img = sitk.ReadImage(joint_seg_path, sitk.sitkUInt8)
 
     #-------Outputs:-------#
     # Set the output path (same as input image path)
     output_path = os.path.dirname(joint_seg_path)
 
-    # pad_image = jsw_pad(img)
-    # sitk.WriteImage(pad_image, os.path.join(output_path, 'PAD_IMG.mha' ))
-
     dilated_image = jsw_dilate(img)
-    sitk.WriteImage(dilated_image, os.path.join(output_path, 'DILATE.mha'))
+    sitk.WriteImage(dilated_image, os.path.join(output_path, str(basename) + '_DILATE.mha'))
 
-    eroded_image, js_mask = jsw_erode(dilated_image, img, output_path)
-    sitk.WriteImage(eroded_image, os.path.join(output_path, 'ERODE.mha'))
-    sitk.WriteImage(js_mask, os.path.join(output_path, 'JS_MASK.mha'))
+    eroded_image, js_mask = jsw_erode(dilated_image, img)
+    sitk.WriteImage(eroded_image, os.path.join(output_path, str(basename) + '_ERODE.mha'))
+    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + '_JS_MASK.mha'))
 
-    jsw_parameters(js_mask, output_path, filename)
+    dt_img, params = jsw_parameters(js_mask, output_path, basename)
+    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + '_DT.mha'))
 
 
 if __name__ == '__main__':
