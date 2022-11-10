@@ -32,13 +32,13 @@ if __name__ == '__main__':
 
     #-------Inputs:-------#
     parser = argparse.ArgumentParser()
-    parser.add_argument('inputDirPath', type=str, help='Input directory')
+    parser.add_argument('input_path', type=str, help='Input directory')
     args = parser.parse_args()
 
-    inputDirPath = args.inputDirPath
-    outputCSV = os.path.join(inputDirPath, 'jsw.csv')
+    input_path = args.input_path
+    output_csv = os.path.join(input_path, 'jsw.csv')
 
-    jswParametersArray = np.array([['Filename', 'Process Date', \
+    jsw_param_arr = np.array([['Filename', 'Process Date', \
                                 'MCP2 JSV (mm3)', 'MCP2 JSW.Mean (mm)', 'MCP2 JSW.Mean_STD (mm)', \
                                 'MCP2 JSW.Min (mm)', 'MCP2 Connectivity Check', 'MCP2 JSW.Max (mm)', 'MCP2 JSW.AS', \
                                 'MCP3 JSV (mm3)', 'MCP3 JSW.Mean (mm)', 'MCP3 JSW.Mean_STD (mm)', \
@@ -46,20 +46,20 @@ if __name__ == '__main__':
 
 
     # Loop through all folders in the directory
-    for folder in os.listdir(inputDirPath) :
+    for folder in os.listdir(input_path) :
         # Get the next folder
-        nextFolder = os.path.join(inputDirPath, folder)
+        next_folder = os.path.join(input_path, folder)
 
-        if os.path.isdir(nextFolder):
+        if os.path.isdir(next_folder):
             # Get study ID number
-            study_ID = folder # os.path.basename(nextFolder)
-            jswParametersArrayLoop = np.array([[study_ID, datetime.datetime.now()]], dtype=object)
+            study_ID = folder
+            jsw_param_arr_loop = np.array([[study_ID, datetime.datetime.now()]], dtype=object)
             params = []
 
-            print('Calculating JSW parameters for: ' + str(nextFolder))
+            print('Calculating JSW parameters for: ' + str(next_folder))
 
             # Loop through files in the folder and only process MPC2 and MCP3 masks
-            for filename in os.listdir(nextFolder):
+            for filename in os.listdir(next_folder):
                 name, extension = os.path.splitext(filename)
 
                 if ('mcp2' or 'mcp3') and '.nrrd' not in filename.lower():
@@ -74,8 +74,8 @@ if __name__ == '__main__':
                     bone = 'MCP3'
 
                 # Update for grayscale images
-                image_path = os.path.join(nextFolder, filename)
-                output_path = nextFolder
+                image_path = os.path.join(next_folder, filename)
+                output_path = next_folder
 
                 # Run the autocontour instead of reading in the mask
                 img = sitk.ReadImage(image_path, sitk.sitkFloat32)
@@ -122,16 +122,16 @@ if __name__ == '__main__':
                 params = np.array([[jsw_params[0][2], jsw_params[0][3], jsw_params[0][4], \
                             jsw_params[0][5], connected, jsw_params[0][6], jsw_params[0][7]]])
 
-                jswParametersArrayLoop = np.hstack([jswParametersArrayLoop, params])
+                jsw_param_arr_loop = np.hstack([jsw_param_arr_loop, params])
                 print('\tDone!')
                 print()
                 
-            jswParametersArray = np.vstack([jswParametersArray, jswParametersArrayLoop])
+            jsw_param_arr = np.vstack([jsw_param_arr, jsw_param_arr_loop])
         else:
             continue
 
-    outputString = jswParametersArray.astype(str)
-    np.savetxt(outputCSV, outputString.astype(str), delimiter=',', fmt='%s')
+    output_string = jsw_param_arr.astype(str)
+    np.savetxt(output_csv, output_string.astype(str), delimiter=',', fmt='%s')
 
     print()
     print('--- Time to run: %s seconds ---' % (time.time() - start_time))
