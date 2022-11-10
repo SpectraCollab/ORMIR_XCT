@@ -13,7 +13,7 @@ from warnings import warn
 
 from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 from ormir_xct.segmentation.ipl_seg import ipl_seg
-from SimpleITK import GetImageFromArray, GetArrayFromImage
+from SimpleITK import GetImageFromArray, GetArrayFromImage, BinaryThinning
 
 
 def standard_distal_morphometry(
@@ -118,6 +118,11 @@ def standard_distal_morphometry(
         == 127
     )
 
+    trab_bone_inter_medial_axis_space_mask = (
+        ~GetArrayFromImage(BinaryThinning(GetImageFromArray(trab_bone_mask)))
+        & trab_mask
+    )
+
     trab_void_mask = trab_mask & (~trab_bone_mask)
 
     # set up the parameters dictionary
@@ -136,7 +141,7 @@ def standard_distal_morphometry(
 
     # calculate trabecular morphometry
     parameters["Tb.BV/TV"] = float(trab_bone_mask.sum() / trab_mask.sum())
-    parameters["Tb.N"] = None  # TODO not yet implemented
+    parameters["Tb.N"] = calc_structure_thickness_statistics(trab_bone_inter_medial_axis_space_mask)[0]
     parameters["Tb.Th"] = calc_structure_thickness_statistics(
         trab_bone_mask, voxel_width, tbth_min_th
     )[0]
