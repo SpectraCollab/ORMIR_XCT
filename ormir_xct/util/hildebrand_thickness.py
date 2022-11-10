@@ -23,7 +23,7 @@ import warnings
 EPS = 1e-8
 
 
-@jit(nopython=True, fastmath=True)
+@jit(nopython=True, fastmath=True, error_model="numpy")
 def compute_local_thickness_from_distance_ridge(
     local_thickness: np.ndarray,
     sorted_dists: np.ndarray,
