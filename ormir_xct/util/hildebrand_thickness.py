@@ -13,12 +13,10 @@ import numpy as np
 from collections.abc import Iterable
 from numba import jit
 from SimpleITK import (
-    BinaryThinning,
     GetImageFromArray,
     GetArrayFromImage,
     SignedMaurerDistanceMap,
 )
-from skimage.morphology import skeletonize_3d
 from typing import Union
 import warnings
 
