@@ -1,11 +1,11 @@
-# -------------------------------------------------------#
-# Created by: Nathan Neeteson
-# Created on: ??
-#
-# Description: A set of utilities for morphometry on an
-#               image and/or binary mask.
-#
-# -------------------------------------------------------#
+"""
+Created by: Nathan Neeteson
+Created on: ??
+
+Description: A set of utilities for morphometry on an
+                image and/or binary mask.
+
+"""
 
 from __future__ import annotations
 
