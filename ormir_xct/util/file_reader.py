@@ -1,10 +1,8 @@
-# -------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 18th, 2022
-#
-# Description:
-#
-# -------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 18th, 2022
+"""
+
 import os
 import sys
 import itk

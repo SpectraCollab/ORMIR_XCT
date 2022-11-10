@@ -1,29 +1,29 @@
-# -----------------------------------------------------
-# bmd.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   June 29, 2022
-#
-# Description: Calculates Bone Mineral Density (BMD) of
-#              an image in mgHA/ccm. The user must specify
-#              what the input image's units are
-#              (e.g., HU, Scanco native, linear attenuation)
-#
-# Notes:
-#   1. If using AIM/ISQ images as input, they are read in using
-#       the ITK Scanco reader which automatically converts the
-#       images from Scanco native units to HU.
-#   2. If using NII/MHA/etc. images as input, they are read in
-#       using the SimpleITK reader and you need to know the
-#       units of your image to provide as input.
-#   3. Default values are provided for muScaling, muWater,
-#       rescaleSlope, and rescaleIntercept, but you should
-#       try to provide your own values for improved accuracy.
-#
-# Usage:
-#   python bmd.py inputImage.nii
-#   python bmd.py inputImage.AIM HU 8192 0.2396 1613.94397 -392.247009
-# -----------------------------------------------------
+"""
+bmd.py
+
+Created by:   Michael Kuczynski
+Created on:   June 29, 2022
+
+Description: Calculates Bone Mineral Density (BMD) of
+             an image in mgHA/ccm. The user must specify
+             what the input image's units are
+             (e.g., HU, Scanco native, linear attenuation)
+
+Notes:
+  1. If using AIM/ISQ images as input, they are read in using
+      the ITK Scanco reader which automatically converts the
+      images from Scanco native units to HU.
+  2. If using NII/MHA/etc. images as input, they are read in
+      using the SimpleITK reader and you need to know the 
+      units of your image to provide as input.
+  3. Default values are provided for muScaling, muWater, 
+      rescaleSlope, and rescaleIntercept, but you should
+      try to provide your own values for improved accuracy.
+
+Usage:
+  python bmd.py inputImage.nii
+  python bmd.py inputImage.AIM HU 8192 0.2396 1613.94397 -392.247009
+"""
 import sys
 import argparse
 import SimpleITK as sitk

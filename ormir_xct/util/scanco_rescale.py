@@ -1,13 +1,12 @@
-# -----------------------------------------------------
-# scanco_rescale.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   June 29, 2022
-#
-# Description: Converts between Scanco native units, HU,
-#               BMD (mgHA/ccm), and linear attenuation (1/cm).
-# -----------------------------------------------------
+"""
+scanco_rescale.py
 
+Created by:   Michael Kuczynski
+Created on:   June 29, 2022
+
+Description: Converts between Scanco native units, HU,
+              BMD (mgHA/ccm), and linear attenuation (1/cm).
+"""
 
 def convert_scanco_to_linear_attenuation(image, mu_scaling):
     """

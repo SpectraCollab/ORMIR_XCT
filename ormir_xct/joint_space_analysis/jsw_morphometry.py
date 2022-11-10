@@ -1,11 +1,12 @@
-# -------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 9th, 2022
-#
-# Description: Contains functions to obtain joint space
-#               segmentation masks using the standard
-#               IPL implementation (translated to Python).
-# -------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 9th, 2022
+
+Description: Contains functions to obtain joint space
+            segmentation masks using the standard
+            IPL implementation (translated to Python).
+"""
+
 import os
 import datetime
 import numpy as np
@@ -167,8 +168,9 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
     max_thickness = result[3]
     thickness_map = result[4]
 
-    sitk_image = sitk.GetImageFromArray(thickness_map)
-    sitk.WriteImage(sitk_image, os.path.join(output_path, "IPL_DT.mha"))
+
+    dt_img = sitk.GetImageFromArray(thickness_map)
+
 
     # Get the volume of the JS
     shape_stats = sitk.LabelShapeStatisticsImageFilter()
@@ -221,5 +223,8 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
     completed_string = csv_data.astype(str)
     completed_string[1:, :] = csv_data[1:, :].astype("S7")
 
-    js_output = os.path.join(output_path, "JSW_OUTPUT.csv")
-    np.savetxt(js_output, completed_string.astype(str), delimiter=",", fmt="%s")
+
+    js_output = os.path.join(output_path, str(filename) + '_JSW_OUTPUT.csv')
+    np.savetxt(js_output, completed_string.astype(str), delimiter=',', fmt='%s')
+
+    return dt_img, jsw_params
