@@ -19,8 +19,6 @@ from SimpleITK import (
     SignedMaurerDistanceMap,
 )
 from skimage.morphology import skeletonize_3d
-from skimage.draw import line_nd
-from kimimaro import skeletonize as kskeletonize
 from typing import Union
 import warnings
 
