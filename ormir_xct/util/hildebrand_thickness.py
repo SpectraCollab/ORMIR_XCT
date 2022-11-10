@@ -24,7 +24,7 @@ EPS = 1e-8
 
 
 @jit(nopython=True, fastmath=True, error_model="numpy")
-def compute_local_thickness_from_distance_ridge(
+def compute_local_thickness_from_sorted_distances(
     local_thickness: np.ndarray,
     sorted_dists: np.ndarray,
     sorted_dists_indices: np.ndarray,
@@ -32,9 +32,9 @@ def compute_local_thickness_from_distance_ridge(
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
-    binary image, given an array to fill in and the sorted distance ridge of the binary image.
+    binary image, given an array to fill in and the sorted distance map of the binary image.
 
-    Since the ridge is sorted by distance values in ascending order, we can iterate through and assign ech voxel's
+    Since the distances are sorted by distance values in ascending order, we can iterate through and assign each voxel's
     distance value to all voxels within that distance. Voxels corresponding to larger spheres will be processed
     later and overwrite values assigned by smaller spheres, and so each voxel will eventually be assigned the
     diameter of the largest sphere that it lies within.
@@ -156,7 +156,7 @@ def compute_local_thickness_from_mask(
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists)
 
-    return mask * compute_local_thickness_from_distance_ridge(
+    return mask * compute_local_thickness_from_sorted_distances(
         np.zeros(mask.shape, dtype=float),
         sorted_dists[:, 0].astype(float),
         sorted_dists[:, 1:].astype(int),
