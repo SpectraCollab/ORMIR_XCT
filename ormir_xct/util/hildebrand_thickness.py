@@ -17,7 +17,7 @@ from SimpleITK import (
     GetArrayFromImage,
     SignedMaurerDistanceMap,
 )
-from typing import Union
+from typing import Optional, Union
 import warnings
 
 EPS = 1e-8
@@ -165,7 +165,8 @@ def compute_local_thickness_from_mask(
 
 
 def calc_structure_thickness_statistics(
-    mask: np.ndarray, voxel_width: Union[float, Iterable], min_thickness: float
+    mask: np.ndarray, voxel_width: Union[float, Iterable], min_thickness: float,
+    sub_mask: Optional[np.ndarray] = None
 ):
     """
     Parameters
@@ -180,6 +181,10 @@ def calc_structure_thickness_statistics(
     min_thickness : float
         the minimum thickness of the structure you want to calculate the mean thickness of
 
+    sub_mask : Optional[np.ndarray]
+        an optional sub mask. if given, we will calculate the local thickness field on `mask` but then sample
+        local thickness values only from within `sub_mask` and calculate stats on these values only.
+
     Returns
     -------
     tuple
@@ -187,14 +192,28 @@ def calc_structure_thickness_statistics(
         and the whole local thickness field of the entire image (0 outside the mask)
     """
     if (mask > 0).sum() > 0:
+        mask = mask > 0  # binarize
         local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
     else:
         warnings.warn(
             "cannot find structure thickness statistics for binary mask with no positive voxels"
         )
-        return 0, 0, 0, 0, np.zeros(mask.shape, dtype=float)
+        return None, None, None, None, np.zeros(mask.shape, dtype=float)
 
-    local_thickness_structure = local_thickness[local_thickness > 0]
+    if sub_mask is not None:
+        sub_mask = sub_mask > 0  # binarize
+        if sub_mask.sum() == 0:
+            warnings.warn(
+                "cannot find structure thickness statistics for binary sub_mask with no positive voxels"
+            )
+            return None, None, None, None, np.zeros(mask.shape, dtype=float)
+        if mask.shape != sub_mask.shape:
+            raise ValueError("`mask` and `sub_mask` must have same shape if `sub_mask` is given")
+
+    if sub_mask is not None:
+        local_thickness_structure = local_thickness[sub_mask]
+    else:
+        local_thickness_structure = local_thickness[mask]
 
     local_thickness_structure = np.maximum(local_thickness_structure, min_thickness)
 
