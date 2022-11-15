@@ -1,6 +1,6 @@
 """
 Written by Nathan Neeteson on 2022/11/2.
-Last modified: 2022/11/2.
+Last modified: 2022/11/15.
 Module containing high-level logic for standard distal morphometric analysis.
 Structure thickness logic imported from `ormir_xct.util.hildebrand_thickness`
 Bone thresholding logic imported from `ormir_xct.segmentation.ipl_seg`
@@ -13,7 +13,333 @@ from warnings import warn
 
 from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 from ormir_xct.segmentation.ipl_seg import ipl_seg
-from SimpleITK import GetImageFromArray, GetArrayFromImage, BinaryThinning
+from SimpleITK import (
+    GetImageFromArray, GetArrayFromImage,
+    BinaryThinning, ConnectedComponentImageFilter, BinaryDilate
+)
+
+
+def get_bone_mask(image: np.ndarray, mask: np.ndarray, bone_thresh: float) -> np.ndarray:
+    """
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+
+    Returns
+    -------
+
+    """
+    bone_mask = sitk.GetArrayFromImage(
+        ipl_seg(
+            sitk.GetImageFromArray(image),
+            bone_thresh,
+            1e10,  # crazy high number because there's no upper thresh
+            voxel_size=1,
+            sigma=sigma
+        )
+    ) == 127
+    return (mask * bone_mask).astype(int)
+
+
+def calculate_bone_mineral_density(image: np.ndarray, mask: np.ndarray) -> float:
+    """
+    Function for calculating the volumetric bone mineral density from a masked image.
+
+    Parameters
+    ----------
+    image : np.ndarray
+        The image, in units of density.
+
+    mask : np.ndarray
+        A binary mask defining the region to calculate the average density over.
+
+    Returns
+    -------
+    float
+    """
+    return float(image[mask].mean())
+
+
+def calculate_mask_thickness(mask: np.ndarray, voxel_width: float, min_th: float) -> float:
+    """
+
+    Parameters
+    ----------
+    mask
+    voxel_width
+    min_th
+
+    Returns
+    -------
+
+    """
+    return calc_structure_thickness_statistics(
+        mask, voxel_width, min_th
+    )[0]
+
+
+def calculate_bone_thickness(
+        image: np.ndarray,
+        mask: np.ndarray,
+        bone_thresh: float,
+        voxel_width: float,
+        min_th: float
+) -> float:
+    """
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+    voxel_width
+    min_th
+
+    Returns
+    -------
+
+    """
+    bone_mask = get_bone_mask(image, mask, bone_thresh)
+    return calculate_mask_thickness(bone_mask, voxel_width, min_th)
+
+
+def calculate_bone_spacing(
+        image: np.ndarray,
+        mask: np.ndarray,
+        bone_thresh: float,
+        voxel_width: float,
+        min_th: float
+) -> float:
+    """
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+    voxel_width
+    min_th
+
+    Returns
+    -------
+
+    """
+    bone_mask = get_bone_mask(image, mask, bone_thresh)
+    space_mask = ~bone_mask & mask
+    return calculate_mask_thickness(space_mask, voxel_width, min_th)
+
+
+def calculate_porosity(
+    image: np.ndarray,
+    mask: np.ndarray,
+    bone_thresh: float,
+    sigma: float = 0.8,
+    max_growing_steps: int = 100
+) -> float:
+    """
+    Function for calculating cortical porosity.
+    Reference: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2926164/
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+    sigma
+    max_growing_steps
+
+    Returns
+    -------
+    float
+    """
+
+    connected_components_filter = sitk.ConnectedComponentImageFilter()
+
+    bone_mask = get_bone_mask(image, mask, bone_thresh)
+
+    # (1) Use 2D connectivity filtering to get a mask of pores in the cortex that are not connected to marrow
+    # or background. Call this mask `initial_pore_mask`
+
+    initial_pore_mask = np.zeros_like(bone_mask, dtype=int)
+
+    for z in range(bone_mask.shape[2]):
+
+        labelled_slice = sitk.GetArrayFromImage(
+            connected_components_filter.Execute(
+                sitk.GetImageFromArray(
+                    (~cort_bone_mask[:, :, z]).astype(int)
+                )
+            )
+        )
+
+        num_objects = connected_components_filter.GetObjectCount()
+        counts = np.zeros((num_objects,), dtype=int)
+
+        for i in range(num_objects):
+            counts[i] = (labelled_slice == i).sum()
+
+        sorted_labels = np.argsort(counts)
+
+        # two largest components will be background and marrow, remove
+        labelled_slice[labelled_slice == sorted_labels[-1]] = 0
+        labelled_slice[labelled_slice == sorted_labels[-2]] = 0
+
+        initial_pore_mask[:, :, z] = (labelled_slice > 0).astype(int)
+
+    # (2) Use a region growing filter to expand the initial pore mask along the z axis into space where there
+    # are voids in the cortical bone.
+
+    # dilate the initial pore estimate mask by 1 voxel, then mask out that mask with the all pores mask.
+    # this will spread the initial pores onto the other pores.
+    # after each step, check how many pore voxels there are. if the number hasn't changed, stop
+
+    num_pore_voxels_prev = initial_pore_mask.sum()
+
+    grown_pores_mask = initial_pore_mask.copy()
+
+    # while True:
+    for i in range(max_growing_steps):
+
+        grown_pores_mask = sitk.GetArrayFromImage(
+            sitk.BinaryDilate(
+                sitk.GetImageFromArray(grown_pores_mask),
+                kernelRadius=[1, 0, 0],
+                kernelType=sitk.sitkCross,
+                backgroundValue=0,
+                foregroundValue=1
+            )
+        )
+        grown_pores_mask = (mask & ~bone_mask) * grown_pores_mask
+
+        num_pore_voxels = grown_pores_mask.sum()
+
+        if num_pore_voxels == num_pore_voxels_prev:
+            break
+        else:
+            num_pore_voxels_prev = num_pore_voxels
+
+    # (4) Add the mask of all pores found to the cortical bone mask to get a mask of bone with pores filled in.
+    # Now apply the 2D connectivity filtering again to find any remaining pores that are not connected to the
+    # marrow or the background.
+
+    cort_bone_plus_pores = cort_bone_mask.astype(int) + grown_pores_mask
+
+    extra_pore_mask = np.zeros_like(cort_bone_plus_pores, dtype=int)
+
+    for z in range(cort_bone_plus_pores.shape[2]):
+
+        labelled_slice = sitk.GetArrayFromImage(
+            connected_components_filter.Execute(
+                sitk.GetImageFromArray(1 - cort_bone_plus_pores[:, :, z])
+            )
+        )
+
+        num_objects = connected_components_filter.GetObjectCount()
+
+        if num_objects > 1:
+
+            counts = np.zeros((num_objects,), dtype=int)
+
+            for i in range(num_objects):
+                counts[i] = (labelled_slice == i).sum()
+
+            sorted_labels = np.argsort(counts)
+
+            # two largest components will be background and marrow
+            labelled_slice[labelled_slice == sorted_labels[-1]] = 0
+            labelled_slice[labelled_slice == sorted_labels[-2]] = 0
+
+            extra_pore_mask[:, :, z] = (labelled_slice > 0).astype(int)
+
+    # (5) Add together the two pore masks, then discard any pores with a total size of less than 5 voxels.
+
+    combined_pore_mask = ((grown_pores_mask > 0) | (extra_pore_mask > 0)).astype(int)
+
+    labelled_image = sitk.GetArrayFromImage(
+        connected_components_filter.Execute(
+            sitk.GetImageFromArray(combined_pore_mask)
+        )
+    )
+
+    num_objects = conn_comp_filter.GetObjectCount()
+
+    for i in range(num_objects):
+        if (labelled_image == i).sum() < 5:
+            labelled_image[labelled_image == i] = 0
+
+    final_pores_mask = (labelled_image > 0).astype(int)
+
+    # return the fraction of pore voxels divided by pore voxels plus bone voxels
+
+    total_pore_voxels = final_pores_mask.sum()
+    bone_voxels = bone_mask.sum()
+
+    return total_pore_voxels / (total_pore_voxels + bone_voxels)
+
+
+def calculate_bone_volume_fraction(image: np.ndarray, mask: np.ndarray, bone_thresh: float) -> float:
+    """
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+
+    Returns
+    -------
+
+    """
+    bone_mask = get_bone_mask(image, mask, bone_thresh)
+    return float(bone_mask.sum() / mask.sum())
+
+
+def calculate_trabecular_number(
+    image: np.ndarray,
+    mask: np.ndarray,
+    bone_thresh: float,
+    voxel_width: float,
+    min_th: float
+) -> float:
+    """
+
+    Parameters
+    ----------
+    image
+    mask
+    bone_thresh
+    voxel_width
+    min_th
+
+    Returns
+    -------
+
+    """
+    bone_mask = get_bone_mask(image, mask, bone_thresh)
+    inter_medial_axis_space_mask = (
+            ~GetArrayFromImage(BinaryThinning(GetImageFromArray(bone_mask.astype(int)))) & mask
+    )
+    return 1 / calculate_mask_thickness(inter_medial_axis_space_mask, voxel_width, min_th)
+
+
+def calculate_mask_average_axial_area(mask: np.ndarray, voxel_width: float, axial_dim: int = 2) -> float:
+    """
+    
+    Parameters
+    ----------
+    mask
+    voxel_width
+    axial_dim
+
+    Returns
+    -------
+
+    """
+    voxel_area = voxel_width ** 2
+    return np.asarray([voxel_area * s.sum() for s in np.moveaxis(mask, axial_dim, 0)]).mean()
 
 
 def standard_distal_morphometry(
@@ -95,87 +421,28 @@ def standard_distal_morphometry(
             "`cort_mask` and `trab_mask` should not overlap or the analysis may be invalid"
         )
 
-    # first calculate bone and void masks for the cortical and trabecular compartments. these will be useful for
-    # many of the morphometric parameters
-
-    cort_mask = cort_mask > 0
-    trab_mask = trab_mask > 0
-
-    cort_bone_mask = cort_mask & (
-        GetArrayFromImage(
-            ipl_seg(
-                GetImageFromArray(image),
-                cort_thresh,
-                1e10,  # crazy high number because there's no upper thresh
-                voxel_size=1,
-                sigma=cort_sigma
-            )
-        )
-        == 127
-    )
-
-    cort_void_mask = cort_mask & (~cort_bone_mask)
-
-    trab_bone_mask = trab_mask & (
-        GetArrayFromImage(
-            ipl_seg(
-                GetImageFromArray(image),
-                trab_thresh,
-                1e10,  # crazy high number because there's no upper thresh
-                voxel_size=1,
-                sigma=trab_sigma
-            )
-        )
-        == 127
-    )
-
-    trab_bone_inter_medial_axis_space_mask = (
-        ~GetArrayFromImage(BinaryThinning(GetImageFromArray(trab_bone_mask.astype(int))))
-        & trab_mask
-    )
-    # trab_bone_inter_medial_axis_space_mask = trab_mask & (~skeletonize(trab_bone_mask))
-
-    trab_void_mask = trab_mask & (~trab_bone_mask)
-
     # set up the parameters dictionary
     parameters = {}
 
     # calculate density measures
-    parameters["Tt.BMD"] = float(image[cort_mask | trab_mask].mean())
-    parameters["Ct.BMD"] = float(image[cort_mask].mean())
-    parameters["Tb.BMD"] = float(image[trab_mask].mean())
+    parameters["Tt.BMD"] = calculate_bone_mineral_density(image, cort_mask | trab_mask)
+    parameters["Ct.BMD"] = calculate_bone_mineral_density(image, cort_mask)
+    parameters["Tb.BMD"] = calculate_bone_mineral_density(image, trab_mask)
 
     # calculate cortical morphometry
-    parameters["Ct.Th"] = calc_structure_thickness_statistics(
-        cort_mask, voxel_width, ctth_min_th
-    )[0]
-    parameters["Ct.Po"] = None # TODO: Ct.Po calculation is way more complicated than this.. see notebook
-    # float(cort_void_mask.sum() / cort_mask.sum())
+    parameters["Ct.Th"] = calculate_mask_thickness(cort_mask, voxel_width, ctth_min_th)
+    parameters["Ct.Po"] = calculate_porosity(image, cort_mask, cort_thresh)
 
     # calculate trabecular morphometry
-    parameters["Tb.BV/TV"] = float(trab_bone_mask.sum() / trab_mask.sum())
-    parameters["Tb.N"] = 1 / calc_structure_thickness_statistics(
-        trab_bone_inter_medial_axis_space_mask, voxel_width, tbn_min_th
-    )[0]
-    parameters["Tb.Th"] = calc_structure_thickness_statistics(
-        trab_bone_mask, voxel_width, tbth_min_th
-    )[0]
-    parameters["Tb.Sp"] = calc_structure_thickness_statistics(
-        trab_void_mask, voxel_width, tbsp_min_th
-    )[0]
+    parameters["Tb.BV/TV"] = calculate_bone_volume_fraction(image, trab_mask, trab_thresh)
+    parameters["Tb.N"] = calculate_trabecular_number(image, trab_mask, trab_thresh, voxel_width, tbn_min_th)
+
+    parameters["Tb.Th"] = calculate_bone_thickness(image, trab_mask, trab_thresh, voxel_width, tbth_min_th)
+    parameters["Tb.Sp"] = calculate_bone_spacing(image, trab_mask, trab_thresh, voxel_width, tbsp_min_th)
 
     # calculate area measures
-    parameters["Tt.Ar"] = np.asarray(
-        [
-            (voxel_width**2) * s.sum()
-            for s in np.moveaxis((cort_mask | trab_mask), axial_dim, 0)
-        ]
-    ).mean()
-    parameters["Ct.Ar"] = np.asarray(
-        [(voxel_width**2) * s.sum() for s in np.moveaxis(cort_mask, axial_dim, 0)]
-    ).mean()
-    parameters["Tb.Ar"] = np.asarray(
-        [(voxel_width**2) * s.sum() for s in np.moveaxis(trab_mask, axial_dim, 0)]
-    ).mean()
+    parameters["Tt.Ar"] = calculate_mask_average_axial_area(cort_mask | trab_mask, voxel_width)
+    parameters["Ct.Ar"] = calculate_mask_average_axial_area(cort_mask, voxel_width)
+    parameters["Tb.Ar"] = calculate_mask_average_axial_area(trab_mask, voxel_width)
 
     return parameters
