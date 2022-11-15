@@ -41,7 +41,9 @@ threshold_dict = {
 }
 
 
-def ipl_seg(input_image, lower_threshold, upper_threshold, voxel_size=0.0606964, sigma=0.5):
+def ipl_seg(
+    input_image, lower_threshold, upper_threshold, voxel_size=0.0606964, sigma=0.5
+):
     """
     Check the image units and get the correct thresholds.
 

@@ -14,12 +14,18 @@ from warnings import warn
 from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 from ormir_xct.segmentation.ipl_seg import ipl_seg
 from SimpleITK import (
-    GetImageFromArray, GetArrayFromImage,
-    BinaryThinning, ConnectedComponentImageFilter, BinaryDilate, sitkCross
+    GetImageFromArray,
+    GetArrayFromImage,
+    BinaryThinning,
+    ConnectedComponentImageFilter,
+    BinaryDilate,
+    sitkCross,
 )
 
 
-def get_bone_mask(image: np.ndarray, mask: np.ndarray, bone_thresh: float, sigma: float = 0.8) -> np.ndarray:
+def get_bone_mask(
+    image: np.ndarray, mask: np.ndarray, bone_thresh: float, sigma: float = 0.8
+) -> np.ndarray:
     """
 
     Parameters
@@ -33,15 +39,18 @@ def get_bone_mask(image: np.ndarray, mask: np.ndarray, bone_thresh: float, sigma
     -------
 
     """
-    bone_mask = GetArrayFromImage(
-        ipl_seg(
-            GetImageFromArray(image),
-            bone_thresh,
-            1e10,  # crazy high number because there's no upper thresh
-            voxel_size=1,
-            sigma=sigma
+    bone_mask = (
+        GetArrayFromImage(
+            ipl_seg(
+                GetImageFromArray(image),
+                bone_thresh,
+                1e10,  # crazy high number because there's no upper thresh
+                voxel_size=1,
+                sigma=sigma,
+            )
         )
-    ) == 127
+        == 127
+    )
     return (mask * bone_mask).astype(int)
 
 
@@ -64,7 +73,9 @@ def calculate_bone_mineral_density(image: np.ndarray, mask: np.ndarray) -> float
     return float(image[mask].mean())
 
 
-def calculate_mask_thickness(mask: np.ndarray, voxel_width: float, min_th: float) -> float:
+def calculate_mask_thickness(
+    mask: np.ndarray, voxel_width: float, min_th: float
+) -> float:
     """
 
     Parameters
@@ -77,17 +88,15 @@ def calculate_mask_thickness(mask: np.ndarray, voxel_width: float, min_th: float
     -------
 
     """
-    return calc_structure_thickness_statistics(
-        mask, voxel_width, min_th
-    )[0]
+    return calc_structure_thickness_statistics(mask, voxel_width, min_th)[0]
 
 
 def calculate_bone_thickness(
-        image: np.ndarray,
-        mask: np.ndarray,
-        bone_thresh: float,
-        voxel_width: float,
-        min_th: float
+    image: np.ndarray,
+    mask: np.ndarray,
+    bone_thresh: float,
+    voxel_width: float,
+    min_th: float,
 ) -> float:
     """
 
@@ -108,11 +117,11 @@ def calculate_bone_thickness(
 
 
 def calculate_bone_spacing(
-        image: np.ndarray,
-        mask: np.ndarray,
-        bone_thresh: float,
-        voxel_width: float,
-        min_th: float
+    image: np.ndarray,
+    mask: np.ndarray,
+    bone_thresh: float,
+    voxel_width: float,
+    min_th: float,
 ) -> float:
     """
 
@@ -137,7 +146,7 @@ def calculate_porosity(
     image: np.ndarray,
     mask: np.ndarray,
     bone_thresh: float,
-    max_growing_steps: int = 100
+    max_growing_steps: int = 100,
 ) -> float:
     """
     Function for calculating cortical porosity.
@@ -169,9 +178,7 @@ def calculate_porosity(
 
         labelled_slice = GetArrayFromImage(
             connected_components_filter.Execute(
-                GetImageFromArray(
-                    1 - bone_mask[:, :, z]
-                )
+                GetImageFromArray(1 - bone_mask[:, :, z])
             )
         )
 
@@ -211,7 +218,7 @@ def calculate_porosity(
                 kernelRadius=[1, 0, 0],
                 kernelType=sitkCross,
                 backgroundValue=0,
-                foregroundValue=1
+                foregroundValue=1,
             )
         )
         grown_pores_mask = mask * (1 - bone_mask) * grown_pores_mask
@@ -261,9 +268,7 @@ def calculate_porosity(
     combined_pore_mask = ((grown_pores_mask > 0) | (extra_pore_mask > 0)).astype(int)
 
     labelled_image = GetArrayFromImage(
-        connected_components_filter.Execute(
-            GetImageFromArray(combined_pore_mask)
-        )
+        connected_components_filter.Execute(GetImageFromArray(combined_pore_mask))
     )
 
     num_objects = connected_components_filter.GetObjectCount()
@@ -282,7 +287,9 @@ def calculate_porosity(
     return total_pore_voxels / (total_pore_voxels + bone_voxels)
 
 
-def calculate_bone_volume_fraction(image: np.ndarray, mask: np.ndarray, bone_thresh: float) -> float:
+def calculate_bone_volume_fraction(
+    image: np.ndarray, mask: np.ndarray, bone_thresh: float
+) -> float:
     """
 
     Parameters
@@ -304,7 +311,7 @@ def calculate_trabecular_number(
     mask: np.ndarray,
     bone_thresh: float,
     voxel_width: float,
-    min_th: float
+    min_th: float,
 ) -> float:
     """
 
@@ -322,12 +329,17 @@ def calculate_trabecular_number(
     """
     bone_mask = get_bone_mask(image, mask, bone_thresh)
     inter_medial_axis_space_mask = (
-            ~GetArrayFromImage(BinaryThinning(GetImageFromArray(bone_mask.astype(int)))) & mask
+        ~GetArrayFromImage(BinaryThinning(GetImageFromArray(bone_mask.astype(int))))
+        & mask
     )
-    return 1 / calculate_mask_thickness(inter_medial_axis_space_mask, voxel_width, min_th)
+    return 1 / calculate_mask_thickness(
+        inter_medial_axis_space_mask, voxel_width, min_th
+    )
 
 
-def calculate_mask_average_axial_area(mask: np.ndarray, voxel_width: float, axial_dim: int = 2) -> float:
+def calculate_mask_average_axial_area(
+    mask: np.ndarray, voxel_width: float, axial_dim: int = 2
+) -> float:
     """
 
     Parameters
@@ -340,8 +352,10 @@ def calculate_mask_average_axial_area(mask: np.ndarray, voxel_width: float, axia
     -------
 
     """
-    voxel_area = voxel_width ** 2
-    return np.asarray([voxel_area * s.sum() for s in np.moveaxis(mask, axial_dim, 0)]).mean()
+    voxel_area = voxel_width**2
+    return np.asarray(
+        [voxel_area * s.sum() for s in np.moveaxis(mask, axial_dim, 0)]
+    ).mean()
 
 
 def standard_distal_morphometry(
@@ -358,7 +372,7 @@ def standard_distal_morphometry(
     tbth_min_th: float = 0.0,
     tbsp_min_th: float = 0.0,
     axial_dim: int = 2,
-    show_progress: bool = True
+    show_progress: bool = True,
 ) -> dict:
     """
 
@@ -432,46 +446,71 @@ def standard_distal_morphometry(
 
     # calculate density measures
 
-    if show_progress: print("Calculating total BMD... ", end="")
+    if show_progress:
+        print("Calculating total BMD... ", end="")
     parameters["Tt.BMD"] = calculate_bone_mineral_density(image, cort_mask | trab_mask)
-    if show_progress: print(f"{parameters['Tt.BMD']:0.2f}")
+    if show_progress:
+        print(f"{parameters['Tt.BMD']:0.2f}")
 
-    if show_progress: print("Calculating cortical BMD... ", end="")
+    if show_progress:
+        print("Calculating cortical BMD... ", end="")
     parameters["Ct.BMD"] = calculate_bone_mineral_density(image, cort_mask)
-    if show_progress: print(f"{parameters['Ct.BMD']:0.2f}")
+    if show_progress:
+        print(f"{parameters['Ct.BMD']:0.2f}")
 
-    if show_progress: print("Calculating trabecular BMD... ", end="")
+    if show_progress:
+        print("Calculating trabecular BMD... ", end="")
     parameters["Tb.BMD"] = calculate_bone_mineral_density(image, trab_mask)
-    if show_progress: print(f"{parameters['Tb.BMD']:0.2f}")
+    if show_progress:
+        print(f"{parameters['Tb.BMD']:0.2f}")
 
     # calculate cortical morphometry
-    if show_progress: print("Calculating cortical thickness... ", end="")
+    if show_progress:
+        print("Calculating cortical thickness... ", end="")
     parameters["Ct.Th"] = calculate_mask_thickness(cort_mask, voxel_width, ctth_min_th)
 
-    if show_progress: print("Calculating cortical porosity... ", end="")
+    if show_progress:
+        print("Calculating cortical porosity... ", end="")
     parameters["Ct.Po"] = calculate_porosity(image, cort_mask, cort_thresh)
 
     # calculate trabecular morphometry
-    if show_progress: print("Calculating trabecular bone volume fraction... ", end="")
-    parameters["Tb.BV/TV"] = calculate_bone_volume_fraction(image, trab_mask, trab_thresh)
+    if show_progress:
+        print("Calculating trabecular bone volume fraction... ", end="")
+    parameters["Tb.BV/TV"] = calculate_bone_volume_fraction(
+        image, trab_mask, trab_thresh
+    )
 
-    if show_progress: print("Calculating trabecular number... ", end="")
-    parameters["Tb.N"] = calculate_trabecular_number(image, trab_mask, trab_thresh, voxel_width, tbn_min_th)
+    if show_progress:
+        print("Calculating trabecular number... ", end="")
+    parameters["Tb.N"] = calculate_trabecular_number(
+        image, trab_mask, trab_thresh, voxel_width, tbn_min_th
+    )
 
-    if show_progress: print("Calculating trabecular thickness... ", end="")
-    parameters["Tb.Th"] = calculate_bone_thickness(image, trab_mask, trab_thresh, voxel_width, tbth_min_th)
+    if show_progress:
+        print("Calculating trabecular thickness... ", end="")
+    parameters["Tb.Th"] = calculate_bone_thickness(
+        image, trab_mask, trab_thresh, voxel_width, tbth_min_th
+    )
 
-    if show_progress: print("Calculating trabecular spacing... ", end="")
-    parameters["Tb.Sp"] = calculate_bone_spacing(image, trab_mask, trab_thresh, voxel_width, tbsp_min_th)
+    if show_progress:
+        print("Calculating trabecular spacing... ", end="")
+    parameters["Tb.Sp"] = calculate_bone_spacing(
+        image, trab_mask, trab_thresh, voxel_width, tbsp_min_th
+    )
 
     # calculate area measures
-    if show_progress: print("Calculating total area... ", end="")
-    parameters["Tt.Ar"] = calculate_mask_average_axial_area(cort_mask | trab_mask, voxel_width)
+    if show_progress:
+        print("Calculating total area... ", end="")
+    parameters["Tt.Ar"] = calculate_mask_average_axial_area(
+        cort_mask | trab_mask, voxel_width
+    )
 
-    if show_progress: print("Calculating cortical area... ", end="")
+    if show_progress:
+        print("Calculating cortical area... ", end="")
     parameters["Ct.Ar"] = calculate_mask_average_axial_area(cort_mask, voxel_width)
 
-    if show_progress: print("Calculating trabecular area... ", end="")
+    if show_progress:
+        print("Calculating trabecular area... ", end="")
     parameters["Tb.Ar"] = calculate_mask_average_axial_area(trab_mask, voxel_width)
 
     return parameters

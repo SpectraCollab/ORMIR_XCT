@@ -165,8 +165,10 @@ def compute_local_thickness_from_mask(
 
 
 def calc_structure_thickness_statistics(
-    mask: np.ndarray, voxel_width: Union[float, Iterable], min_thickness: float,
-    sub_mask: Optional[np.ndarray] = None
+    mask: np.ndarray,
+    voxel_width: Union[float, Iterable],
+    min_thickness: float,
+    sub_mask: Optional[np.ndarray] = None,
 ):
     """
     Parameters
@@ -208,7 +210,9 @@ def calc_structure_thickness_statistics(
             )
             return None, None, None, None, np.zeros(mask.shape, dtype=float)
         if mask.shape != sub_mask.shape:
-            raise ValueError("`mask` and `sub_mask` must have same shape if `sub_mask` is given")
+            raise ValueError(
+                "`mask` and `sub_mask` must have same shape if `sub_mask` is given"
+            )
 
     if sub_mask is not None:
         local_thickness_structure = local_thickness[sub_mask]

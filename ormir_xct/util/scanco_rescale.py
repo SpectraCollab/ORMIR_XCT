@@ -8,6 +8,7 @@ Description: Converts between Scanco native units, HU,
               BMD (mgHA/ccm), and linear attenuation (1/cm).
 """
 
+
 def convert_scanco_to_linear_attenuation(image, mu_scaling):
     """
     Converts an image from Scanco native units to linear attenuation (1/cm).

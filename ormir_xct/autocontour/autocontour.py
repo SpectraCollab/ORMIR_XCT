@@ -24,7 +24,7 @@ def autocontour(img):
 def main():
     # Parse input arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('image_path', type=str, help='Image (path + filename)')
+    parser.add_argument("image_path", type=str, help="Image (path + filename)")
     args = parser.parse_args()
 
     image_path = args.image_path
@@ -33,9 +33,9 @@ def main():
     image_dir = os.path.dirname(image_path)
     basename = os.path.splitext(os.path.basename(image_path))[0]
 
-    prx_mask_path = os.path.join(image_dir, basename + '_PRX_MASK.nii')
-    dst_mask_path = os.path.join(image_dir, basename + '_DST_MASK.nii')
-    mask_path = os.path.join(image_dir, basename + '_MASK.nii')
+    prx_mask_path = os.path.join(image_dir, basename + "_PRX_MASK.nii")
+    dst_mask_path = os.path.join(image_dir, basename + "_DST_MASK.nii")
+    mask_path = os.path.join(image_dir, basename + "_MASK.nii")
 
     # Read in images as floats to increase precision
     image = sitk.ReadImage(image_path, sitk.sitkFloat32)
@@ -48,5 +48,5 @@ def main():
     sitk.WriteImage(dst_mask, dst_mask_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

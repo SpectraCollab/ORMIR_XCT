@@ -49,14 +49,18 @@ def main():
     output_path = os.path.dirname(joint_seg_path)
 
     dilated_image = jsw_dilate(img)
-    sitk.WriteImage(dilated_image, os.path.join(output_path, str(basename) + '_DILATE.mha'))
+    sitk.WriteImage(
+        dilated_image, os.path.join(output_path, str(basename) + "_DILATE.mha")
+    )
 
     eroded_image, js_mask = jsw_erode(dilated_image, img)
-    sitk.WriteImage(eroded_image, os.path.join(output_path, str(basename) + '_ERODE.mha'))
-    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + '_JS_MASK.mha'))
+    sitk.WriteImage(
+        eroded_image, os.path.join(output_path, str(basename) + "_ERODE.mha")
+    )
+    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + "_JS_MASK.mha"))
 
     dt_img, params = jsw_parameters(js_mask, output_path, basename)
-    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + '_DT.mha'))
+    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + "_DT.mha"))
 
 
 if __name__ == "__main__":
