@@ -22,8 +22,11 @@ def standard_distal_morphometry(
     trab_mask: np.ndarray,
     voxel_width: float = 0.0606964,
     cort_thresh: float = 450.0,
+    cort_sigma: float = 0.8,
     trab_thresh: float = 320.0,
+    trab_sigma: float = 0.8,
     ctth_min_th: float = 0.0,
+    tbn_min_th: float = 0.0,
     tbth_min_th: float = 0.0,
     tbsp_min_th: float = 0.0,
     axial_dim: int = 2,
@@ -51,11 +54,17 @@ def standard_distal_morphometry(
         The lower threshold to use to segment cortical bone. Should be in the same units as the intensity image.
         Default value is 450.0 (in mg HA/ccm, corresponds to standard HR-pQCT protocol)
 
+    cort_sigma : float
+
     trab_thresh : float
         The lower threshold to use to segment trabecular bone. Should be in the same units as the intensity image.
         Default value is 320.0 (in mg HA/ccm, corresponds to standard HR-pQCT protocol)
 
+    trab_sigma : float
+
     ctth_min_th : float
+
+    tbn_min_th : float
 
     tbth_min_th : float
 
@@ -98,7 +107,8 @@ def standard_distal_morphometry(
                 GetImageFromArray(image),
                 cort_thresh,
                 1e10,  # crazy high number because there's no upper thresh
-                voxel_width,
+                voxel_size=1,
+                sigma=cort_sigma
             )
         )
         == 127
@@ -112,16 +122,18 @@ def standard_distal_morphometry(
                 GetImageFromArray(image),
                 trab_thresh,
                 1e10,  # crazy high number because there's no upper thresh
-                voxel_width,
+                voxel_size=1,
+                sigma=trab_sigma
             )
         )
         == 127
     )
 
     trab_bone_inter_medial_axis_space_mask = (
-        ~GetArrayFromImage(BinaryThinning(GetImageFromArray(trab_bone_mask)))
+        ~GetArrayFromImage(BinaryThinning(GetImageFromArray(trab_bone_mask.astype(int))))
         & trab_mask
     )
+    # trab_bone_inter_medial_axis_space_mask = trab_mask & (~skeletonize(trab_bone_mask))
 
     trab_void_mask = trab_mask & (~trab_bone_mask)
 
@@ -137,11 +149,14 @@ def standard_distal_morphometry(
     parameters["Ct.Th"] = calc_structure_thickness_statistics(
         cort_mask, voxel_width, ctth_min_th
     )[0]
-    parameters["Ct.Po"] = float(cort_void_mask.sum() / cort_mask.sum())
+    parameters["Ct.Po"] = None # TODO: Ct.Po calculation is way more complicated than this.. see notebook
+    # float(cort_void_mask.sum() / cort_mask.sum())
 
     # calculate trabecular morphometry
     parameters["Tb.BV/TV"] = float(trab_bone_mask.sum() / trab_mask.sum())
-    parameters["Tb.N"] = calc_structure_thickness_statistics(trab_bone_inter_medial_axis_space_mask)[0]
+    parameters["Tb.N"] = 1 / calc_structure_thickness_statistics(
+        trab_bone_inter_medial_axis_space_mask, voxel_width, tbn_min_th
+    )[0]
     parameters["Tb.Th"] = calc_structure_thickness_statistics(
         trab_bone_mask, voxel_width, tbth_min_th
     )[0]
