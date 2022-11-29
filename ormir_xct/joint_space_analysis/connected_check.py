@@ -33,7 +33,7 @@ def connected_check(image_path):
         be read in.
     """
     try:
-        image = sitk.ReadImage(image_path)
+        image = sitk.ReadImage(image_path, sitk.sitkUInt8)
     except:
         print('ERROR: File {} not found.'.format(image_path))
         return -1
