@@ -25,3 +25,4 @@ dependencies:
     - itk-registration==5.2.1
     - itk-segmentation==5.2.1
     - notebook==6.5.2
+    - kimimaro==3.3.0
