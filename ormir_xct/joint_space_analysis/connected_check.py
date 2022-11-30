@@ -16,14 +16,14 @@ import os
 import argparse
 import SimpleITK as sitk
 
-def connected_check(image_path):
+def connected_check(image):
     """
     Runs a connected component analysis on a binary image and returns the 
     number of components in the image.
 
     Parameters
     ----------
-    image_path : string
+    image_path : SimpleITK.Image
         Path to the binary image.
 
     Returns
@@ -32,12 +32,6 @@ def connected_check(image_path):
         Number of labels in the binary image. -1 is returned if the image can't
         be read in.
     """
-    try:
-        image = sitk.ReadImage(image_path, sitk.sitkUInt8)
-    except:
-        print('ERROR: File {} not found.'.format(image_path))
-        return -1
-
     image_conn = sitk.ConnectedComponent(image, True)
     conn_list = sitk.RelabelComponent(image_conn, sortByObjectSize=True)
 
@@ -71,9 +65,10 @@ if __name__ == '__main__':
 
             # DIP2 joint
             dip2_path = os.path.join(next_folder, study_id + '_DIP2_MASK.nii')
+            dip2_img = sitk.ReadImage(dip2_path, sitk.sitkUInt8)
             print('\tDIP2 segmentation: ' + str(dip2_path))
 
-            dip2_labels = connected_check(dip2_path)
+            dip2_labels = connected_check(dip2_img)
             if dip2_labels > 1:
                 print('\tDIP2 segmentation NOT CONNECTED')
             elif dip2_labels == 1:
@@ -83,7 +78,8 @@ if __name__ == '__main__':
 
             # DIP3 joint
             dip3_path = os.path.join(next_folder, study_id + '_DIP3_MASK.nii')
-            print('\tDIP3 segmentation: ' + str(dip3_path))
+            dip3_img = sitk.ReadImage(dip3_path, sitk.sitkUInt8)
+            print('\tDIP3 segmentation: ' + str(dip3_img))
 
             dip3_labels = connected_check(dip3_path)
             if dip3_labels > 1:
@@ -96,9 +92,10 @@ if __name__ == '__main__':
             # TMC joint
             stack_reg_folder = os.path.join(next_folder, 'stackRegistrationOutput')
             tmc_path = os.path.join(stack_reg_folder, 'FULL_IMAGE_MASK.nii')
+            tmc_img = sitk.ReadImage(tmc_path, sitk.sitkUInt8)
             print('\tTMC segmentation: ' + str(tmc_path))
 
-            tmc_labels = connected_check(tmc_path)
+            tmc_labels = connected_check(tmc_img)
             if tmc_labels > 1:
                 print('\tTMC segmentation NOT CONNECTED')
             elif tmc_labels == 1:
