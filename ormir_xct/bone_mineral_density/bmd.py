@@ -60,39 +60,75 @@ def bmd(image, image_units, mu_scaling, mu_water, rescale_slope, rescale_interce
     image_statistics_filter = sitk.StatisticsImageFilter()
 
     # Now convert to BMD units if needed
-    if image_units == 'bmd':
+    if image_units == "bmd":
         # No conversion needed
         image_statistics_filter.Execute(image)
-    elif image_units == 'scanco':
+    elif image_units == "scanco":
         # Convert from Scanco native units to linear attenuation
         # Then convert to BMD
-        image = convert_scanco_to_bmd(image, mu_scaling, rescale_slope, rescale_intercept)
+        image = convert_scanco_to_bmd(
+            image, mu_scaling, rescale_slope, rescale_intercept
+        )
         image_statistics_filter.Execute(image)
-    elif image_units == 'attenuation':
+    elif image_units == "attenuation":
         # Convert to BMD
-        image = convert_linear_attenuation_to_bmd(image, rescale_slope, rescale_intercept)
+        image = convert_linear_attenuation_to_bmd(
+            image, rescale_slope, rescale_intercept
+        )
         image_statistics_filter.Execute(image)
-    elif image_units == 'hu':
+    elif image_units == "hu":
         # Convert from HU to linear attenuation
         # Then convert to BMD
         image = convert_hu_to_bmd(image, mu_water, rescale_slope, rescale_intercept)
         image_statistics_filter.Execute(image)
     else:
-        print('ERROR: Invalid image units provided. Only BMD, SCANCO, ATTENUATION, or HU are accepted.')
+        print(
+            "ERROR: Invalid image units provided. Only BMD, SCANCO, ATTENUATION, or HU are accepted."
+        )
         sys.exit(1)
-    
+
     return image_statistics_filter
 
 
 def main():
     # Parse input arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument( 'image', type=str, help='The input imagek (path + filename)' )
-    parser.add_argument( 'image_units', type=str, nargs='?', default='BMD', help='The image voxel units (options: BMD, SCANCO, ATTENUATION, HU)' )
-    parser.add_argument( 'mu_scaling', type=int, nargs='?', default='8192', help='The Scanco defined scaling value (usually 8192 or 4096)' )
-    parser.add_argument( 'mu_water', type=float, nargs='?', default='0.25', help='Linear attenuation of water' )
-    parser.add_argument( 'rescale_slope', type=float, nargs='?', default='1600.0', help='Slope to scale to BMD' )
-    parser.add_argument( 'rescale_intercept', type=float, nargs='?', default='-390.0', help='Intercept to scale to BMD' )
+    parser.add_argument("image", type=str, help="The input imagek (path + filename)")
+    parser.add_argument(
+        "image_units",
+        type=str,
+        nargs="?",
+        default="BMD",
+        help="The image voxel units (options: BMD, SCANCO, ATTENUATION, HU)",
+    )
+    parser.add_argument(
+        "mu_scaling",
+        type=int,
+        nargs="?",
+        default="8192",
+        help="The Scanco defined scaling value (usually 8192 or 4096)",
+    )
+    parser.add_argument(
+        "mu_water",
+        type=float,
+        nargs="?",
+        default="0.25",
+        help="Linear attenuation of water",
+    )
+    parser.add_argument(
+        "rescale_slope",
+        type=float,
+        nargs="?",
+        default="1600.0",
+        help="Slope to scale to BMD",
+    )
+    parser.add_argument(
+        "rescale_intercept",
+        type=float,
+        nargs="?",
+        default="-390.0",
+        help="Intercept to scale to BMD",
+    )
     args = parser.parse_args()
 
     image_path = args.image
@@ -101,13 +137,15 @@ def main():
     mu_water = args.mu_water
     rescale_slope = args.rescale_slope
     rescale_intercept = args.rescale_intercept
- 
+
     image = file_reader(image_path)
 
     # Get the image stats
-    stats = bmd(image, image_units, mu_scaling, mu_water, rescale_slope, rescale_intercept)
+    stats = bmd(
+        image, image_units, mu_scaling, mu_water, rescale_slope, rescale_intercept
+    )
     print(stats)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

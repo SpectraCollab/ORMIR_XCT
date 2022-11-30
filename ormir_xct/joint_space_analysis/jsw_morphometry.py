@@ -129,14 +129,18 @@ def jsw_erode(dilated_image, pad_image):
     relabel_image = sitk.RelabelComponent(connected_image)
     js_mask = sitk.BinaryThreshold(relabel_image, 1, 1, 1, 0)
 
-    dilated_js_mask = sitk.BinaryDilate(js_mask, [CALC, CALC, CALC], sitk.sitkBall, 0, 1)
+    dilated_js_mask = sitk.BinaryDilate(
+        js_mask, [CALC, CALC, CALC], sitk.sitkBall, 0, 1
+    )
     dilated_js_mask = sitk.Add(dilated_js_mask, pad_image)
     dilated_js_mask = sitk.BinaryThreshold(dilated_js_mask, 1, 1, 1, 0)
 
     return eroded_image, js_mask, dilated_js_mask
 
 
-def jsw_parameters(pad_image, dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None):
+def jsw_parameters(
+    pad_image, dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None
+):
     """
     Computes the following JSW parameters:
         -Joint Space Volume (JSV)
@@ -167,7 +171,9 @@ def jsw_parameters(pad_image, dilated_js_mask, output_path, filename, voxel_size
 
     # Needs to be fixed for masks with JS minimum < 1 voxel
     # For now, set the minimum JSW value to twice the voel size (0.1214)
-    result = calc_structure_thickness_statistics(dilated_mask, voxel_size, voxel_size * 2, mask)
+    result = calc_structure_thickness_statistics(
+        dilated_mask, voxel_size, voxel_size * 2, mask
+    )
     mean_thickness = result[0]
     mean_thickness_std = result[1]
     min_thickness = result[2]

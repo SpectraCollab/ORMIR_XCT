@@ -12,12 +12,21 @@ import SimpleITK as sitk
 from AutocontourKnee import AutocontourKnee
 from ormir_xct.util.scanco_rescale import convert_hu_to_bmd
 
+
 def main():
     # Parse input arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument( 'image_path', type=str, help='Image (path + filename)' )
-    parser.add_argument( 'dst_gobj_path', type=str, help='Distal contour from UCT_EVALUATION (path + filename)' )
-    parser.add_argument( 'prx_gobj_path', type=str, help='Proximal contour from UCT_EVALUATION (path + filename)' )
+    parser.add_argument("image_path", type=str, help="Image (path + filename)")
+    parser.add_argument(
+        "dst_gobj_path",
+        type=str,
+        help="Distal contour from UCT_EVALUATION (path + filename)",
+    )
+    parser.add_argument(
+        "prx_gobj_path",
+        type=str,
+        help="Proximal contour from UCT_EVALUATION (path + filename)",
+    )
     args = parser.parse_args()
 
     image_path = args.image_path
@@ -28,9 +37,9 @@ def main():
     image_dir = os.path.dirname(image_path)
     basename = os.path.splitext(os.path.basename(image_path))[0]
 
-    prx_mask_path = os.path.join(image_dir, basename + '_PRX_MASK.nii')
-    dst_mask_path = os.path.join(image_dir, basename + '_DST_MASK.nii')
-    mask_path = os.path.join(image_dir, basename + '_MASK.nii')
+    prx_mask_path = os.path.join(image_dir, basename + "_PRX_MASK.nii")
+    dst_mask_path = os.path.join(image_dir, basename + "_DST_MASK.nii")
+    mask_path = os.path.join(image_dir, basename + "_MASK.nii")
 
     # Read in images as floats to increase precision
     image = sitk.ReadImage(image_path, sitk.sitkFloat32)
@@ -42,7 +51,7 @@ def main():
     dst_gobj = sitk.ReadImage(dst_gobj_path)
     prx_gobj = sitk.ReadImage(prx_gobj_path)
 
-    dst_gobj = sitk.Resample(dst_gobj, image_bmd, interpolator=sitk.sitkNearestNeighbor)    
+    dst_gobj = sitk.Resample(dst_gobj, image_bmd, interpolator=sitk.sitkNearestNeighbor)
     prx_gobj = sitk.Resample(prx_gobj, image_bmd, interpolator=sitk.sitkNearestNeighbor)
 
     dst_masked_image = sitk.Mask(image_bmd, dst_gobj)
@@ -69,5 +78,5 @@ def main():
     sitk.WriteImage(dst_mask, dst_mask_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

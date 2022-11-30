@@ -12,6 +12,7 @@ from vtk.util.numpy_support import vtk_to_numpy
 
 import SimpleITK as sitk
 
+
 def sitk_to_vtk(sitk_image):
     """
     Convert a SimpleITK image to a VTK image.
@@ -50,8 +51,8 @@ def sitk_to_vtk(sitk_image):
     # Set the new VTK image's parameters
     # For some reason we need to set both the data and whole extent...?
     # Output image orientation will be lost when converting to a VTK image
-    data_importer.SetDataExtent(0, size[0]-1, 0, size[1]-1, 0, size[2]-1)
-    data_importer.SetWholeExtent(0, size[0]-1, 0, size[1]-1, 0, size[2]-1)
+    data_importer.SetDataExtent(0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
+    data_importer.SetWholeExtent(0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
     data_importer.SetDataOrigin(origin)
     data_importer.SetDataSpacing(spacing)
     data_importer.Update()
