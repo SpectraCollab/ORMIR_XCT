@@ -10,8 +10,7 @@ import SimpleITK as sitk
 
 from ormir_xct.util.sitk_itk import itk_sitk
 
-file_extensions = [".nii", ".mha", ".aim", ".isq"]
-
+file_extensions = ['.nii', '.mha', '.nrrd', '.aim', '.isq']
 
 def file_reader(input_file_path):
     """
