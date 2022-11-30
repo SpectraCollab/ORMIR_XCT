@@ -33,6 +33,7 @@ def connected_check(image):
         Number of labels in the binary image. -1 is returned if the image can't
         be read in.
     """
+
     image_conn = sitk.ConnectedComponent(image, True)
     conn_list = sitk.RelabelComponent(image_conn, sortByObjectSize=True)
 

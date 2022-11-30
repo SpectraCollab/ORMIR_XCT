@@ -41,7 +41,9 @@ threshold_dict = {
 }
 
 
-def ipl_seg(input_image, lower_threshold, upper_threshold, voxel_size=0.0606964):
+def ipl_seg(
+    input_image, lower_threshold, upper_threshold, voxel_size=0.0606964, sigma=0.5
+):
     """
     Check the image units and get the correct thresholds.
 
@@ -53,11 +55,15 @@ def ipl_seg(input_image, lower_threshold, upper_threshold, voxel_size=0.0606964)
 
     upper_threshold : float
 
+    voxel_size : float
+
+    sigma : float
+
     Returns
     -------
     seg : SimpleITK.Image
     """
-    smooth = sitk.SmoothingRecursiveGaussian(input_image, 0.5 * voxel_size)
+    smooth = sitk.SmoothingRecursiveGaussian(input_image, sigma * voxel_size)
     seg = sitk.BinaryThreshold(smooth, lower_threshold, upper_threshold, 127, 0)
     return seg
 
