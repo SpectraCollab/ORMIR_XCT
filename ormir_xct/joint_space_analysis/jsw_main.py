@@ -27,36 +27,42 @@ import os
 import argparse
 import SimpleITK as sitk
 
-from jsw_morphometry import jsw_dilate, jsw_erode, jsw_parameters
+from jsw_morphometry import jsw_pad, jsw_dilate, jsw_erode, jsw_parameters
 
-def main():
-    #-------Inputs:-------#
-    parser = argparse.ArgumentParser(
-        prog='jsw_main',
-        description='Reimplementation of the IPL joint space width analysis.'
-    )
-    parser.add_argument('joint_seg', type=str, help='Joint segmentation image')
-    args = parser.parse_args()
+def main(joint_seg_path, output_path):
+  filename = os.path.basename(joint_seg_path)
+  basename = os.path.splitext(filename)[0]
+  img = sitk.ReadImage(joint_seg_path, sitk.sitkUInt8)
 
-    joint_seg_path = args.joint_seg
-    filename = os.path.basename(joint_seg_path)
-    basename = os.path.splitext(filename)[0]
-    img = sitk.ReadImage(joint_seg_path, sitk.sitkUInt8)
+  # Pad image
+  pad_image = jsw_pad(img)
 
-    #-------Outputs:-------#
-    # Set the output path (same as input image path)
-    output_path = os.path.dirname(joint_seg_path)
+  # Dilate image
+  dilated_image, dilated_js_mask = jsw_dilate(pad_image)
+  sitk.WriteImage(dilated_image, os.path.join(output_path, str(basename) + '_DILATE.mha'))
 
-    dilated_image, dilated_js_mask = jsw_dilate(img)
-    sitk.WriteImage(dilated_image, os.path.join(output_path, str(basename) + '_DILATE.mha'))
+  # Erode image
+  eroded_image, js_mask, dilated_js_mask = jsw_erode(dilated_image, pad_image)
+  sitk.WriteImage(eroded_image, os.path.join(output_path, str(basename) + "_ERODE.mha"))
+  sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + "_JS_MASK.mha"))
+  sitk.WriteImage(dilated_js_mask, os.path.join(output_path, str(basename) + "_DILATED_JS_MASK.mha"))
 
-    eroded_image, js_mask = jsw_erode(dilated_image, img)
-    sitk.WriteImage(eroded_image, os.path.join(output_path, str(basename) + '_ERODE.mha'))
-    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + '_JS_MASK.mha'))
-
-    dt_img, params = jsw_parameters(dilated_js_mask, js_mask, output_path, basename)
-    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + '_DT.mha'))
+  # Compute JS parameters
+  dt_img, jsw_params = jsw_parameters(pad_image, dilated_js_mask, output_path, basename, 0.0607, js_mask)
+  sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + "_DT.mha"))
 
 
 if __name__ == '__main__':
-    main()
+  parser = argparse.ArgumentParser(
+      prog='jsw_main',
+      description='Reimplementation of the IPL joint space width analysis.'
+  )
+  parser.add_argument('joint_seg', type=str, help='Joint segmentation image')
+  args = parser.parse_args()
+
+  joint_seg_path = args.joint_seg
+
+  # Set the output path (same as input image path)
+  output_path = os.path.dirname(joint_seg_path)
+
+  main(joint_seg_path, output_path)

@@ -12,6 +12,7 @@ import datetime
 import numpy as np
 import SimpleITK as sitk
 
+from connected_check import connected_check
 from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 
 
@@ -135,7 +136,7 @@ def jsw_erode(dilated_image, pad_image):
     return eroded_image, js_mask, dilated_js_mask
 
 
-def jsw_parameters(dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None):
+def jsw_parameters(pad_image, dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None):
     """
     Computes the following JSW parameters:
         -Joint Space Volume (JSV)
@@ -190,6 +191,15 @@ def jsw_parameters(dilated_js_mask, output_path, filename, voxel_size=0.0607, js
 
     jsv = stats_list[0][0]
 
+    # Check if we have bone-on-bone contact
+    labels = connected_check(pad_image)
+    if labels > 1:
+        connected = "NO"
+    elif labels == 1:
+        connected = "YES"
+    else:
+        connected = "NO LABELS"
+
     jsw_output_header = np.array(
         [
             [
@@ -199,6 +209,7 @@ def jsw_parameters(dilated_js_mask, output_path, filename, voxel_size=0.0607, js
                 "JSW.Mean (mm)",
                 "JSW.Mean_STD (mm)",
                 "JSW.Min (mm)",
+                "Bone-on-bone Contact (YES/NO)",
                 "JSW.Max (mm)",
                 "JSW.AS",
             ]
@@ -215,6 +226,7 @@ def jsw_parameters(dilated_js_mask, output_path, filename, voxel_size=0.0607, js
                 mean_thickness,
                 mean_thickness_std,
                 min_thickness,
+                connected,
                 max_thickness,
                 min_thickness / max_thickness,
             ]
