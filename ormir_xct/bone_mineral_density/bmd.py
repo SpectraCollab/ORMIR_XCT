@@ -24,7 +24,6 @@ Usage:
   python bmd.py inputImage.nii
   python bmd.py inputImage.AIM HU 8192 0.2396 1613.94397 -392.247009
 """
-
 import sys
 import argparse
 import SimpleITK as sitk

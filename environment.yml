@@ -25,8 +25,5 @@ dependencies:
     - itk-registration==5.2.1
     - itk-segmentation==5.2.1
     - notebook==6.5.2
-<<<<<<< HEAD
     - numba==0.56.3
-=======
     - kimimaro==3.3.0
->>>>>>> main
