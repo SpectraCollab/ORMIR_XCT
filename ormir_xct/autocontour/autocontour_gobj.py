@@ -1,9 +1,10 @@
-#
-# Use this script instead of the autocontour.py script if the bones are
-# too close to distinguish between distal and proximal. You will need to
-# provide the distal and proximal GOBJ masks (as NIFTI or similar) to mask
-# out the bone of interest.
-#
+"""
+Use this script instead of the autocontour.py script if the bones are
+too close to distinguish between distal and proximal. You will need to 
+provide the distal and proximal GOBJ masks (as NIFTI or similar) to mask
+out the bone of interest.
+"""
+
 import os
 import argparse
 import SimpleITK as sitk

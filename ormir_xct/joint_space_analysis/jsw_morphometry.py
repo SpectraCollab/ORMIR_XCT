@@ -1,16 +1,18 @@
-# -------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 9th, 2022
-#
-# Description: Contains functions to obtain joint space
-#               segmentation masks using the standard
-#               IPL implementation (translated to Python).
-# -------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 9th, 2022
+
+Description: Contains functions to obtain joint space
+            segmentation masks using the standard
+            IPL implementation (translated to Python).
+"""
+
 import os
 import datetime
 import numpy as np
 import SimpleITK as sitk
 
+from connected_check import connected_check
 from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
 
 
@@ -94,7 +96,7 @@ def jsw_dilate(image):
     return filled_holes
 
 
-def jsw_erode(dilated_image, image):
+def jsw_erode(dilated_image, pad_image):
     """
     Performs morphological erosion on a binary segmentation by
     kernel = CALC x CALC x CALC. Erosion is performed using the ball structural
@@ -110,7 +112,7 @@ def jsw_erode(dilated_image, image):
 
     Returns
     -------
-    first_component : SimpleITK.Image
+    js_mask : SimpleITK.Image
     """
     # Erode the image, set the eroded mask's value to 30
     eroded_image = sitk.BinaryErode(
@@ -120,17 +122,25 @@ def jsw_erode(dilated_image, image):
 
     # Add the eroded image (value = 30) and joint image (value = 60) together.
     # Then threshold out JS image (value = 30)
-    add_image = sitk.Add(eroded_image, image)
+    add_image = sitk.Add(eroded_image, pad_image)
     add_image = sitk.BinaryThreshold(add_image, 30, 30, 127, 0)
 
     connected_image = sitk.ConnectedComponent(add_image, False)
     relabel_image = sitk.RelabelComponent(connected_image)
-    first_component = sitk.BinaryThreshold(relabel_image, 1, 1, 1, 0)
+    js_mask = sitk.BinaryThreshold(relabel_image, 1, 1, 1, 0)
 
-    return eroded_image, first_component
+    dilated_js_mask = sitk.BinaryDilate(
+        js_mask, [CALC, CALC, CALC], sitk.sitkBall, 0, 1
+    )
+    dilated_js_mask = sitk.Add(dilated_js_mask, pad_image)
+    dilated_js_mask = sitk.BinaryThreshold(dilated_js_mask, 1, 1, 1, 0)
+
+    return eroded_image, js_mask, dilated_js_mask
 
 
-def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
+def jsw_parameters(
+    pad_image, dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None
+):
     """
     Computes the following JSW parameters:
         -Joint Space Volume (JSV)
@@ -157,18 +167,20 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
     """
     # Distance transform + JSW parameters
     mask = sitk.GetArrayFromImage(js_mask)
+    dilated_mask = sitk.GetArrayFromImage(dilated_js_mask)
 
     # Needs to be fixed for masks with JS minimum < 1 voxel
     # For now, set the minimum JSW value to twice the voel size (0.1214)
-    result = calc_structure_thickness_statistics(mask, voxel_size, voxel_size * 2)
+    result = calc_structure_thickness_statistics(
+        dilated_mask, voxel_size, voxel_size * 2, mask
+    )
     mean_thickness = result[0]
     mean_thickness_std = result[1]
     min_thickness = result[2]
     max_thickness = result[3]
     thickness_map = result[4]
 
-    sitk_image = sitk.GetImageFromArray(thickness_map)
-    sitk.WriteImage(sitk_image, os.path.join(output_path, "IPL_DT.mha"))
+    dt_img = sitk.GetImageFromArray(thickness_map)
 
     # Get the volume of the JS
     shape_stats = sitk.LabelShapeStatisticsImageFilter()
@@ -185,6 +197,15 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
 
     jsv = stats_list[0][0]
 
+    # Check if we have bone-on-bone contact
+    labels = connected_check(pad_image)
+    if labels > 1:
+        connected = "NO"
+    elif labels == 1:
+        connected = "YES"
+    else:
+        connected = "NO LABELS"
+
     jsw_output_header = np.array(
         [
             [
@@ -194,6 +215,7 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
                 "JSW.Mean (mm)",
                 "JSW.Mean_STD (mm)",
                 "JSW.Min (mm)",
+                "Bone-on-bone Contact (YES/NO)",
                 "JSW.Max (mm)",
                 "JSW.AS",
             ]
@@ -210,6 +232,7 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
                 mean_thickness,
                 mean_thickness_std,
                 min_thickness,
+                connected,
                 max_thickness,
                 min_thickness / max_thickness,
             ]
@@ -217,9 +240,13 @@ def jsw_parameters(js_mask, output_path, filename, voxel_size=0.0607):
         dtype=object,
     )
 
+    # Change so we write out each line of the CSV after processing each participant
+    # rather than at the end of processing all scans
     csv_data = np.vstack([jsw_output_header, jsw_params])
     completed_string = csv_data.astype(str)
     completed_string[1:, :] = csv_data[1:, :].astype("S7")
 
-    js_output = os.path.join(output_path, "JSW_OUTPUT.csv")
+    js_output = os.path.join(output_path, str(filename) + "_JSW_OUTPUT.csv")
     np.savetxt(js_output, completed_string.astype(str), delimiter=",", fmt="%s")
+
+    return dt_img, jsw_params

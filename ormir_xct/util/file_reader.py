@@ -1,10 +1,8 @@
-# -------------------------------------------------------#
-# Created by: Michael Kuczynski
-# Created on: June 18th, 2022
-#
-# Description:
-#
-# -------------------------------------------------------#
+"""
+Created by: Michael Kuczynski
+Created on: June 18th, 2022
+"""
+
 import os
 import sys
 import itk
@@ -12,7 +10,7 @@ import SimpleITK as sitk
 
 from ormir_xct.util.sitk_itk import itk_sitk
 
-file_extensions = [".nii", ".mha", ".aim", ".isq"]
+file_extensions = [".nii", ".mha", ".nrrd", ".aim", ".isq"]
 
 
 def file_reader(input_file_path):

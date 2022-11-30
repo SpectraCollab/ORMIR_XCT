@@ -1,11 +1,12 @@
-# -----------------------------------------------------
-# sitk_vtk.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   21-01-2020
-#
-# Description: Converts between SimpleITK and VTK image types
-# -----------------------------------------------------
+"""
+sitk_vtk.py
+
+Created by:   Michael Kuczynski
+Created on:   21-01-2020
+
+Description: Converts between SimpleITK and VTK image types
+"""
+
 import vtk
 from vtk.util.numpy_support import vtk_to_numpy
 

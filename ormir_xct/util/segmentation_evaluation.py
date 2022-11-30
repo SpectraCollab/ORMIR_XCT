@@ -1,13 +1,12 @@
-# -------------------------------------------------------#
-# Created by: Nathan Neeteson
-# Created on: ??
-#
-# Description: Utilities for quantitatively comparing
-#               predicted and reference segmentations.
-#               Loosely adapted from:
-# https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks/blob/master/Python/34_Segmentation_Evaluation.ipynb
-#
-# -------------------------------------------------------#
+"""
+Created by: Nathan Neeteson
+Created on: ??
+
+Description: Utilities for quantitatively comparing 
+              predicted and reference segmentations.
+              Loosely adapted from: 
+https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks/blob/master/Python/34_Segmentation_Evaluation.ipynb
+"""
 
 import SimpleITK as sitk
 import numpy as np

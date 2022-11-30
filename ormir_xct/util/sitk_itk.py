@@ -1,11 +1,11 @@
-# -----------------------------------------------------
-# sitk_itk.py
-#
-# Created by:   Michael Kuczynski
-# Created on:   26/01/2021
-#
-# Description: Converts between SimpleITK and ITK images.
-# -----------------------------------------------------
+"""
+sitk_itk.py
+
+Created by:   Michael Kuczynski
+Created on:   26/01/2021
+
+Description: Converts between SimpleITK and ITK images.
+"""
 
 import itk
 import SimpleITK as sitk
