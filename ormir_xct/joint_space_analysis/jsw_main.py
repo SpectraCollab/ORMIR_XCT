@@ -39,7 +39,7 @@ def main(joint_seg_path, output_path):
     pad_image = jsw_pad(img)
 
     # Dilate image
-    dilated_image, dilated_js_mask = jsw_dilate(pad_image)
+    dilated_image = jsw_dilate(pad_image)
     sitk.WriteImage(
         dilated_image, os.path.join(output_path, str(basename) + "_DILATE.mha")
     )
