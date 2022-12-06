@@ -234,7 +234,7 @@ def jsw_parameters(
                 min_thickness,
                 connected,
                 max_thickness,
-                min_thickness / max_thickness,
+                max_thickness / min_thickness
             ]
         ],
         dtype=object,
