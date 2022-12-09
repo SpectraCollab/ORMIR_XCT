@@ -1,1003 +1,1319 @@
 #!/bin/bash -u
-SCRIPT="/Users/mkuczyns/Projects/Manskelab/scripts/resampleToImage.py"
+RESAMPLE_SCRIPT="/Users/mkuczyns/Projects/Manskelab/scripts/resampleToImage.py"
+EVAL_SCRIPT="/Users/mkuczyns/Projects/ORMIR_XCT/ormir_xct/util/seg_eval.py"
 
-#-------------HandOA_001-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_001-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_001_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_002-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_002_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_003-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_003_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_004-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_004_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_005-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_005_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_006-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_006_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_007-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_007_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_008-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_008_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+
+#-------------ACTUS_009-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_009_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_010-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_010_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_011-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_011_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_012-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_012_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
+
+
+#-------------ACTUS_013-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_013_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_014-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/001_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_014_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_002-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_015-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_015_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_016-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_016_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_017-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/002_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_017_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_003-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_018-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_018_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+
+#-------------ACTUS_020-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_020_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_021-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/003_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_021_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_004-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_022-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_022_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_023-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_023_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_024-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/004_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_024_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_006-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_025-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_025_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_026-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_026_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_027-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/006_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_027_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_007-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_028-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_028_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_029-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_029_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_030-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/007_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_030_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
+#-------------ACTUS_031-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
 
-#-------------HandOA_009-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_031_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_032-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_032_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_035-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_035_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/009_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_036-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_036_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
 
 
-#-------------HandOA_010-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_037-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_037_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_038-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_038_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_039-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/010_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_039_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_012-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_040-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_040_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_101-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_101_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_102-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/012_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_102_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_013-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_103-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_103_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_104-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_104_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_106-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/013_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_106_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_101-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_107-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_107_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_108-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_108_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_109-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/101_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_109_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_102-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_110-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_110_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_111-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_111_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_112-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/102_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_112_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_103-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_113-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_113_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_115-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_115_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_116-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/103_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_116_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_104-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_117-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_117_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_118-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_118_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_119-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/104_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_119_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_106-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_120-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_120_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_121-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_121_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_122-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/106_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_122_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_107-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_123-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_123_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_124-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_124_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_125-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/107_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_125_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
+#-------------ACTUS_126-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
 
-#-------------HandOA_109-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_126_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_127-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_127_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_128-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_128_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/109_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_129-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_129_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+echo $cmd
+eval $cmd
 
 
-#-------------HandOA_110-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_130-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_130_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_131-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_131_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_132-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/110_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_132_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_112-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_135-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_135_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_136-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_136_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_137-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/112_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_137_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
 
-#-------------HandOA_113-------------#
-# DIP2 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_138-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP2 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP2_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_138_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+
+#-------------ACTUS_139-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# DIP3 PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_DIP3_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_139_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
+
 
-# TMC DST
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC_DST.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC_DST_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+#-------------ACTUS_140-------------#
+# MCP2
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP2_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP2_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP2_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
 
-# TMC PRX
-IMG="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC_PRX.nii"
-REF="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC.nii"
-OUTPUT="/Users/mkuczyns/Desktop/ORMIR_XCT_BlandAltman/handOA_bmd_comparison/113_CMC_PRX_RESAMPLED.nii"
-cmd="python \"${SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
+# MCP3
+IMG="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP3_SEG.nii"
+REF="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP3_SEG_PY.nii"
+OUTPUT="/Users/mkuczyns/Library/CloudStorage/OneDrive-UniversityofCalgary/ManskeLabImages/ORMIR_XCT/images/ACTUS_140_0M_MCP3_SEG_RESAMPLED.nii"
+cmd="python \"${RESAMPLE_SCRIPT}\" \"${IMG}\" \"${REF}\" \"${OUTPUT}\" -i nearestneighbor"
 echo $cmd
 eval $cmd
