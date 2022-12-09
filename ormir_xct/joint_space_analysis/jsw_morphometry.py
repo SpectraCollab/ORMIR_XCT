@@ -13,7 +13,10 @@ import numpy as np
 import SimpleITK as sitk
 
 from connected_check import connected_check
-from ormir_xct.util.hildebrand_thickness import calc_structure_thickness_statistics
+from ormir_xct.util.hildebrand_thickness import (
+    calc_structure_thickness_statistics,
+    compute_local_thickness_from_mask,
+)
 
 
 # Set standard global variables used in IPL script
@@ -174,6 +177,7 @@ def jsw_parameters(
     result = calc_structure_thickness_statistics(
         dilated_mask, voxel_size, voxel_size * 2, mask
     )
+
     mean_thickness = result[0]
     mean_thickness_std = result[1]
     min_thickness = result[2]
@@ -234,7 +238,7 @@ def jsw_parameters(
                 min_thickness,
                 connected,
                 max_thickness,
-                max_thickness/ min_thickness
+                max_thickness / min_thickness,
             ]
         ],
         dtype=object,
