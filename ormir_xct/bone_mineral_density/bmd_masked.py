@@ -38,8 +38,8 @@ from ormir_xct.util.file_reader import file_reader
 
 def bmd_masked(
     image,
+    mask,
     image_units,
-    background,
     mu_scaling,
     mu_water,
     rescale_slope,
@@ -54,9 +54,9 @@ def bmd_masked(
     ----------
     image : SimpleITK.Image
 
-    image_units : string
+    mask  : SimpleITK.Image
 
-    background : int
+    image_units : string
 
     mu_scaling : int
 
@@ -80,31 +80,26 @@ def bmd_masked(
         image = convert_scanco_to_bmd(
             image, mu_scaling, rescale_slope, rescale_intercept
         )
-        background = background / mu_scaling
-        background = background * rescale_slope + rescale_intercept
     elif image_units == "attenuation":
         # Convert to BMD.
         # Convert both the image and background value.
         image = convert_linear_attenuation_to_bmd(
             image, rescale_slope, rescale_intercept
         )
-        background = background * rescale_slope + rescale_intercept
     elif image_units == "hu":
         # Convert from HU to linear attenuation. Then convert to BMD.
         # Convert both the image and background value.
         image = convert_hu_to_bmd(image, mu_water, rescale_slope, rescale_intercept)
-        background = (background + 1000) * (mu_water / 1000)
-        background = background * rescale_slope + rescale_intercept
     elif image_units != "bmd":
         print(
             "ERROR: Invalid image units provided. Only BMD, SCANCO, ATTENUATION, or HU are accepted."
         )
         sys.exit(1)
-
+    
     numpy_image = sitk.GetArrayFromImage(image)
-    num_bone_voxels = (numpy_image > background).sum()
-    mean = numpy_image[numpy_image > background].sum() / num_bone_voxels
-    std = numpy_image[numpy_image > background].std()
+    mask = sitk.GetArrayFromImage(mask)
+    mean = float(numpy_image[mask > 0].mean())
+    std = float(numpy_image[mask > 0].std())
 
     return mean, std
 
@@ -151,13 +146,6 @@ def main():
         default="-390.0",
         help="Intercept to scale to BMD (default = -390.0)",
     )
-    parser.add_argument(
-        "background",
-        type=float,
-        nargs="?",
-        default="-1000",
-        help="Background value for cropped images (default = -1000)",
-    )
     args = parser.parse_args()
 
     image_path = args.image
@@ -167,28 +155,14 @@ def main():
     mu_water = args.mu_water
     rescale_slope = args.rescale_slope
     rescale_intercept = args.rescale_intercept
-    background_value = args.background
 
     image = file_reader(image_path)
-
-    # Mask the image
     mask = sitk.ReadImage(image_mask_path)
-    background_value = -50000
-    masked_image = sitk.Mask(image, mask, background_value, 0)
 
-    # Images and masks from created in IPL often have different dimensions.
-    # In SimpleITK, to use the MaskImageFilter, both the image and mask need
-    # to have the same dimensions. However, even if you mask an image with a
-    # GOBJ in IPL, when you convert it to NII/MHA/etc., the image isn't cropped
-    # tight to the bone and we have some background values around the image.
-    # (i.e., we will have the bone cropped and values of -1000 around the image)
-    #
-    # To avoid this, just convert the image to a NumPy array and find the mean
-    #  and std of all values that aren't considered background.
     mean, std = bmd_masked(
-        masked_image,
+        image,
+        mask,
         image_units,
-        background_value,
         mu_scaling,
         mu_water,
         rescale_slope,
