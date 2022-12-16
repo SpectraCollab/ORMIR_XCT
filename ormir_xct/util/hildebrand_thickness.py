@@ -67,10 +67,10 @@ def compute_local_thickness_from_sorted_distances(
     """
 
     for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
-        rd_sqrt = np.sqrt(rd)
-        rd_sqrt_vox_0 = rd_sqrt / voxel_width[0]
-        rd_sqrt_vox_1 = rd_sqrt / voxel_width[1]
-        rd_sqrt_vox_2 = rd_sqrt / voxel_width[2]
+        #rd_sqrt = np.sqrt(rd)
+        rd_sqrt_vox_0 = rd / voxel_width[0]
+        rd_sqrt_vox_1 = rd / voxel_width[1]
+        rd_sqrt_vox_2 = rd / voxel_width[2]
         for di in range(
             np.maximum(np.floor(ri - rd_sqrt_vox_0) - 1, 0),
             np.minimum(np.ceil(ri + rd_sqrt_vox_0) + 2, local_thickness.shape[0]),
@@ -89,9 +89,40 @@ def compute_local_thickness_from_sorted_distances(
                         (voxel_width[0] * (di - ri)) ** 2
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
-                    ) < rd:
-                        local_thickness[di, dj, dk] = 2 * rd_sqrt
+                    ) < rd**2:
+                        local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
+
+
+def average_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
+    mask_sitk = GetImageFromArray(
+        (~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int)
+    )
+    mask_sitk.SetSpacing(tuple(voxel_width))
+    over_dist = (
+            mask
+            * GetArrayFromImage(
+                SignedMaurerDistanceMap(
+                    mask_sitk,
+                    useImageSpacing=True,
+                    insideIsPositive=False,
+                    squaredDistance=False,
+                )
+            )[1:-1, 1:-1, 1:-1]
+    )
+    mask_sitk = 1 - mask_sitk
+    under_dist = (
+            mask
+            * GetArrayFromImage(
+                SignedMaurerDistanceMap(
+                    mask_sitk,
+                    useImageSpacing=True,
+                    insideIsPositive=True,
+                    squaredDistance=False,
+                )
+            )[1:-1, 1:-1, 1:-1]
+    )
+    return (under_dist + over_dist) / 2
 
 
 def compute_local_thickness_from_mask(
@@ -137,24 +168,10 @@ def compute_local_thickness_from_mask(
         warnings.warn("given an empty mask, cannot proceed, returning zeros array")
         return np.zeros(mask.shape, dtype=float)
 
-    mask_sitk = GetImageFromArray(
-        (~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int)
-    )
-    mask_sitk.SetSpacing(tuple(voxel_width))
-    mask_dist = (
-        mask
-        * GetArrayFromImage(
-            SignedMaurerDistanceMap(
-                mask_sitk,
-                useImageSpacing=True,
-                insideIsPositive=False,
-                squaredDistance=True,
-            )
-        )[1:-1, 1:-1, 1:-1]
-    )
+    mask_dist = average_distance_transform(mask, voxel_width)
     sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask.nonzero())]
     sorted_dists.sort()
-    sorted_dists = np.asarray(sorted_dists)
+    sorted_dists = np.asarray(sorted_dists, dtype=float)
 
     return mask * compute_local_thickness_from_sorted_distances(
         np.zeros(mask.shape, dtype=float),
