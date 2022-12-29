@@ -141,13 +141,10 @@ def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -
     ).astype(int)[tuple([slice(1, -1)]*len(mask.shape))]
 
     # do distance transform on oversampled mask
-    upsampled_dist = distance_transform_edt(
+    return upsampled_mask*distance_transform_edt(
         upsampled_mask,
         [w/2 for w in voxel_width] if len(voxel_width)>1 else voxel_width/2
     )
-
-    # downsample and return
-    return upsampled_dist[tuple([slice(None, None, 2)]*len(mask.shape))]
 
 
 def compute_local_thickness_from_mask(
@@ -194,16 +191,16 @@ def compute_local_thickness_from_mask(
         return np.zeros(mask.shape, dtype=float)
 
     mask_dist = oversampling_distance_transform(mask, voxel_width)
-    sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask.nonzero())]
+    sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())]
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists, dtype=float)
 
     return mask * compute_local_thickness_from_sorted_distances(
-        np.zeros(mask.shape, dtype=float),
+        np.zeros(mask_dist.shape, dtype=float),
         sorted_dists[:, 0].astype(float),
         sorted_dists[:, 1:].astype(int),
-        voxel_width,
-    )
+        voxel_width/2,
+    )[::2, ::2, ::2]
 
 
 def calc_structure_thickness_statistics(
