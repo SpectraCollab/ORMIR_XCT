@@ -17,6 +17,7 @@ from SimpleITK import (
     GetArrayFromImage,
     SignedMaurerDistanceMap,
 )
+from scipy.ndimage.morphology import binary_erosion, binary_dilation, distance_transform_edt
 from typing import Optional, Union
 import warnings
 
@@ -125,6 +126,30 @@ def average_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.
     return (under_dist + over_dist) / 2
 
 
+def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
+    # oversample the image
+    shape = [2 * s - 1 for s in mask.shape]
+    upsampled_mask = np.zeros(shape, dtype=mask.dtype)
+    upsampled_mask[tuple([slice(None, None, 2)]*len(mask.shape))] = mask
+    upsampled_mask = binary_dilation(
+        upsampled_mask,
+        structure=np.ones(tuple([3]*len(mask.shape)))
+    ).astype(int)
+    upsampled_mask = binary_erosion(
+        np.pad(upsampled_mask, 1, mode="edge"),
+        structure=np.ones(tuple([3]*len(mask.shape)))
+    ).astype(int)[tuple([slice(1, -1)]*len(mask.shape))]
+
+    # do distance transform on oversampled mask
+    upsampled_dist = distance_transform_edt(
+        upsampled_mask,
+        [w/2 for w in voxel_width] if len(voxel_width)>1 else voxel_width/2
+    )
+
+    # downsample and return
+    return upsampled_dist[tuple([slice(None, None, 2)]*len(mask.shape))]
+
+
 def compute_local_thickness_from_mask(
     mask: np.ndarray, voxel_width: Union[Iterable[float], float]
 ) -> np.ndarray:
@@ -168,7 +193,7 @@ def compute_local_thickness_from_mask(
         warnings.warn("given an empty mask, cannot proceed, returning zeros array")
         return np.zeros(mask.shape, dtype=float)
 
-    mask_dist = average_distance_transform(mask, voxel_width)
+    mask_dist = oversampling_distance_transform(mask, voxel_width)
     sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask.nonzero())]
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists, dtype=float)
