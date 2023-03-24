@@ -90,7 +90,7 @@ def compute_local_thickness_from_sorted_distances(
                         (voxel_width[0] * (di - ri)) ** 2
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
-                    ) < rd**2:
+                    ) <= rd**2:
                         local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
 
