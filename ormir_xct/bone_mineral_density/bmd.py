@@ -86,7 +86,9 @@ def bmd(image, image_units, mu_scaling, mu_water, rescale_slope, rescale_interce
         )
         sys.exit(1)
 
-    return image_statistics_filter
+    mean = image_statistics_filter.GetMean()
+    std = image_statistics_filter.GetSigma()
+    return mean, std
 
 
 def main():
