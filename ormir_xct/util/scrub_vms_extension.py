@@ -30,11 +30,14 @@ def scrub_vms_extension(directory):
 
     """
     for file in os.listdir(directory):
-        filename = os.path.join(directory, file)
-        if ";" in filename[-2:-1]:
-            new_filename = os.path.join(directory, filename[:-2])
-            print("Renaming: " + file + " to: " + file[:-2])
-            os.rename(filename, new_filename)
+        filepath = os.path.join(directory, file)
+        name, extension = os.path.splitext(file)
+
+        if ";" in extension:
+            new_file = name + extension.split(";", 1)[0]
+            new_filepath = os.path.join(directory, new_file)
+            print("Renaming: " + file + " to: " + new_file)
+            os.rename(filepath, new_filepath)
 
 
 def main(input_dir):
