@@ -10,7 +10,7 @@ authors:
     orcid: 0000-0001-5671-1205
     equal-contrib: true
     affiliation: "1, 2"
-  - name: Nathan Neeteson
+  - name: Nathan J. Neeteson
     orcid: 
     equal-contrib: true
     affiliation: "1, 2"
