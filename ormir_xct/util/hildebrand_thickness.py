@@ -257,7 +257,7 @@ def calc_structure_thickness_statistics(
                 "`mask` and `sub_mask` must have same shape if `sub_mask` is given"
             )
     else:
-        sub_mask = np.ones_like(mask)
+        sub_mask = np.ones_like(mask, dtype=bool)
 
     if pad_amount is not None:
         if not isinstance(pad_amount, int) or (pad_amount <= 0):
