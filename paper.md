@@ -110,6 +110,56 @@ The ORMIR_XCT package contains several IPL workflows reimplemented in Python:
 4. Bone Mineral Density
 5. Stack Registration
 
+# Thickness
+
+The ORMIR_XCT package contains an open-source implementation of Hildebrand et al.'s
+algorithm for model-independent thickness estimation [cite: https://doi.org/10.1046/j.1365-2818.1997.1340694.x].
+Given a binary mask describing a three-dimensional object as input, the algorithm first 
+computes the distance map (via a distance transform), describing at each voxel the radius 
+of the largest sphere centered at that voxel that is entirely within the object.
+Next, the local thickness map is computed by iterating through all voxels in the mask and 
+assigning them a local thickness value that is the diameter of the largest sphere in the 
+distance map that contains that voxel. 
+The thickness of a structure can then be computed as the volume-weighted mean of the local
+thickness map, with optional adjustments for a minimum thickness value if desired 
+to reduce the effect of surface noise.
+
+Hildebrand et al. note an optimization for the algorithm where first the distance ridge 
+(also known as skeletonization or medial axis) is computed and only the distance map
+values on the distance ridge are used for local thickness map computation. We have found 
+this optimization unnecessary for computational feasibility on modern hardware, 
+and further have found that available open-source solutions for digital skeletonization 
+are insufficiently robust and frequently lead to incorrect local thickness maps for simple 
+structures. Therefore, we instead have implemented the non-optimized version of the 
+algorithm with `numpy` and `numba`, first sorting the distance map in ascending order to avoid
+the need for multiple logical comparisons within the iteration.
+
+Finally, we have noted, and compensated for, a discrepancy between Hildebrand et al.'s 
+definition of the distance map and the outputs of many common open-source distance map
+algorithms (including those available in `SimpleITK` and `scikit-image`).
+Hildebrand et al. define their distance map as "the radius of the largest sphere centered at 
+the point and still completely inside the structure." In contrast, most distance transforms
+will compute the distance from the center of a voxel inside the mask to the nearest 
+voxel center outside the mask. The discrepancy is visualized in 
+FIGURE XXX (INSERT FIGURE).
+To compensate for this, we have developed the "oversampling distance transform" function.
+In this function, an input mask is upsampled to double the resolution, and a sequence of 
+morphological filters are applied to ensure that the newly introduced voxels on the boundary
+between the structure and the background are assigned to be background voxels.
+A distance transform is applied to this mask, resulting in a distance map where the spheres
+fit entirely within the structure defined by the mask, and the resulting distance map is
+downsampled back to the original resolution.
+
+The user is given a choice, via a boolean flag parameter in the
+`compute_local_thickness_from_mask` and `calc_structure_thickness_statistics` functions,
+whether they would like to use the oversampling distance transform for thickness
+estimation. The choice is given because different users may have differing definitions of 
+the bounds of their structures (whether they are contained within the mask voxels, or may
+extend to the center of the neighbouring background voxels) and because using the normal
+distance transform will provide better congruence with thickness calculations produced
+using IPL.
+
+
 # Figures
 
 Figures can be included like this:
