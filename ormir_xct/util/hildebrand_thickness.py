@@ -88,37 +88,6 @@ def compute_local_thickness_from_sorted_distances(
     return local_thickness
 
 
-def average_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
-    mask_sitk = GetImageFromArray(
-        (~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int)
-    )
-    mask_sitk.SetSpacing(tuple(voxel_width))
-    over_dist = (
-            mask
-            * GetArrayFromImage(
-                SignedMaurerDistanceMap(
-                    mask_sitk,
-                    useImageSpacing=True,
-                    insideIsPositive=False,
-                    squaredDistance=False,
-                )
-            )[1:-1, 1:-1, 1:-1]
-    )
-    mask_sitk = 1 - mask_sitk
-    under_dist = (
-            mask
-            * GetArrayFromImage(
-                SignedMaurerDistanceMap(
-                    mask_sitk,
-                    useImageSpacing=True,
-                    insideIsPositive=True,
-                    squaredDistance=False,
-                )
-            )[1:-1, 1:-1, 1:-1]
-    )
-    return (under_dist + over_dist) / 2
-
-
 def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
     # oversample the image
     shape = [2 * s - 1 for s in mask.shape]
@@ -279,9 +248,10 @@ def calc_structure_thickness_statistics(
 
     if pad_amount is not None:
         # trim down the output
+        mask = mask[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
         local_thickness = local_thickness[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
 
-    local_thickness_structure = np.maximum(local_thickness[sub_mask], min_thickness)
+    local_thickness_structure = np.maximum(local_thickness[sub_mask & mask], min_thickness)
 
     return (
         local_thickness_structure.mean(),
