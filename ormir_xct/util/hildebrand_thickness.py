@@ -79,7 +79,11 @@ def compute_local_thickness_from_sorted_distances(
         for di in range(di_min, di_max):
             for dj in range(dj_min, dj_max):
                 for dk in range(dk_min, dk_max):
-                    if np.linalg.norm(voxel_width * (np.array([di - ri, dj - rj, dk - rk])), ord=2) < (rd + rd_extra):
+                    if (
+                        (voxel_width[0] * (di - ri)) ** 2
+                        + (voxel_width[1] * (dj - rj)) ** 2
+                        + (voxel_width[2] * (dk - rk)) ** 2
+                    ) < (rd + rd_extra) ** 2:
                         local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
 
