@@ -203,6 +203,10 @@ def file_converter(input_image, output_image):
         image_to_dicom(output_image, output_dir)
 
     elif output_extension.lower() == ".isq":
+        # Cast to signed short if needed
+        if output_image.GetPixelID != sitk.sitkInt16:
+            output_image = sitk.Cast(output_image, sitk.sitkInt16)
+
         outputImageISQ = sitk_itk(output_image)
         print("WRITING IMAGE: " + str(output_image_filename))
 
