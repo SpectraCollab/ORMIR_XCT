@@ -17,7 +17,11 @@ from SimpleITK import (
     GetArrayFromImage,
     SignedMaurerDistanceMap,
 )
-from scipy.ndimage.morphology import binary_erosion, binary_dilation, distance_transform_edt
+from scipy.ndimage.morphology import (
+    binary_erosion,
+    binary_dilation,
+    distance_transform_edt,
+)
 from typing import Optional, Union
 import warnings
 
@@ -30,7 +34,7 @@ def compute_local_thickness_from_sorted_distances(
     sorted_dists: np.ndarray,
     sorted_dists_indices: np.ndarray,
     voxel_width: np.ndarray,
-    rd_extra: float
+    rd_extra: float,
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
@@ -88,31 +92,31 @@ def compute_local_thickness_from_sorted_distances(
     return local_thickness
 
 
-def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
+def oversampling_distance_transform(
+    mask: np.ndarray, voxel_width: np.ndarray
+) -> np.ndarray:
     # oversample the image
     shape = [2 * s - 1 for s in mask.shape]
     upsampled_mask = np.zeros(shape, dtype=mask.dtype)
-    upsampled_mask[tuple([slice(None, None, 2)]*len(mask.shape))] = mask
+    upsampled_mask[tuple([slice(None, None, 2)] * len(mask.shape))] = mask
     upsampled_mask = binary_dilation(
-        upsampled_mask,
-        structure=np.ones(tuple([3]*len(mask.shape)))
+        upsampled_mask, structure=np.ones(tuple([3] * len(mask.shape)))
     ).astype(int)
     upsampled_mask = binary_erosion(
         np.pad(upsampled_mask, 1, mode="edge"),
-        structure=np.ones(tuple([3]*len(mask.shape)))
-    ).astype(int)[tuple([slice(1, -1)]*len(mask.shape))]
+        structure=np.ones(tuple([3] * len(mask.shape))),
+    ).astype(int)[tuple([slice(1, -1)] * len(mask.shape))]
 
     # do distance transform on oversampled mask
-    dt = upsampled_mask*distance_transform_edt(
-        upsampled_mask,
-        voxel_width/2
-    )
+    dt = upsampled_mask * distance_transform_edt(upsampled_mask, voxel_width / 2)
 
-    return dt[tuple([slice(None, None, 2)]*len(mask.shape))]
+    return dt[tuple([slice(None, None, 2)] * len(mask.shape))]
 
 
 def compute_local_thickness_from_mask(
-    mask: np.ndarray, voxel_width: Union[Iterable[float], float], oversample: bool = True
+    mask: np.ndarray,
+    voxel_width: Union[Iterable[float], float],
+    oversample: bool = True,
 ) -> np.ndarray:
     """
     Compute the local thickness field for a binary mask.
@@ -161,11 +165,10 @@ def compute_local_thickness_from_mask(
     if oversample:
         mask_dist = oversampling_distance_transform(mask, voxel_width)
     else:
-        mask_dist = mask*distance_transform_edt(
-            mask,
-            voxel_width
-        )
-    sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())]
+        mask_dist = mask * distance_transform_edt(mask, voxel_width)
+    sorted_dists = [
+        (mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())
+    ]
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists, dtype=float)
 
@@ -174,7 +177,7 @@ def compute_local_thickness_from_mask(
         sorted_dists[:, 0].astype(float),
         sorted_dists[:, 1:].astype(int),
         voxel_width,
-        0.5 if oversample else 0
+        0.5 if oversample else 0,
     )
 
 
@@ -184,7 +187,7 @@ def calc_structure_thickness_statistics(
     min_thickness: float,
     sub_mask: Optional[np.ndarray] = None,
     pad_amount: Optional[Union[int, Tuplep[int, int, int]]] = None,
-    oversample: bool = True
+    oversample: bool = True,
 ) -> Tuple[float, float, float, float, np.ndarray]:
     """
     Parameters
@@ -239,7 +242,9 @@ def calc_structure_thickness_statistics(
 
     if (mask > 0).sum() > 0:
         mask = mask > 0  # binarize
-        local_thickness = compute_local_thickness_from_mask(mask, voxel_width, oversample)
+        local_thickness = compute_local_thickness_from_mask(
+            mask, voxel_width, oversample
+        )
     else:
         warnings.warn(
             "cannot find structure thickness statistics for binary mask with no positive voxels"
@@ -248,10 +253,16 @@ def calc_structure_thickness_statistics(
 
     if pad_amount is not None:
         # trim down the output
-        mask = mask[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
-        local_thickness = local_thickness[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
+        mask = mask[
+            pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount
+        ]
+        local_thickness = local_thickness[
+            pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount
+        ]
 
-    local_thickness_structure = np.maximum(local_thickness[sub_mask & mask], min_thickness)
+    local_thickness_structure = np.maximum(
+        local_thickness[sub_mask & mask], min_thickness
+    )
 
     return (
         local_thickness_structure.mean(),
