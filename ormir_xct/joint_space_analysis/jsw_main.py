@@ -36,15 +36,18 @@ def main(joint_seg_path, output_path):
     img = sitk.ReadImage(joint_seg_path, sitk.sitkUInt8)
 
     # Pad image
+    print('Padding image...')
     pad_image = jsw_pad(img)
 
     # Dilate image
+    print('Dilating image...')
     dilated_image = jsw_dilate(pad_image)
     sitk.WriteImage(
         dilated_image, os.path.join(output_path, str(basename) + "_DILATE.mha")
     )
 
     # Erode image
+    print('Eroding image...')
     eroded_image, js_mask, dilated_js_mask = jsw_erode(dilated_image, pad_image)
     sitk.WriteImage(
         eroded_image, os.path.join(output_path, str(basename) + "_ERODE.mha")
@@ -56,9 +59,20 @@ def main(joint_seg_path, output_path):
     )
 
     # Compute JS parameters
+    print('Computing thickness...')
     dt_img, jsw_params = jsw_parameters(
         pad_image, dilated_js_mask, output_path, basename, 0.0607, js_mask
     )
+
+    # Copy the origin and spacing information from the original image so the 
+    # thickness map and original joint image overlap
+    dt_img.SetOrigin(js_mask.GetOrigin())
+    dt_img.SetSpacing(js_mask.GetSpacing())
+    dt_img.SetDirection(js_mask.GetDirection())
+
+    # Mask the thickness map with the original joint space mask
+    dt_img = sitk.Mask(dt_img, js_mask)
+
     sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + "_DT.mha"))
 
 
