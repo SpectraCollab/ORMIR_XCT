@@ -30,37 +30,38 @@ def compute_local_thickness_from_sorted_distances(
     sorted_dists: np.ndarray,
     sorted_dists_indices: np.ndarray,
     voxel_width: np.ndarray,
+    rd_extra: float
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
     binary image, given an array to fill in and the sorted distance map of the binary image.
-
     Since the distances are sorted by distance values in ascending order, we can iterate through and assign each voxel's
     distance value to all voxels within that distance. Voxels corresponding to larger spheres will be processed
     later and overwrite values assigned by smaller spheres, and so each voxel will eventually be assigned the
     diameter of the largest sphere that it lies within.
-
     Finally, we do not check every voxel in the image for whether it lies within a sphere. We only check voxels that
     lie within the cube with side length equal to the sphere diameter around the center voxel. This saves a lot of
     computational effort.
-
     Parameters
     ----------
     local_thickness : np.ndarray
         A numpy array that is initialized as zeros.
-
     sorted_dists : np.ndarray
         A numpy array that is the sorted distance ridge of a mask, but the distances only. Each element is a float
         that corresponds to a distance value on the distance ridge, in ascending order.
-
     sorted_dists_indices : np.ndarray
         A numpy array that is the integer indices of the location of the distance. Each row in this array corresponds to
         the distance at the same position in the `dist_ridge` parameter, and then the three elements in each row are
         the i, j, k indices of the location of that voxel of the distance ridge in the binary image.
-
     voxel_width : np.ndarray
         A numpy array with shape (3,) that gives the width of voxels in each dimension.
-
+    rd_extra : float
+        An extra bit of distance added to `rd` for the purposes of determining whether a voxel falls within the sphere
+        centered at another voxel. This is needed because if you use the oversampling distance transform, your sphere
+        diameters will be smaller (since they are measuring the distance from that voxel centroid to the boundary of
+        the shape rather than to the nearest centroid outside the shape). This causes voxels along the boundary of a
+        shape to not be included in the spheres centered on voxels further in. Set this to `0.5` if you are using
+        oversampling and `0` if you are not.
     Returns
     -------
     np.ndarray
@@ -68,62 +69,23 @@ def compute_local_thickness_from_sorted_distances(
     """
 
     for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
-        #rd_sqrt = np.sqrt(rd)
-        rd_sqrt_vox_0 = rd / voxel_width[0]
-        rd_sqrt_vox_1 = rd / voxel_width[1]
-        rd_sqrt_vox_2 = rd / voxel_width[2]
-        for di in range(
-            np.maximum(np.floor(ri - rd_sqrt_vox_0) - 1, 0),
-            np.minimum(np.ceil(ri + rd_sqrt_vox_0) + 2, local_thickness.shape[0]),
-        ):
-            for dj in range(
-                np.maximum(np.floor(rj - rd_sqrt_vox_1) - 1, 0),
-                np.minimum(np.ceil(rj + rd_sqrt_vox_1) + 2, local_thickness.shape[1]),
-            ):
-                for dk in range(
-                    np.maximum(np.floor(rk - rd_sqrt_vox_2) - 1, 0),
-                    np.minimum(
-                        np.ceil(rk + rd_sqrt_vox_2) + 2, local_thickness.shape[2]
-                    ),
-                ):
+        rd_vox = rd / voxel_width
+        di_min = np.maximum(np.floor(ri - rd_vox[0]) - 1, 0)
+        di_max = np.minimum(np.ceil(ri + rd_vox[0]) + 2, local_thickness.shape[0])
+        dj_min = np.maximum(np.floor(rj - rd_vox[1]) - 1, 0)
+        dj_max = np.minimum(np.ceil(rj + rd_vox[1]) + 2, local_thickness.shape[1])
+        dk_min = np.maximum(np.floor(rk - rd_vox[2]) - 1, 0)
+        dk_max = np.minimum(np.ceil(rk + rd_vox[2]) + 2, local_thickness.shape[2])
+        for di in range(di_min, di_max):
+            for dj in range(dj_min, dj_max):
+                for dk in range(dk_min, dk_max):
                     if (
                         (voxel_width[0] * (di - ri)) ** 2
                         + (voxel_width[1] * (dj - rj)) ** 2
                         + (voxel_width[2] * (dk - rk)) ** 2
-                    ) < rd**2:
+                    ) < (rd + rd_extra) ** 2:
                         local_thickness[di, dj, dk] = 2 * rd
     return local_thickness
-
-
-def average_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
-    mask_sitk = GetImageFromArray(
-        (~np.pad(mask, 1, mode="constant", constant_values=0)).astype(int)
-    )
-    mask_sitk.SetSpacing(tuple(voxel_width))
-    over_dist = (
-            mask
-            * GetArrayFromImage(
-                SignedMaurerDistanceMap(
-                    mask_sitk,
-                    useImageSpacing=True,
-                    insideIsPositive=False,
-                    squaredDistance=False,
-                )
-            )[1:-1, 1:-1, 1:-1]
-    )
-    mask_sitk = 1 - mask_sitk
-    under_dist = (
-            mask
-            * GetArrayFromImage(
-                SignedMaurerDistanceMap(
-                    mask_sitk,
-                    useImageSpacing=True,
-                    insideIsPositive=True,
-                    squaredDistance=False,
-                )
-            )[1:-1, 1:-1, 1:-1]
-    )
-    return (under_dist + over_dist) / 2
 
 
 def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
@@ -150,7 +112,7 @@ def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -
 
 
 def compute_local_thickness_from_mask(
-    mask: np.ndarray, voxel_width: Union[Iterable[float], float]
+    mask: np.ndarray, voxel_width: Union[Iterable[float], float], oversample: bool = True
 ) -> np.ndarray:
     """
     Compute the local thickness field for a binary mask.
@@ -168,6 +130,10 @@ def compute_local_thickness_from_mask(
 
     voxel_width : Union[Iterable[float], float]
         If an iterable of length 3, the voxel widths in each dimension. If a float, the isotropic voxel width.
+
+    oversample : bool
+        Set this to `True` to use the (more accurate but slower) oversampling distance transform method. For
+        consistency with IPL, set this to `False`
 
     Returns
     -------
@@ -192,7 +158,13 @@ def compute_local_thickness_from_mask(
         warnings.warn("given an empty mask, cannot proceed, returning zeros array")
         return np.zeros(mask.shape, dtype=float)
 
-    mask_dist = oversampling_distance_transform(mask, voxel_width)
+    if oversample:
+        mask_dist = oversampling_distance_transform(mask, voxel_width)
+    else:
+        mask_dist = mask*distance_transform_edt(
+            mask,
+            voxel_width
+        )
     sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())]
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists, dtype=float)
@@ -201,7 +173,8 @@ def compute_local_thickness_from_mask(
         np.zeros(mask_dist.shape, dtype=float),
         sorted_dists[:, 0].astype(float),
         sorted_dists[:, 1:].astype(int),
-        voxel_width/2,
+        voxel_width,
+        0.5 if oversample else 0
     )
 
 
@@ -210,7 +183,9 @@ def calc_structure_thickness_statistics(
     voxel_width: Union[float, Iterable],
     min_thickness: float,
     sub_mask: Optional[np.ndarray] = None,
-):
+    pad_amount: Optional[Union[int, Tuplep[int, int, int]]] = None,
+    oversample: bool = True
+) -> Tuple[float, float, float, float, np.ndarray]:
     """
     Parameters
     ----------
@@ -228,21 +203,21 @@ def calc_structure_thickness_statistics(
         an optional sub mask. if given, we will calculate the local thickness field on `mask` but then sample
         local thickness values only from within `sub_mask` and calculate stats on these values only.
 
+    pad_amount: Optional[int]
+        specify this to pad your mask using edge padding but then only use the local distances provided on the
+        original image. can be useful if you have a structure that intersects the edge of the image but you don't want
+        local thicknesses to be artificially decreased
+
+    oversample : bool
+        Set this to `True` to use the (more accurate but slower) oversampling distance transform method. For
+        consistency with IPL, set this to `False`
+
     Returns
     -------
-    tuple
+    Tuple[float, float, float, float, np.ndarray]
         the mean, standard deviation, minimum, and maximum of the local thickness of the structure defined by the mask,
         and the whole local thickness field of the entire image (0 outside the mask)
     """
-    if (mask > 0).sum() > 0:
-        mask = mask > 0  # binarize
-        local_thickness = compute_local_thickness_from_mask(mask, voxel_width)
-    else:
-        warnings.warn(
-            "cannot find structure thickness statistics for binary mask with no positive voxels"
-        )
-        return None, None, None, None, np.zeros(mask.shape, dtype=float)
-
     if sub_mask is not None:
         sub_mask = sub_mask > 0  # binarize
         if sub_mask.sum() == 0:
@@ -254,13 +229,29 @@ def calc_structure_thickness_statistics(
             raise ValueError(
                 "`mask` and `sub_mask` must have same shape if `sub_mask` is given"
             )
-
-    if sub_mask is not None:
-        local_thickness_structure = local_thickness[sub_mask]
     else:
-        local_thickness_structure = local_thickness[mask]
+        sub_mask = np.ones_like(mask, dtype=bool)
 
-    local_thickness_structure = np.maximum(local_thickness_structure, min_thickness)
+    if pad_amount is not None:
+        if not isinstance(pad_amount, int) or (pad_amount <= 0):
+            raise ValueError("if given, `pad_amount` must be a positive integer")
+        mask = np.pad(mask, pad_amount, mode="edge")
+
+    if (mask > 0).sum() > 0:
+        mask = mask > 0  # binarize
+        local_thickness = compute_local_thickness_from_mask(mask, voxel_width, oversample)
+    else:
+        warnings.warn(
+            "cannot find structure thickness statistics for binary mask with no positive voxels"
+        )
+        return None, None, None, None, np.zeros(mask.shape, dtype=float)
+
+    if pad_amount is not None:
+        # trim down the output
+        mask = mask[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
+        local_thickness = local_thickness[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
+
+    local_thickness_structure = np.maximum(local_thickness[sub_mask & mask], min_thickness)
 
     return (
         local_thickness_structure.mean(),

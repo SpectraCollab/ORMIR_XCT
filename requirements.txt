@@ -5,6 +5,7 @@ setuptools
 black
 flake8
 pytest
+hypothesis
 
 # Image processing
 itk
