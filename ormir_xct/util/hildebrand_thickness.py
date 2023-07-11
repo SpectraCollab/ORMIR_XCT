@@ -184,7 +184,7 @@ def calc_structure_thickness_statistics(
     min_thickness: float,
     sub_mask: Optional[np.ndarray] = None,
     pad_amount: Optional[Union[int, Tuplep[int, int, int]]] = None,
-    oversample: bool = True
+    oversample: bool = False,
 ) -> Tuple[float, float, float, float, np.ndarray]:
     """
     Parameters
