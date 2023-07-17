@@ -1,6 +1,11 @@
+"""
+Created by: Michael Kuczynski
+Created on: ??
+
+Description: Functions to parse Python thickness logs to extract thickness data. 
+"""
+
 import os
-import re
-import sys
 import glob
 import argparse
 import numpy as np
@@ -25,18 +30,20 @@ def process_py_log(log_dir, output_dir):
 
     # Oversampled shapes
     hollow_sphere_oversample_files = glob.glob(
-        os.path.join(log_dir, "*H_SPH*_OVERSAMPLE.txt")
+        os.path.join(log_dir, "*H_SPH*_OVERSAMPLE_SKEL.txt")
     )
     filled_sphere_oversample_files = glob.glob(
-        os.path.join(log_dir, "*F_SPH*_OVERSAMPLE.txt")
+        os.path.join(log_dir, "*F_SPH*_OVERSAMPLE_SKEL.txt")
     )
     hollow_cylinder_oversample_files = glob.glob(
-        os.path.join(log_dir, "*H_CYL*_OVERSAMPLE.txt")
+        os.path.join(log_dir, "*H_CYL*_OVERSAMPLE_SKEL.txt")
     )
     filled_cylinder_oversample_files = glob.glob(
-        os.path.join(log_dir, "*F_CYL*_OVERSAMPLE.txt")
+        os.path.join(log_dir, "*F_CYL*_OVERSAMPLE_SKEL.txt")
     )
-    plate_oversample_files = glob.glob(os.path.join(log_dir, "*PLATE*_OVERSAMPLE.txt"))
+    plate_oversample_files = glob.glob(
+        os.path.join(log_dir, "*PLATE*_OVERSAMPLE_SKEL.txt")
+    )
 
     # Remove the oversampled images from the log lists
     hollow_sphere_files = list(
@@ -65,41 +72,48 @@ def process_py_log(log_dir, output_dir):
     filled_cylinder_oversample_files.sort()
     plate_oversample_files.sort()
 
-    # ----------------------------------------#
-    # Filled Spheres
-    # ----------------------------------------#
-    # true_csv_array = np.array(["Filename", "Thickness"])
     csv_array = np.array(
         ["Filename", "main_th", "main_th_sd", "main_th_min", "main_th_max"]
     )
 
-    for log_file in filled_cylinder_files:
-        # Read the log (text) file
-        basename = os.path.basename(log_file)
-        print("Parsing: " + str(basename))
-        file = open(log_file, "r")
-        lines = file.read().splitlines()
-        lines = [str(i) for i in lines]
-        file.close()
+    shape_list = [
+        (hollow_sphere_oversample_files, "H_SPH_OVERSAMPLE_SKEL_DT_THICKNESS_PY.csv"),
+        (filled_sphere_oversample_files, "F_SPH_OVERSAMPLE_SKEL_DT_THICKNESS_PY.csv"),
+        (hollow_cylinder_oversample_files, "H_CYL_OVERSAMPLE_SKEL_DT_THICKNESS_PY.csv"),
+        (filled_cylinder_oversample_files, "F_CYL_OVERSAMPLE_SKEL_DT_THICKNESS_PY.csv"),
+        (plate_oversample_files, "PLATE_OVERSAMPLE_SKEL_DT_THICKNESS_PY.csv"),
+    ]
 
-        # Split the lines into lists and parse out the values
-        header = lines[0]
-        values = lines[1].split()
+    for shape in shape_list:
 
-        filename = values[0]
-        main_th = values[1]
-        main_th_sd = values[2]
-        main_th_min = values[3]
-        main_th_max = values[4]
+        for log_file in shape[0]:
+            # Read the log (text) file
+            basename = os.path.basename(log_file)
+            print("Parsing: " + str(basename))
+            file = open(log_file, "r")
+            lines = file.read().splitlines()
+            lines = [str(i) for i in lines]
+            file.close()
 
-        output_array = np.array(
-            [filename, main_th, main_th_sd, main_th_min, main_th_max]
-        )
-        csv_array = np.vstack([csv_array, output_array])
+            # Split the lines into lists and parse out the values
+            header = lines[0]
+            values = lines[1].split()
 
-    output_csv = os.path.join(output_dir, "F_CYL_DT_THICKNESS_PY.csv")
-    csv_array = csv_array.astype(str)
-    np.savetxt(output_csv, csv_array, delimiter=",", fmt="%s")
+            filename = values[0]
+            main_th = values[1]
+            main_th_sd = values[2]
+            main_th_min = values[3]
+            main_th_max = values[4]
+
+            output_array = np.array(
+                [filename, main_th, main_th_sd, main_th_min, main_th_max]
+            )
+            csv_array = np.vstack([csv_array, output_array])
+
+        output_csv = os.path.join(output_dir, shape[1])
+        print(output_csv)
+        csv_array = csv_array.astype(str)
+        np.savetxt(output_csv, csv_array, delimiter=",", fmt="%s")
 
 
 if __name__ == "__main__":

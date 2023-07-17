@@ -1,3 +1,10 @@
+"""
+Created by: Michael Kuczynski
+Created on: ??
+
+Description: Functions to parse IPL logs to extract thickness data. 
+"""
+
 import os
 import re
 import glob
@@ -15,41 +22,11 @@ def process_ipl_log(log_dir, output_dir):
     log_dir : string
     output_dir : string
     """
-    # Padded shapes
     jsw_hollow_sphere_files = glob.glob(os.path.join(log_dir, "*H_SPH*JSW*.LOG"))
     jsw_filled_sphere_files = glob.glob(os.path.join(log_dir, "*F_SPH*JSW*.LOG"))
-    jsw_hollow_cylinder_files = glob.glob(os.path.join(log_dir, "*H_CYL*JSW*.LOG"))
-    jsw_filled_cylinder_files = glob.glob(os.path.join(log_dir, "*F_CYL*JSW*.LOG"))
+    jsw_hollow_cylinder_files = glob.glob(os.path.join(log_dir, "*H_CYL*.LOG"))
+    jsw_filled_cylinder_files = glob.glob(os.path.join(log_dir, "*F_CYL*.LOG"))
     jsw_plate_files = glob.glob(os.path.join(log_dir, "*PLATE*JSW*.LOG"))
-    # morph_hollow_sphere_files = glob.glob(os.path.join(log_dir, '*H_SPH*MORPHO*.LOG'))
-    # morph_filled_sphere_files = glob.glob(os.path.join(log_dir, '*F_SPH*MORPHO*.LOG'))
-    # morph_hollow_cylinder_files = glob.glob(os.path.join(log_dir, '*H_CYL*MORPHO*.LOG'))
-    # morph_filled_cylinder_files = glob.glob(os.path.join(log_dir, '*F_CYL*MORPHO*.LOG'))
-    # morph_plate_files = glob.glob(os.path.join(log_dir, '*PLATE*MORPHO*.LOG'))
-
-    # Bounding box shapes
-    # jsw_hollow_sphere_bound_files = glob.glob(os.path.join(log_dir, '*H_SPH*_BOUNDING*JSW*.LOG'))
-    # jsw_filled_sphere_bound_files = glob.glob(os.path.join(log_dir, '*F_SPH*_BOUNDING*JSW*.LOG'))
-    # jsw_hollow_cylinder_bound_files = glob.glob(os.path.join(log_dir, '*H_CYL*_BOUNDING*JSW*.LOG'))
-    # jsw_filled_cylinder_bound_files = glob.glob(os.path.join(log_dir, '*F_CYL*_BOUNDING*JSW*.LOG'))
-    # jsw_plate_bound_files = glob.glob(os.path.join(log_dir, '*PLATE*_BOUNDING*JSW*.LOG'))
-    # morph_hollow_sphere_bound_files = glob.glob(os.path.join(log_dir, '*H_SPH*_BOUNDING*MORPHO*.LOG'))
-    # morph_filled_sphere_bound_files = glob.glob(os.path.join(log_dir, '*F_SPH*_BOUNDING*MORPHO*.LOG'))
-    # morph_hollow_cylinder_bound_files = glob.glob(os.path.join(log_dir, '*H_CYL*_BOUNDING*MORPHO*.LOG'))
-    # morph_filled_cylinder_bound_files = glob.glob(os.path.join(log_dir, '*F_CYL*_BOUNDING*MORPHO*.LOG'))
-    # morph_plate_bound_files = glob.glob(os.path.join(log_dir, '*PLATE*_BOUNDING*MORPHO*.LOG'))
-
-    # Remove the bounding box images from the log lists
-    # jsw_hollow_sphere_files = list(set(jsw_hollow_sphere_files) - set(jsw_hollow_sphere_bound_files))
-    # jsw_filled_sphere_files = list(set(jsw_filled_sphere_files) - set(jsw_filled_sphere_bound_files))
-    # jsw_hollow_cylinder_files = list(set(jsw_hollow_cylinder_files) - set(jsw_hollow_cylinder_bound_files))
-    # jsw_filled_cylinder_files = list(set(jsw_filled_cylinder_files) - set(jsw_filled_cylinder_bound_files))
-    # jsw_plate_files = list(set(jsw_plate_files) - set(jsw_plate_bound_files))
-    # morph_hollow_sphere_files = list(set(morph_hollow_sphere_files) - set(morph_hollow_sphere_bound_files))
-    # morph_filled_sphere_files = list(set(morph_filled_sphere_files) - set(morph_filled_sphere_bound_files))
-    # morph_hollow_cylinder_files = list(set(morph_hollow_cylinder_files) - set(morph_hollow_cylinder_bound_files))
-    # morph_filled_cylinder_files = list(set(morph_filled_cylinder_files) - set(morph_filled_cylinder_bound_files))
-    # morph_plate_files = list(set(morph_plate_files) - set(morph_plate_bound_files))
 
     # Sort the lists alphabetically
     jsw_hollow_sphere_files.sort()
@@ -57,21 +34,6 @@ def process_ipl_log(log_dir, output_dir):
     jsw_hollow_cylinder_files.sort()
     jsw_filled_cylinder_files.sort()
     jsw_plate_files.sort()
-    # jsw_hollow_sphere_bound_files.sort()
-    # jsw_filled_sphere_bound_files.sort()
-    # jsw_hollow_cylinder_bound_files.sort()
-    # jsw_filled_cylinder_bound_files.sort()
-    # jsw_plate_bound_files.sort()
-    # morph_hollow_sphere_files.sort()
-    # morph_filled_sphere_files.sort()
-    # morph_hollow_cylinder_files.sort()
-    # morph_filled_cylinder_files.sort()
-    # morph_plate_files.sort()
-    # morph_hollow_sphere_bound_files.sort()
-    # morph_filled_sphere_bound_files.sort()
-    # morph_hollow_cylinder_bound_files.sort()
-    # morph_filled_cylinder_bound_files.sort()
-    # morph_plate_bound_files.sort()
 
     csv_array = np.array(
         [
@@ -97,7 +59,7 @@ def process_ipl_log(log_dir, output_dir):
         ]
     )
 
-    for log_file in jsw_hollow_sphere_files:
+    for log_file in jsw_hollow_cylinder_files:
         basename = os.path.basename(log_file)
         print("Parsing: " + str(basename))
         file = open(log_file, "rb")
@@ -144,7 +106,7 @@ def process_ipl_log(log_dir, output_dir):
         )
         csv_array = np.vstack([csv_array, output_array])
 
-    output_csv = os.path.join(output_dir, "H_SPH_JSW_THICKNESS.csv")
+    output_csv = os.path.join(output_dir, "H_CYL_JSW_THICKNESS_IPL.csv")
     csv_array = csv_array.astype(str)
     np.savetxt(output_csv, csv_array, delimiter=",", fmt="%s")
 

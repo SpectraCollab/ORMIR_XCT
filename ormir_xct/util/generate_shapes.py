@@ -1,3 +1,10 @@
+"""
+Created by: Michael Kuczynski
+Created on: ??
+
+Description: Functions to generate filled/hollow spheres, cylinders, plates, and compute thickness. 
+"""
+
 import os
 import numpy as np
 import SimpleITK as sitk
@@ -384,10 +391,10 @@ def compute_thickness(base_dir):
         file_basename = os.path.basename(os.path.splitext(f)[0])
         log_file_name = os.path.join(log_dir, file_basename + ".txt")
         log_file_name_oversample = os.path.join(
-            log_dir, file_basename + "_OVERSAMPLE.txt"
+            log_dir, file_basename + "_OVERSAMPLE_SKEL.txt"
         )
 
-        if os.path.isfile(log_file_name):
+        if os.path.isfile(log_file_name_oversample):
             continue
 
         print("Computing thickness for: " + str(file_basename))
@@ -395,12 +402,11 @@ def compute_thickness(base_dir):
         shape = sitk.ReadImage(f, sitk.sitkUInt8)
         shape = sitk.GetArrayFromImage(shape)
 
-        print("\tOversample branch thickness...")
         thickness_stats_branch = calc_structure_thickness_statistics(
-            shape, tuple([VOXEL_SIZE] * 3), VOXEL_SIZE
+            shape, tuple([VOXEL_SIZE] * 3), 0, oversample=True, skeletonize=True
         )
 
-        filename = file_basename + "_OVERSAMPLE"
+        filename = file_basename + "_OVERSAMPLE_SKEL"
         header = np.array(["shape", "th_mean", "th_sd", "th_min", "th_max"])
         content = np.array(
             [
@@ -414,36 +420,14 @@ def compute_thickness(base_dir):
         log_array = np.vstack((header, content))
         np.savetxt(log_file_name_oversample, log_array, fmt="%s")
 
-        print("\tNo oversample branch thickness...")
-        thickness_stats_branch = calc_structure_thickness_statistics(
-            shape, tuple([VOXEL_SIZE] * 3), VOXEL_SIZE, oversample=False
-        )
 
-        header = np.array(["shape", "th_mean", "th_sd", "th_min", "th_max"])
-        content = np.array(
-            [
-                file_basename,
-                thickness_stats_branch[0],
-                thickness_stats_branch[1],
-                thickness_stats_branch[2],
-                thickness_stats_branch[3],
-            ]
-        )
-        log_array = np.vstack((header, content))
-        np.savetxt(log_file_name, log_array, fmt="%s")
+if __name__ == "__main__":
+    base_dir = "/Volumes/Manskelab/ManskelabProjects/ORMIR_XCT"
+    img_dir = "/Volumes/Manskelab/ManskelabProjects/ORMIR_XCT/NII"
 
-
-def main(base_dir, img_dir):
     create_filled_spheres(img_dir)
     create_hollow_spheres(img_dir)
     create_filled_spheres(img_dir)
     create_hollow_spheres(img_dir)
     create_plates(img_dir)
     compute_thickness(base_dir)
-
-
-if __name__ == "__main__":
-    base_dir = "/Volumes/Manskelab/ManskelabProjects/ORMIR_XCT/LOG"
-    img_dir = "/Volumes/Manskelab/ManskelabProjects/ORMIR_XCT/NII"
-
-    main(base_dir, img_dir)
