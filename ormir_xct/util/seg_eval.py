@@ -3,8 +3,8 @@ import SimpleITK as sitk
 from segmentation_evaluation import calculate_dice_and_jaccard
 
 parser = argparse.ArgumentParser()
-parser.add_argument('ref')
-parser.add_argument('seg')
+parser.add_argument("ref")
+parser.add_argument("seg")
 args = parser.parse_args()
 
 # Parse arguments
