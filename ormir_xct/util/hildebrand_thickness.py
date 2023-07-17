@@ -12,12 +12,14 @@ from __future__ import annotations
 import numpy as np
 from collections.abc import Iterable
 from numba import jit
-from SimpleITK import (
-    GetImageFromArray,
-    GetArrayFromImage,
-    SignedMaurerDistanceMap,
+from SimpleITK import GetImageFromArray, GetArrayFromImage, SignedMaurerDistanceMap
+import SimpleITK as sitk
+from scipy.ndimage.morphology import (
+    binary_erosion,
+    binary_dilation,
+    distance_transform_edt,
 )
-from scipy.ndimage.morphology import binary_erosion, binary_dilation, distance_transform_edt
+from skimage.morphology import skeletonize_3d
 from typing import Optional, Union
 import warnings
 
@@ -30,7 +32,7 @@ def compute_local_thickness_from_sorted_distances(
     sorted_dists: np.ndarray,
     sorted_dists_indices: np.ndarray,
     voxel_width: np.ndarray,
-    rd_extra: float
+    rd_extra: float,
 ) -> np.ndarray:
     """
     Use Hildebrand's sphere-fitting method to compute the local thickness field for a
@@ -88,31 +90,32 @@ def compute_local_thickness_from_sorted_distances(
     return local_thickness
 
 
-def oversampling_distance_transform(mask: np.ndarray, voxel_width: np.ndarray) -> np.ndarray:
+def oversampling_distance_transform(
+    mask: np.ndarray, voxel_width: np.ndarray
+) -> np.ndarray:
     # oversample the image
     shape = [2 * s - 1 for s in mask.shape]
     upsampled_mask = np.zeros(shape, dtype=mask.dtype)
-    upsampled_mask[tuple([slice(None, None, 2)]*len(mask.shape))] = mask
+    upsampled_mask[tuple([slice(None, None, 2)] * len(mask.shape))] = mask
     upsampled_mask = binary_dilation(
-        upsampled_mask,
-        structure=np.ones(tuple([3]*len(mask.shape)))
+        upsampled_mask, structure=np.ones(tuple([3] * len(mask.shape)))
     ).astype(int)
     upsampled_mask = binary_erosion(
         np.pad(upsampled_mask, 1, mode="edge"),
-        structure=np.ones(tuple([3]*len(mask.shape)))
-    ).astype(int)[tuple([slice(1, -1)]*len(mask.shape))]
+        structure=np.ones(tuple([3] * len(mask.shape))),
+    ).astype(int)[tuple([slice(1, -1)] * len(mask.shape))]
 
     # do distance transform on oversampled mask
-    dt = upsampled_mask*distance_transform_edt(
-        upsampled_mask,
-        voxel_width/2
-    )
+    dt = upsampled_mask * distance_transform_edt(upsampled_mask, voxel_width / 2)
 
-    return dt[tuple([slice(None, None, 2)]*len(mask.shape))]
+    return dt[tuple([slice(None, None, 2)] * len(mask.shape))]
 
 
 def compute_local_thickness_from_mask(
-    mask: np.ndarray, voxel_width: Union[Iterable[float], float], oversample: bool = True
+    mask: np.ndarray,
+    voxel_width: Union[Iterable[float], float],
+    oversample: bool = True,
+    skeletonize: bool = True,
 ) -> np.ndarray:
     """
     Compute the local thickness field for a binary mask.
@@ -121,7 +124,8 @@ def compute_local_thickness_from_mask(
     "distance ridge," which is an array of the distance transform values and indices of the skeletonization.
     Finally, a `numba`-jit-decorated function is called to efficiently use Hildebrand's sphere-fitting method for
     local thickness calculation. The local thickness field is scaled by the voxel width and multiplied by the
-    binary mask to ensure local thickness values are not assigned to the background inadvertently.
+    binary mask to ensure local thickness values are not assigned to the background inadvertently. Optionally,
+    skeletonization can be used to speed up the calculation, and oversampling can be used to improve accuracy.
 
     Parameters
     ----------
@@ -134,6 +138,10 @@ def compute_local_thickness_from_mask(
     oversample : bool
         Set this to `True` to use the (more accurate but slower) oversampling distance transform method. For
         consistency with IPL, set this to `False`
+
+    skeletonize : bool
+        Set this to `True` to skeletonize and use only voxels on the skeleton for thickness calculation. For
+        better consistency with IPL, set this to `True`
 
     Returns
     -------
@@ -161,11 +169,33 @@ def compute_local_thickness_from_mask(
     if oversample:
         mask_dist = oversampling_distance_transform(mask, voxel_width)
     else:
-        mask_dist = mask*distance_transform_edt(
-            mask,
-            voxel_width
+        mask_dist = mask * distance_transform_edt(mask, voxel_width)
+
+    if skeletonize:
+        skeleton = np.asarray(
+            sitk.GetArrayFromImage(
+                sitk.BinaryThinning(sitk.GetImageFromArray(mask.astype(int)))
+            ),
+            dtype=bool,
         )
-    sorted_dists = [(mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())]
+
+        if not np.any(skeleton):
+            warnings.warn(
+                "shape too thin, no skeletonization is found, skipping skeletonization step"
+            )
+            skeleton_dist = mask_dist
+        else:
+            skeleton_dist = (skeleton > 0) * mask_dist
+
+        sorted_dists = [
+            (skeleton_dist[i, j, k], i, j, k)
+            for (i, j, k) in zip(*skeleton_dist.nonzero())
+        ]
+    else:
+        sorted_dists = [
+            (mask_dist[i, j, k], i, j, k) for (i, j, k) in zip(*mask_dist.nonzero())
+        ]
+
     sorted_dists.sort()
     sorted_dists = np.asarray(sorted_dists, dtype=float)
 
@@ -174,7 +204,7 @@ def compute_local_thickness_from_mask(
         sorted_dists[:, 0].astype(float),
         sorted_dists[:, 1:].astype(int),
         voxel_width,
-        0.5 if oversample else 0
+        0.5 if oversample else 0,
     )
 
 
@@ -184,7 +214,8 @@ def calc_structure_thickness_statistics(
     min_thickness: float,
     sub_mask: Optional[np.ndarray] = None,
     pad_amount: Optional[Union[int, Tuplep[int, int, int]]] = None,
-    oversample: bool = True
+    oversample: bool = True,
+    skeletonize: bool = True,
 ) -> Tuple[float, float, float, float, np.ndarray]:
     """
     Parameters
@@ -211,6 +242,10 @@ def calc_structure_thickness_statistics(
     oversample : bool
         Set this to `True` to use the (more accurate but slower) oversampling distance transform method. For
         consistency with IPL, set this to `False`
+
+    skeletonize : bool
+        Set this to `True` to skeletonize and use only voxels on the skeleton for thickness calculation. For
+        better consistency with IPL, set this to `True`
 
     Returns
     -------
@@ -239,7 +274,9 @@ def calc_structure_thickness_statistics(
 
     if (mask > 0).sum() > 0:
         mask = mask > 0  # binarize
-        local_thickness = compute_local_thickness_from_mask(mask, voxel_width, oversample)
+        local_thickness = compute_local_thickness_from_mask(
+            mask, voxel_width, oversample, skeletonize
+        )
     else:
         warnings.warn(
             "cannot find structure thickness statistics for binary mask with no positive voxels"
@@ -248,10 +285,16 @@ def calc_structure_thickness_statistics(
 
     if pad_amount is not None:
         # trim down the output
-        mask = mask[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
-        local_thickness = local_thickness[pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount]
+        mask = mask[
+            pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount
+        ]
+        local_thickness = local_thickness[
+            pad_amount:-pad_amount, pad_amount:-pad_amount, pad_amount:-pad_amount
+        ]
 
-    local_thickness_structure = np.maximum(local_thickness[sub_mask & mask], min_thickness)
+    local_thickness_structure = np.maximum(
+        local_thickness[local_thickness > 0], min_thickness
+    )
 
     return (
         local_thickness_structure.mean(),

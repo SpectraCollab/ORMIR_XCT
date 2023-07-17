@@ -33,9 +33,10 @@ import argparse
 import SimpleITK as sitk
 
 from ormir_xct.util.scanco_rescale import (
-    convert_scanco_to_bmd, convert_linear_attenuation_to_bmd,
-    convert_hu_to_bmd
-    )
+    convert_scanco_to_bmd,
+    convert_linear_attenuation_to_bmd,
+    convert_hu_to_bmd,
+)
 from ormir_xct.util.file_reader import file_reader
 
 
@@ -98,7 +99,7 @@ def bmd_masked(
             "ERROR: Invalid image units provided. Only BMD, SCANCO, ATTENUATION, or HU are accepted."
         )
         sys.exit(1)
-    
+
     numpy_image = sitk.GetArrayFromImage(image)
     mask = sitk.GetArrayFromImage(mask)
     mean = numpy_image[mask > 0].mean()
