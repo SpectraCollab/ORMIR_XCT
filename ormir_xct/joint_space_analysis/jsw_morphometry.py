@@ -12,7 +12,7 @@ import datetime
 import numpy as np
 import SimpleITK as sitk
 
-from connected_check import connected_check
+from ormir_xct.joint_space_analysis.connected_check import connected_check
 from ormir_xct.util.hildebrand_thickness import (
     calc_structure_thickness_statistics,
     compute_local_thickness_from_mask,
@@ -173,9 +173,8 @@ def jsw_parameters(
     dilated_mask = sitk.GetArrayFromImage(dilated_js_mask)
 
     # Needs to be fixed for masks with JS minimum < 1 voxel
-    # For now, set the minimum JSW value to twice the voel size (0.1214)
     result = calc_structure_thickness_statistics(
-        dilated_mask, voxel_size, voxel_size * 2, mask
+        dilated_mask, voxel_size, 0, mask, oversample=False, skeletonize=True
     )
 
     mean_thickness = result[0]
