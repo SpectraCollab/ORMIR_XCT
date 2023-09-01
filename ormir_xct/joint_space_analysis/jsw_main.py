@@ -61,7 +61,7 @@ def main(joint_seg_path, output_path):
     # Compute JS parameters
     print("Computing thickness...")
     dt_img, jsw_params = jsw_parameters(
-        pad_image, dilated_js_mask, output_path, basename, 0.0607, js_mask
+        pad_image, dilated_js_mask, basename, output_path, js_mask, 0.0607, True, True
     )
 
     # Copy the origin and spacing information from the original image so the

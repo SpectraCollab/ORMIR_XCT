@@ -142,7 +142,7 @@ def jsw_erode(dilated_image, pad_image):
 
 
 def jsw_parameters(
-    pad_image, dilated_js_mask, output_path, filename, voxel_size=0.0607, js_mask=None
+    pad_image, dilated_js_mask, filename, output_path, js_mask=None, voxel_size=0.0607, oversamp=True, skel=True, minimum=0.0
 ):
     """
     Computes the following JSW parameters:
@@ -174,7 +174,7 @@ def jsw_parameters(
 
     # Needs to be fixed for masks with JS minimum < 1 voxel
     result = calc_structure_thickness_statistics(
-        dilated_mask, voxel_size, 0, mask, oversample=False, skeletonize=True
+        dilated_mask, voxel_size, minimum, mask, oversample=oversamp, skeletonize=skel
     )
 
     mean_thickness = result[0]
