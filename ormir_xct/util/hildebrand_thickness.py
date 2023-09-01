@@ -277,6 +277,7 @@ def calc_structure_thickness_statistics(
         local_thickness = compute_local_thickness_from_mask(
             mask, voxel_width, oversample, skeletonize
         )
+        local_thickness *= sub_mask
     else:
         warnings.warn(
             "cannot find structure thickness statistics for binary mask with no positive voxels"
