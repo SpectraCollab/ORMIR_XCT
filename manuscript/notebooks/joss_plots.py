@@ -7,6 +7,7 @@ from LinearRegression import LinearRegression
 
 from matplotlib import pyplot as plt
 
+
 def get_thickness_list(csv, ipl=True):
     # Assume CSV files have already been sorted by filename (alphabetically)
     if ipl:
@@ -22,6 +23,7 @@ def get_thickness_list(csv, ipl=True):
 
     return thickness, filenames
 
+
 def get_bmd_list(csv):
     csv = pandas.read_csv(csv)
     filenames = csv["Filename"].values.tolist()
@@ -35,13 +37,14 @@ def get_bmd_list(csv):
         "MCP2_DST_BMD": mcp2_dst_bmd,
         "MCP2_PRX_BMD": mcp2_prx_bmd,
         "MCP3_DST_BMD": mcp3_dst_bmd,
-        "MCP3_PRX_BMD": mcp3_prx_bmd
+        "MCP3_PRX_BMD": mcp3_prx_bmd,
     }
 
     return bmd_dict
 
+
 def bmd_plots(bmd_files):
-    fig = plt.figure(constrained_layout=True, figsize=(20,10))
+    fig = plt.figure(constrained_layout=True, figsize=(20, 10))
     fig.suptitle(
         "Bone Mineral Density (BMD) - IPL vs. ORMIR_XCT",
         fontsize="xx-large",
@@ -61,10 +64,12 @@ def bmd_plots(bmd_files):
     ipl_bmd_dict = get_bmd_list(bmd_files["IPL"])
     py_bmd_dict = get_bmd_list(bmd_files["PY"])
 
-    bmd = ((ipl_bmd_dict["MCP2_DST_BMD"], py_bmd_dict["MCP2_DST_BMD"]), 
-           (ipl_bmd_dict["MCP2_PRX_BMD"], py_bmd_dict["MCP2_PRX_BMD"]),
-               (ipl_bmd_dict["MCP3_DST_BMD"], py_bmd_dict["MCP3_DST_BMD"]), 
-               (ipl_bmd_dict["MCP3_PRX_BMD"], py_bmd_dict["MCP3_PRX_BMD"])) 
+    bmd = (
+        (ipl_bmd_dict["MCP2_DST_BMD"], py_bmd_dict["MCP2_DST_BMD"]),
+        (ipl_bmd_dict["MCP2_PRX_BMD"], py_bmd_dict["MCP2_PRX_BMD"]),
+        (ipl_bmd_dict["MCP3_DST_BMD"], py_bmd_dict["MCP3_DST_BMD"]),
+        (ipl_bmd_dict["MCP3_PRX_BMD"], py_bmd_dict["MCP3_PRX_BMD"]),
+    )
 
     subplot = 0
 
@@ -81,11 +86,13 @@ def bmd_plots(bmd_files):
         md = np.mean(diff)
 
         axs1[subplot].scatter(mean, diff, color="blue", marker=".")
-        axs1[subplot].axhline(md, color="black", linestyle="-", label='MeanDiff')
-        axs1[subplot].axhline(md + 1.96 * sd, color="red", linestyle="--", label='MeanDiff +/- 1.96 * sd')
+        axs1[subplot].axhline(md, color="black", linestyle="-", label="MeanDiff")
+        axs1[subplot].axhline(
+            md + 1.96 * sd, color="red", linestyle="--", label="MeanDiff +/- 1.96 * sd"
+        )
         axs1[subplot].axhline(md - 1.96 * sd, color="red", linestyle="--")
         axs1[subplot].grid()
-        axs1[subplot].set_title(list(ipl_bmd_dict.keys())[subplot+1])
+        axs1[subplot].set_title(list(ipl_bmd_dict.keys())[subplot + 1])
         axs1[subplot].set_xlabel("Mean BMD (mg HA/cm^3)")
 
         max_thickness = max(np.max(bmd_ipl), np.max(bmd_py))
@@ -107,7 +114,7 @@ def bmd_plots(bmd_files):
                 model_slope, model_intercept, model_r_sq
             ),
         )
-        axs2[subplot].set_title(list(ipl_bmd_dict.keys())[subplot+1])
+        axs2[subplot].set_title(list(ipl_bmd_dict.keys())[subplot + 1])
         axs2[subplot].set_xlabel("IPL Calculated BMD (mg HA/cm^3)")
         axs2[subplot].grid()
         axs2[subplot].legend(loc="lower right")
@@ -122,8 +129,9 @@ def bmd_plots(bmd_files):
 
     plt.show()
 
+
 def thickness_plots(thickness_files):
-    fig = plt.figure(constrained_layout=True, figsize=(20,10))
+    fig = plt.figure(constrained_layout=True, figsize=(20, 10))
     fig.suptitle(
         "Mean Thickness - IPL vs. ORMIR_XCT (Oversampling=True, Skeletonization=True)",
         fontsize="xx-large",
@@ -134,7 +142,8 @@ def thickness_plots(thickness_files):
         "Bland-Altman Plots of Mean Thickness - IPL vs. ORMIR_XCT", fontsize="x-large"
     )
     subfigs[1].suptitle(
-        "Linear Regression Plots of Mean Thickness - IPL vs. ORMIR_XCT", fontsize="x-large"
+        "Linear Regression Plots of Mean Thickness - IPL vs. ORMIR_XCT",
+        fontsize="x-large",
     )
 
     axs1 = subfigs[0].subplots(nrows=1, ncols=5)
@@ -148,7 +157,9 @@ def thickness_plots(thickness_files):
         thickness_ipl, filename_ipl = get_thickness_list(
             thickness_files[file_name]["IPL"], ipl=True
         )
-        thickness_py, filename_py = get_thickness_list(thickness_files[file_name]["PY"], ipl=False)
+        thickness_py, filename_py = get_thickness_list(
+            thickness_files[file_name]["PY"], ipl=False
+        )
 
         thickness_ipl = np.array([thickness_ipl]).T
         thickness_py = np.array([thickness_py]).T
@@ -159,8 +170,10 @@ def thickness_plots(thickness_files):
         md = np.mean(diff)
 
         axs1[subplot].scatter(mean, diff, color="blue", marker=".")
-        axs1[subplot].axhline(md, color="black", linestyle="-", label='MeanDiff')
-        axs1[subplot].axhline(md + 1.96 * sd, color="red", linestyle="--", label='MeanDiff +/- 1.96 * sd')
+        axs1[subplot].axhline(md, color="black", linestyle="-", label="MeanDiff")
+        axs1[subplot].axhline(
+            md + 1.96 * sd, color="red", linestyle="--", label="MeanDiff +/- 1.96 * sd"
+        )
         axs1[subplot].axhline(md - 1.96 * sd, color="red", linestyle="--")
         axs1[subplot].grid()
         axs1[subplot].set_title(file_name)
@@ -185,7 +198,9 @@ def thickness_plots(thickness_files):
                 model_slope, model_intercept, model_r_sq
             ),
         )
-        axs2[subplot].plot((0,max_thickness), (0,max_thickness), color="red", linestyle="--")
+        axs2[subplot].plot(
+            (0, max_thickness), (0, max_thickness), color="red", linestyle="--"
+        )
         axs2[subplot].set_title(file_name)
         axs2[subplot].set_xlabel("IPL Calculated Thickness")
         axs2[subplot].grid()

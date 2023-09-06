@@ -70,7 +70,7 @@ def compute_local_thickness_from_sorted_distances(
         The local thickness field.
     """
 
-    for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
+    for rd, (ri, rj, rk) in zip(sorted_dists, sorted_dists_indices):
         rd_vox = rd / voxel_width
         di_min = np.maximum(np.floor(ri - rd_vox[0]) - 1, 0)
         di_max = np.minimum(np.ceil(ri + rd_vox[0]) + 2, local_thickness.shape[0])

@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression as sklearnLinearRegression
 
+
 class LinearRegression:
     def __init__(self):
         self.model = None

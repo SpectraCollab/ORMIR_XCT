@@ -85,7 +85,6 @@ def process_py_log(log_dir, output_dir):
     ]
 
     for shape in shape_list:
-
         for log_file in shape[0]:
             # Read the log (text) file
             basename = os.path.basename(log_file)

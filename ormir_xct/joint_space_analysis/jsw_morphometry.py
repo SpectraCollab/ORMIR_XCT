@@ -142,7 +142,15 @@ def jsw_erode(dilated_image, pad_image):
 
 
 def jsw_parameters(
-    pad_image, dilated_js_mask, filename, output_path, js_mask=None, voxel_size=0.0607, oversamp=True, skel=True, minimum=0.0
+    pad_image,
+    dilated_js_mask,
+    filename,
+    output_path,
+    js_mask=None,
+    voxel_size=0.0607,
+    oversamp=True,
+    skel=True,
+    minimum=0.0,
 ):
     """
     Computes the following JSW parameters:

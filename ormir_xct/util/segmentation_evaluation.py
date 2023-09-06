@@ -153,6 +153,7 @@ def calculate_surface_distance_measures(ref, seg, spacing):
 
     return ssd_measures
 
+
 def hausdorff_sitk(ref, seg):
     """
     Compute the Hausdorff distance using SimpleITK.
