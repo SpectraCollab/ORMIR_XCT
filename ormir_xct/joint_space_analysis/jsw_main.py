@@ -43,25 +43,25 @@ def main(joint_seg_path, output_path):
     print("Dilating image...")
     dilated_image = jsw_dilate(pad_image)
     sitk.WriteImage(
-        dilated_image, os.path.join(output_path, str(basename) + "_DILATE.mha")
+        dilated_image, os.path.join(output_path, str(basename) + "_DILATE.nii")
     )
 
     # Erode image
     print("Eroding image...")
     eroded_image, js_mask, dilated_js_mask = jsw_erode(dilated_image, pad_image)
     sitk.WriteImage(
-        eroded_image, os.path.join(output_path, str(basename) + "_ERODE.mha")
+        eroded_image, os.path.join(output_path, str(basename) + "_ERODE.nii")
     )
-    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + "_JS_MASK.mha"))
+    sitk.WriteImage(js_mask, os.path.join(output_path, str(basename) + "_JS_MASK.nii"))
     sitk.WriteImage(
         dilated_js_mask,
-        os.path.join(output_path, str(basename) + "_DILATED_JS_MASK.mha"),
+        os.path.join(output_path, str(basename) + "_DILATED_JS_MASK.nii"),
     )
 
     # Compute JS parameters
     print("Computing thickness...")
     dt_img, jsw_params = jsw_parameters(
-        pad_image, dilated_js_mask, basename, output_path, js_mask, 0.0607, True, True
+        pad_image, dilated_js_mask, basename, output_path, js_mask, 0.0607, True, False
     )
 
     # Copy the origin and spacing information from the original image so the
@@ -73,7 +73,7 @@ def main(joint_seg_path, output_path):
     # Mask the thickness map with the original joint space mask
     dt_img = sitk.Mask(dt_img, js_mask)
 
-    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + "_DT.mha"))
+    sitk.WriteImage(dt_img, os.path.join(output_path, str(basename) + "_DT.nii"))
 
 
 if __name__ == "__main__":
