@@ -16,8 +16,8 @@ import SimpleITK as sitk
 
 from ormir_xct.autocontour.autocontour import autocontour
 
-class TestAutocontour(unittest.TestCase):
 
+class TestAutocontour(unittest.TestCase):
     def setUp(self):
         self.true_mask_filename = "test_joint_mask.nii"
         self.true_image_filename = "test_joint.nii"

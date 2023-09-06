@@ -70,7 +70,7 @@ def compute_local_thickness_from_sorted_distances(
         The local thickness field.
     """
 
-    for (rd, (ri, rj, rk)) in zip(sorted_dists, sorted_dists_indices):
+    for rd, (ri, rj, rk) in zip(sorted_dists, sorted_dists_indices):
         rd_vox = rd / voxel_width
         di_min = np.maximum(np.floor(ri - rd_vox[0]) - 1, 0)
         di_max = np.minimum(np.ceil(ri + rd_vox[0]) + 2, local_thickness.shape[0])
@@ -277,6 +277,7 @@ def calc_structure_thickness_statistics(
         local_thickness = compute_local_thickness_from_mask(
             mask, voxel_width, oversample, skeletonize
         )
+        local_thickness *= sub_mask
     else:
         warnings.warn(
             "cannot find structure thickness statistics for binary mask with no positive voxels"

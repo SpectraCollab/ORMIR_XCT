@@ -26,7 +26,7 @@ def binarize_numpy_array(arr):
     numpy.array
         Binarized image as an array
     """
-    return (np.abs(arr) > 0).astype(np.int)
+    return (np.abs(arr) > 0).astype(np.int64)
 
 
 def get_distance_map_and_surface(mask):
@@ -152,3 +152,24 @@ def calculate_surface_distance_measures(ref, seg, spacing):
     ssd_measures["std"] = np.std(all_dist_list)
 
     return ssd_measures
+
+
+def hausdorff_sitk(ref, seg):
+    """
+    Compute the Hausdorff distance using SimpleITK.
+
+    Parameters
+    ----------
+    ref : sitk.Image
+
+    seg : sitk.Image
+
+    Returns
+    -------
+    ssd_measures : tuple
+        A tuple containing the mean and max Hausdorff distance.
+    """
+    d = sitk.HausdorffDistanceImageFilter()
+    d.Execute(ref, seg)
+
+    return (d.GetAverageHausdorffDistance(), d.GetHausdorffDistance())
