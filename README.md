@@ -5,5 +5,8 @@ ORMIR_XCT is a Python package for processing high resolution peripheral computed
 ### Step 1: Install the ORMIR_XCT Anaconda Environment:
 `conda env create -f environment.yml`
 
+### Step 2: Activate the Anaconda Environment:
+`conda activate ormir_xct`
+
 ### Step 2: Install the Package:
 `pip install -e .`
