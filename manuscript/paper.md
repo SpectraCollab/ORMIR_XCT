@@ -69,11 +69,11 @@ date: 30 August 2023
 bibliography: paper.bib
 ---
 
-# 1 – Statement of Need:
+# 1 – Statement of need:
 High resolution peripheral quantitative computed tomography (HR-pQCT) is an imaging technique with a nominal isotropic voxel size of 61µm capable of imaging trabecular bone *in-vivo*. HR-pQCT has a wide range of applications, primarily focused on bone to improve our understanding of musculoskeletal diseases [@Brunet:2020], assess epidemiological associations  [@Burt:2016], and evaluate the effects of pharmaceutical interventions [@Brunet:2021]. Processing HR-pQCT images has largely been supported using the scanner manufacturer’s scripting language (Image Processing Language, IPL, Scanco Medical). However, by expanding image processing workflows outside of the scanner manufacturer’s software environment, users have the flexibility to apply more advanced mathematical techniques and leverage modern software packages to improve image processing. The `ORMIR_XCT` Python package was developed to reimplement some existing IPL workflows and provide an open and reproducible package allowing for the development of advanced HR-pQCT data processing workflows.
 
 
-# 2 – Package Summary:
+# 2 – Package summary:
 The development of this package began during the Jupyter Community Workshop in Maastricht, Netherlands in June 2022, hosted by the Open and Reproducible Musculoskeletal Imaging Research (ORMIR) group. During this workshop, the conceptualization and initial development of the `ORMIR_XCT` package began with support from Kitware. The `ORMIR_XCT` package is currently being used by members of the ORMIR community to assess bone mineral density (BMD) and joint space width (JSW) changes in HR-pQCT scans of patients with osteoarthritis or rheumatoid arthritis.
 
 The `ORMIR_XCT` package contains four modules for processing HR-pQCT data of bones and joints: 1) automatic contouring of the periosteal surface, 2) JSW analysis, 3) BMD calculation, and 4) segmentation of trabecular bone. Analyses have been performed to compare outputs from the `ORMIR_XCT` package to results generated using IPL. Jupyter Notebook examples are provided to describe the workflows implemented in the `ORMIR_XCT` package.
@@ -99,12 +99,12 @@ To evaluate the thickness computation implemented in the `ORMIR_XCT` package, a 
 
 ![Figure 2: Bland-Altman and regression plots of mean joint space thickness computed using IPL and the `ORMIR_XCT` package  . Top row: black lines indicate mean difference and red dotted line shows the limits of agreement. Bottom row: solid black line indicates the linear regression between IPL and ORMIR_XCT computed thickness and red dotted lines indicate a line of unity.\label{fig:IPL_vs_ORMIR_XCT-DT}](figures/IPL_vs_ORMIR_XCT-DT.png)
 
-## 3.3 - Bone Mineral Density:
+## 3.3 - Bone mineral density:
 Images obtained from HR-pQCT scanners are saved using the manufacturer’s proprietary file format (AIM). To process HR-pQCT images using Python, these files need to be converted to a file format that can be interpreted by common image processing Python libraries. The `ITKIOScanco` module is used in the `ORMIR_XCT` package to convert HR-pQCT images to other common medical image file types. However, the `ITKIOScanco` module converts HR-pQCT images to Hounsfield Units (HU) by default. Measures of BMD require the image to be calibrated in density units (mg of hydroxyapatite per cm3). Several image unit conversions have been included in the `ORMIR_XCT` package to allow for conversion between HR-pQCT native units (termed Scanco units) and each of HU, density, and linear attenuation units. A sample dataset of HR-pQCT images of second and third metacarpal phalangeal (MCP) joints (n = 292) was used to compare BMD results between IPL and the `ORMIR_XCT` package. BMD was reported separately for the distal (DST) and proximal (PRX) segments of each joint (\autoref{fig:IPL_vs_ORMIR_XCT-BMD}).
 
 ![Figure 3: Bone mineral density (mg HA/cm3) linear regression and Bland-Altman plots comparing IPL and the ORMIR_XCT computed bone mineral density (BMD ). All scans were obtained from a second-generation HR-pQCT scanner (XtremeCT2, Scanco Medical) with an isotropic voxel size of 61µm. MCP2: 2nd metacarpal phalangeal joint, MCP3: 3rd metacarpal phalangeal joint,  DST: distal, PRX: proximal.\label{fig:IPL_vs_ORMIR_XCT-BMD}](figures/IPL_vs_ORMIR_XCT-BMD.png)
 	
-## 3.4 - Trabecular Segmentation:
+## 3.4 - Trabecular segmentation:
 A common operation performed in IPL is the application of a Gaussian smoothing filter followed by a global threshold-based image segmentation. The `gauss_seg` function in IPL has been reimplemented in the `ORMIR_XCT` package and the similarity of IPL and `ORMIR_XCT` trabecular segmentations were computed using DICE coefficients, Jaccard indices, and Hausdorff distances (\autoref{fig:Table2}). The same dataset used to test the automatic contouring module was used to compare IPL and `ORMIR_XCT` trabecular segmentation.
 
 ![Table 2: DICE scores, Jaccard indices, and Hausdorff distances (voxels) for comparison of trabecular segmentation  performed using IPL versus the `ORMIR_XCT` package. All scans were obtained from a second-generation HR-pQCT scanner (XtremeCT2, Scanco Medical) with an isotropic voxel size of 61µm. For each algorithm, Gaussian smoothing was performed with sigma = 0.5. Subsequently, segmentation was performed with lower and upper thresholds of 1,170 and 10,000 HU, respectively. DIP2: second distal interphalangeal joint, DIP3: third distal interphalangeal joint, TMC: trapeziometacarpal joint.\label{fig:Table2}](figures/Table2.png)
