@@ -23,6 +23,7 @@ def create_test_image(dimensions, value):
     array = np.full(dimensions, value, np.int32)
     return array
 
+
 def create_vtk_image(dimensions, value):
     """
     Creates a VTK image containing a single value of given dimension.
@@ -33,12 +34,13 @@ def create_vtk_image(dimensions, value):
 
     flat_data_array = data.flatten()
     vtk_data = numpy_to_vtk(num_array=flat_data_array, deep=True, array_type=data_type)
-    
+
     vtk_image = vtk.vtkImageData()
     vtk_image.GetPointData().SetScalars(vtk_data)
     vtk_image.SetDimensions(shape[0], shape[1], shape[2])
 
     return vtk_image
+
 
 def vtk_image_to_numpy(vtk_image):
     """

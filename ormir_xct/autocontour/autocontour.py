@@ -27,9 +27,33 @@ def main():
     # Parse input arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("image_path", type=str, help="Image (path + filename)")
+    parser.add_argument(
+        "mu_water",
+        type=float,
+        nargs="?",
+        default="0.2409",
+        help="Linear attenuation of water (default = 0.2409)",
+    )
+    parser.add_argument(
+        "rescale_slope",
+        type=float,
+        nargs="?",
+        default="1603.51904",
+        help="Slope to scale to BMD (default = 1603.51904)",
+    )
+    parser.add_argument(
+        "rescale_intercept",
+        type=float,
+        nargs="?",
+        default="-391.209015",
+        help="Intercept to scale to BMD (default = -391.209015)",
+    )
     args = parser.parse_args()
 
     image_path = args.image_path
+    mu_water = args.mu_water
+    rescale_slope = args.rescale_slope
+    rescale_intercept = args.rescale_intercept
 
     # Create a new folder to hold the output images
     image_dir = os.path.dirname(image_path)
@@ -43,7 +67,11 @@ def main():
     image = sitk.ReadImage(image_path, sitk.sitkFloat32)
 
     # Run the autocontour method for each bone
-    dst_mask, prx_mask, mask = autocontour(image)
+    dst_mask, prx_mask, mask = autocontour(image, 
+                                           mu_water,
+                                           rescale_slope,
+                                           rescale_intercept
+                                           )
 
     sitk.WriteImage(mask, mask_path)
     sitk.WriteImage(prx_mask, prx_mask_path)

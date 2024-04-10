@@ -15,7 +15,6 @@ from ormir_xct.util.file_reader import file_reader
 
 
 class TestFileReader(unittest.TestCase):
-
     filenames = [
         "test_aim",
         "test_isq",

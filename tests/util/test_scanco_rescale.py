@@ -12,12 +12,17 @@ import numpy as np
 import SimpleITK as sitk
 
 from ormir_xct.util.scanco_rescale import (
-    convert_scanco_to_linear_attenuation, convert_scanco_to_hu,
-    convert_scanco_to_bmd, convert_hu_to_linear_attenuation,
-    convert_hu_to_scanco, convert_hu_to_bmd,
-    convert_linear_attenuation_to_hu, convert_linear_attenuation_to_scanco, 
-    convert_linear_attenuation_to_bmd
-) 
+    convert_scanco_to_linear_attenuation,
+    convert_scanco_to_hu,
+    convert_scanco_to_bmd,
+    convert_hu_to_linear_attenuation,
+    convert_hu_to_scanco,
+    convert_hu_to_bmd,
+    convert_linear_attenuation_to_hu,
+    convert_linear_attenuation_to_scanco,
+    convert_linear_attenuation_to_bmd,
+)
+
 
 def create_test_image(dimensions, value):
     """
@@ -30,7 +35,6 @@ def create_test_image(dimensions, value):
 
 
 class TestScancoRescale(unittest.TestCase):
-
     def test_scanco_to_linear_attenuation(self):
         # LinearAttenuation = ScancoUnits / mu_scaling
         test_image = create_test_image((10, 10, 10), 8192)
@@ -57,7 +61,9 @@ class TestScancoRescale(unittest.TestCase):
         mu_scaling = 8192
         rescale_slope = 9
         rescale_intercept = 1
-        result_image = convert_scanco_to_bmd(test_image, mu_scaling, rescale_slope, rescale_intercept)
+        result_image = convert_scanco_to_bmd(
+            test_image, mu_scaling, rescale_slope, rescale_intercept
+        )
         np.testing.assert_array_equal(expected_image, result_image)
 
     def test_hu_to_linear_attenuation(self):
@@ -86,7 +92,9 @@ class TestScancoRescale(unittest.TestCase):
         mu_water = 0.5
         rescale_slope = 1
         rescale_intercept = 1
-        result_image = convert_hu_to_bmd(test_image, mu_water, rescale_slope, rescale_intercept)
+        result_image = convert_hu_to_bmd(
+            test_image, mu_water, rescale_slope, rescale_intercept
+        )
         np.testing.assert_array_equal(expected_image, result_image)
 
     def test_linear_attenuation_to_hu(self):
@@ -111,5 +119,7 @@ class TestScancoRescale(unittest.TestCase):
         expected_image = create_test_image((10, 10, 10), 8192)
         rescale_slope = 8191
         rescale_intercept = 1
-        result_image = convert_linear_attenuation_to_bmd(test_image, rescale_slope, rescale_intercept)
+        result_image = convert_linear_attenuation_to_bmd(
+            test_image, rescale_slope, rescale_intercept
+        )
         np.testing.assert_array_equal(expected_image, result_image)

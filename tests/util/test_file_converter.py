@@ -674,7 +674,7 @@ class TestFileConverter(unittest.TestCase):
         Test the conversion of DICOM to ISQ using ITKIOScanco and SimpleITK.
         """
         extension = os.path.splitext(self.test_dcm_to_isq_temp)[1]
-        self.assertTrue(extension.lower() == '.isq')
+        self.assertTrue(extension.lower() == ".isq")
 
         file_converter(self.test_dcm_temp, self.test_dcm_to_isq_temp)
 
