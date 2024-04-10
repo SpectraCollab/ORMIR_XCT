@@ -1,4 +1,4 @@
-# ORMIR_2022
+# ORMIR_XCT
 ORMIR_XCT is a Python package for processing high resolution peripheral computed tomography (HR-pQCT) scans. Development of this project began during the “Building the Jupyter Community in Musculoskeletal Imaging Research” workshop hosted by the Open and Reproducible Musculoskeletal Imaging Research (ORMIR) group.
 
 ## Installation
