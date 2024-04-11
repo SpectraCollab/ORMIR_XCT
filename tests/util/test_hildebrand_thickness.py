@@ -25,12 +25,6 @@ def create_sphere_mask(shape, voxel_width, radius):
     return mask
 
 
-class TestComputeLocalThicknessFromMask(unittest.TestCase):
-    @unittest.skip("unimplemented")
-    def test_placeholder(self):
-        pass
-
-
 class TestCalcStructureThicknessStatistics(unittest.TestCase):
     def test_get_sphere_thickness(self):
         voxel_width = (1, 1, 1)
@@ -39,7 +33,7 @@ class TestCalcStructureThicknessStatistics(unittest.TestCase):
         min_thickness = 0
         sphere = create_sphere_mask(shape, voxel_width, radius)
         s = calc_structure_thickness_statistics(
-            sphere, voxel_width, min_thickness, pad_amount=10, oversample=False
+            sphere, voxel_width, min_thickness, oversample=False
         )
         self.assertAlmostEqual(2 * radius, s[0], places=1)
 
