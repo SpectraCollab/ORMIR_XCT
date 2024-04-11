@@ -20,7 +20,7 @@ def create_test_image(dimensions, value):
     """
     Creates a numpy array containing a single value of given dimension.
     """
-    array = np.full(dimensions, value, np.int32)
+    array = np.full(dimensions, value, np.int16)
     return array
 
 

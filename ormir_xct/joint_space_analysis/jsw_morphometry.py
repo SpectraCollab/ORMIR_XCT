@@ -36,7 +36,7 @@ def jsw_pad(joint_seg_image):
 
     Parameters
     ----------
-    joint_seg_image : string
+    joint_seg_image : SimpleITK.Image
 
     Returns
     -------
@@ -54,6 +54,17 @@ def jsw_pad(joint_seg_image):
         joint_seg_image, [MISC2, MISC2, 0], [MISC2, MISC2, 0], 0
     )
     pad_image = sitk.BinaryThreshold(pad_image, 1, 127, 60, 0)
+    size = [joint_seg_image.GetSize()[0]+ MISC2*2, joint_seg_image.GetSize()[1]+ MISC2*2, joint_seg_image.GetSize()[2]]
+    origin = joint_seg_image.GetOrigin()
+    spacing = joint_seg_image.GetSpacing()
+    direction = joint_seg_image.GetDirection()
+    pad_image = sitk.Resample(pad_image, 
+                              size, 
+                              interpolator=sitk.sitkNearestNeighbor, 
+                              outputOrigin=origin,
+                              outputSpacing=spacing,
+                              outputDirection=direction
+                              )
 
     return pad_image
 
@@ -115,7 +126,11 @@ def jsw_erode(dilated_image, pad_image):
 
     Returns
     -------
+    eroded_image : SimpleITK.Image
+
     js_mask : SimpleITK.Image
+
+    dilated_js_mask : SimpleITK.Image
     """
     # Erode the image, set the eroded mask's value to 30
     eroded_image = sitk.BinaryErode(
