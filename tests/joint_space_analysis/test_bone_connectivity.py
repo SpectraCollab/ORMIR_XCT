@@ -4,6 +4,7 @@ import SimpleITK as sitk
 
 from ormir_xct.joint_space_analysis.connected_check import connected_check
 
+
 def create_sphere_mask(shape, voxel_width, radius):
     """
     Creates a binary NumPy sphere with given radius and voxel size.
@@ -22,13 +23,14 @@ def create_sphere_mask(shape, voxel_width, radius):
     ] = 1
     return mask
 
+
 class TestBoneConnectivityCheck(unittest.TestCase):
     def test_connected_check(self):
         voxel_width = (1, 1, 1)
         shape = (30, 30, 30)
         radius = 4
         sphere_array = create_sphere_mask(shape, voxel_width, radius).astype(float)
-        translated_sphere_x = np.roll(sphere_array, 5, axis=[1,0,0])
+        translated_sphere_x = np.roll(sphere_array, 5, axis=[1, 0, 0])
 
         empty = sitk.Image(shape, sitk.sitkUInt8)
         one_sphere = sitk.GetImageFromArray(sphere_array)
