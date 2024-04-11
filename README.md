@@ -16,3 +16,10 @@ If using an Apple M1, M2, or M3 processor, run the following command instead:
 
 ### Step 4: Run Scripts:
 The modules in the `ormir_xct` directory can now be run. Examples for each module are provided in the `examples` directory. 
+
+## Ways to Contribute
+### Reporting Bugs
+Bugs can be reported by creating a new GitHub issue in this repository. For each bug, please provide details on how to reproduce the bug and the specific error message (if possible).
+
+### Contributing New Features
+To add a new feature, expand existing functionality, add documentation, or other contributions, please submit a new GitHub issue outlining your contribution in detail. When submitting a new pull request, ensure you outline what you have changed and why it is necessary to make this change.
