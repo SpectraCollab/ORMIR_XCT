@@ -19,7 +19,7 @@ authors:
   - name: Andrew J. Burghardt
     orcid: 0000-0002-6343-4944
     affiliation: 4
-  - name: Michelle A.E. Espinosa
+  - name: Michelle A. Espinosa Hernandez
     orcid: 0000-0002-8279-9842
     affiliation: "3, 5, 6"
   - name: Jared Vicory
