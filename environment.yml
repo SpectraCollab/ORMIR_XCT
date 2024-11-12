@@ -21,7 +21,7 @@ dependencies:
     - itk-core==5.3.0
     - itk-filtering==5.3.0
     - itk-io==5.3.0
-    - itk-ioscanco==0.9.2
+    - itk-ioscanco==0.10.0
     - itk-numerics==5.3.0
     - itk-registration==5.3.0
     - itk-segmentation==5.3.0
