@@ -45,4 +45,4 @@ The modules in the `ormir_xct` directory can now be run. Examples for each modul
 
 ## Citation
 When using the ORMIR_XCT package, please use the following citation:
-- *Kuczynski, M.T., et al. "ORMIR_XCT: A Python package for high resolution peripheral quantitative computed tomography image processing." arXiv preprint arXiv:2309.04602 (2023).*
+- *Kuczynski et al., (2024). ORMIR_XCT: A Python package for high resolution peripheral quantitative computed tomography image processing. Journal of Open Source Software, 9(97), 6084, https://doi.org/10.21105/joss.06084*
